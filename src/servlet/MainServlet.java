@@ -17,6 +17,8 @@ import dao.clientdao;
 import dao.ingredientsdao;
 import dao.productdao;
 import dao.rawmaterialsdao;
+import dao.supplyorderdetailsdao;
+import dao.supplyordersdao;
 import model.Client;
 import model.ingredients;
 import model.product;
@@ -285,11 +287,12 @@ public class MainServlet extends HttpServlet {
 	//This is the function for going to the servlet for a new Supplier Order
 	private void addNewSupplierOrder(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
 		ArrayList<suppliers> suppliersList = Supplierdao.viewSupplier();
-		ArrayList<ingredients> ingredientsList = ingredientsdao.viewIngredientactive();
+		ArrayList<rawmaterials> rawMaterialsList = rawmaterialsdao.viewRaw();
 		ArrayList<supplyorders> supplyOrdersCart = new ArrayList<supplyorders>();
 		
+		
 		request.setAttribute("suppliersList",  suppliersList);
-		request.setAttribute("ingredientsList", ingredientsList);
+		request.setAttribute("rawMaterialsList", rawMaterialsList);
 		
 		request.getSession().setAttribute("supplyOrdersCart", supplyOrdersCart);
 		
@@ -330,15 +333,19 @@ public class MainServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		String actionToDo = request.getParameter("submit");
-		int productCode = Integer.parseInt(request.getParameter("ingredientCode"));
+		int rawmCode = Integer.parseInt(request.getParameter("rawmCode"));
+		
+		System.out.println(actionToDo);
 		
 		if (actionToDo.equals("addToOrder")) {
 			ArrayList<SupplyOrderItem> supplyOrdersCart = (ArrayList<SupplyOrderItem>) session.getAttribute("supplyOrdersCart");
 			SupplyOrderItem item = new SupplyOrderItem();
 			
+			
 			try {
-				product p = productdao.getProduct(productCode);
-				item.setProduct(p);
+				//product p = productdao.getProduct(productCode);
+				rawmaterials rawm = rawmaterialsdao.getRawMaterialById(rawmCode);
+				item.setRawMaterials(rawm);
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
@@ -350,6 +357,7 @@ public class MainServlet extends HttpServlet {
 	        int supplyOrderNum = Integer.parseInt(request.getParameter("supplyOrder"));
 	        String OrderDate = request.getParameter("orderDate");
 	        String DeliveryDate = request.getParameter("deliveryDate");
+	        int quantity = Integer.parseInt(request.getParameter("quantity"));
 	        //Subject to Change
 	        int StatusID = 2;
 	        String Comment = "";
@@ -359,6 +367,7 @@ public class MainServlet extends HttpServlet {
 	        //supplyorders b = new supplyorders(SupplierID,0,OrderDate,DeliveryDate,StatusID,Comment);
 			supplyorders b = new supplyorders(supplierName, supplyOrderNum, SupplierID, 0, OrderDate, DeliveryDate, StatusID, Comment);
 	        item.setSupplyOrders(b);
+	        item.setQuantity(quantity);
 			supplyOrdersCart.add(item);
 	        session.setAttribute("supplyOrdersCart", supplyOrdersCart);
 	        
@@ -369,11 +378,12 @@ public class MainServlet extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+	        
 			try {
-				ArrayList<ingredients> ingredientsList = ingredientsdao.viewIngredientactive();
-				request.setAttribute("ingredientsList", ingredientsList);
+				ArrayList<rawmaterials> rawMaterialsList = rawmaterialsdao.viewRaw();
+				
+				request.setAttribute("rawMaterialsList", rawMaterialsList);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 	        
@@ -381,7 +391,21 @@ public class MainServlet extends HttpServlet {
 			
 	        request.getRequestDispatcher("newsupplierorder2.jsp").forward(request, response);
 		} else if (actionToDo.equals("checkout")) {
-			response.sendRedirect("/addSupplyOrder");
+			System.out.println("ADD THE ORDERS");
+			//response.sendRedirect("/Six_Eagles/addSupplyOrder");
+
+	        ArrayList<SupplyOrderItem> supplyOrdersCart = (ArrayList<SupplyOrderItem>) session.getAttribute("supplyOrdersCart");
+	        
+	        for (SupplyOrderItem item : supplyOrdersCart) {
+	        	rawmaterials r = item.getRawMaterials();
+	        	supplyorders sb = item.getSupplyOrders();
+	        	
+	        	if(supplyordersdao.addingSupplyOrder(sb)){
+	        		supplyorderdetailsdao.AddSupplyOrderDetails(item);
+	        		response.sendRedirect("/Six_Eagles/home");
+	        	}
+	        }
+			
 		}
 		
 	}

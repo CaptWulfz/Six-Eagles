@@ -22,6 +22,16 @@ public class rawmaterials implements Serializable {
     private double Amount;
     private String UnitOfMeasurement;
     
+    public rawmaterials(int rawmCode, int ingrCode, String brand, double packagingAmount, String packaging, double amount, String uom) {
+    	this.RawMaterialCode = rawmCode;
+    	this.IngredientCode = ingrCode;
+    	this.IngredientBrand = brand;
+    	this.PackagingAmount = packagingAmount;
+    	this.Packaging = packaging;
+    	this.Amount = amount;
+    	this.UnitOfMeasurement = uom;
+    }
+    
     public rawmaterials(String IngredientBrand, double PackagingAmount, String Packaging, double Amount,String Uom){
 
         this.IngredientBrand=IngredientBrand;

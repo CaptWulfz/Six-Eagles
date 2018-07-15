@@ -5,8 +5,10 @@
  */
 package servlet;
 
+import dao.supplyorderdetailsdao;
 import dao.supplyordersdao;
 import model.product;
+import model.rawmaterials;
 import model.supplyorders;
 import temporary_models.SupplyOrderItem;
 
@@ -65,35 +67,41 @@ public class addSupplyOrder extends HttpServlet {
         
         HttpSession session = request.getSession();
         
+        System.out.println("Hello");
+        
+        /*
         int SupplierID = Integer.parseInt(request.getParameter("supplierid"));
         String OrderDate = request.getParameter("orderDate");
         String DeliveryDate = request.getParameter("deliveryDate");
         String StatusID = request.getParameter("status");
         String Comment = "";
-        
+        */
        // System.out.println("THE ORDER AND DELIVERY DATE: " + OrderDate + " " + DeliveryDate);
         
-        supplyorders b = new supplyorders(SupplierID,0,OrderDate,DeliveryDate,StatusID,Comment);
+        //supplyorders b = new supplyorders(SupplierID,0,OrderDate,DeliveryDate,StatusID,Comment);
         
         ArrayList<SupplyOrderItem> supplyOrdersCart = (ArrayList<SupplyOrderItem>) session.getAttribute("supplyOrdersCart");
         
         for (SupplyOrderItem item : supplyOrdersCart) {
-        	product p = item.getProduct();
+        	rawmaterials r = item.getRawMaterials();
         	supplyorders sb = item.getSupplyOrders();
         	
         	if(supplyordersdao.addingSupplyOrder(sb)){
-        		if ()
+        		supplyorderdetailsdao.AddSupplyOrderDetails(item);
+        		response.sendRedirect("/Six_Eagles/home");
         	}
         	
         	
         }
         
+        /*
         if(supplyordersdao.addingSupplyOrder(b)){
             request.getRequestDispatcher("supplyorders.jsp").forward(request, response);
         }
         else{
         request.getRequestDispatcher("updateprodad.jsp").forward(request, response);
         }
+        */
         
     }
 

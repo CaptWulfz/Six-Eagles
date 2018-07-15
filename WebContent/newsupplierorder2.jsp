@@ -7,13 +7,13 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import = "java.util.ArrayList" %>
 <%@page import = "model.suppliers" %>
-<%@page import = "model.ingredients" %>
+<%@page import = "model.rawmaterials" %>
 <%@page import = "model.supplyorders" %>
 <%@page import = "temporary_models.SupplyOrderItem" %>
 <!DOCTYPE html>
 
 <% ArrayList<suppliers> suppliersList = (ArrayList<suppliers>) request.getAttribute("suppliersList");
-   ArrayList<ingredients> ingredientsList = (ArrayList<ingredients>) request.getAttribute("ingredientsList");
+   ArrayList<rawmaterials> rawMaterialsList = (ArrayList<rawmaterials>) request.getAttribute("rawMaterialsList");
    ArrayList<SupplyOrderItem> supplyOrdersCart = (ArrayList<SupplyOrderItem>) session.getAttribute("supplyOrdersCart");
 %>
 
@@ -65,11 +65,11 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="control-label col-sm-5" for="col2">Ingredients:</label>
+							<label class="control-label col-sm-5" for="col2">Ingredient Brand:</label>
 							<div class="col-sm-7">
-								<select class="form-control" id="ingredientCode" name="ingredientCode" style = "width : 150px">
-									<% for (ingredients i : ingredientsList) { %>
-										<option value = "<%=i.getIngredientCode()%>"><%=i.getIngredientName() %></option>
+								<select class="form-control" id="ingredientCode" name="rawmCode" style = "width : 150px">
+									<% for (rawmaterials r : rawMaterialsList) { %>
+										<option value = "<%=r.getRawMaterialCode()%>"><%=r.getIngredientBrand() %></option>
 									<% } %>
 								</select>
 							</div>

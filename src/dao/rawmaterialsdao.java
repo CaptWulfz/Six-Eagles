@@ -81,6 +81,28 @@ public static rawmaterials getRawMaterialByName(String key) throws SQLException 
 	return rawm;
 }
 
+public static rawmaterials getRawMaterialById(int key) throws SQLException {
+	rawmaterials rawm = null;
+	Connection c = dbconnect.getDBConnection();
+	String sql = "SELECT * FROM eagle.rawmaterials WHERE RawMaterialCode = ?;";
+	
+	try {
+		PreparedStatement ps = c.prepareCall(sql);
+		ps.setInt(1, key);
+		ResultSet rs = ps.executeQuery();
+		while (rs.next())
+			rawm = new rawmaterials(rs.getInt(1), rs.getInt(1), rs.getString(3), rs.getDouble(4), rs.getString(5), rs.getDouble(6), rs.getString(7));
+	} catch (Exception e) {
+		e.printStackTrace();
+	} finally {
+		if (c != null) {
+			c.close();
+		}
+	}
+	
+	return rawm;
+}
+
 public static ArrayList<rawmaterials> viewRawDeactive()throws SQLException
         {
             ArrayList<rawmaterials>rawmaterials=new ArrayList();

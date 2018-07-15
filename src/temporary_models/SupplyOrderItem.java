@@ -1,22 +1,23 @@
 package temporary_models;
 
-import model.product;
+import model.rawmaterials;
 import model.supplyorders;
 
 public class SupplyOrderItem {
-	private product product;
+	private rawmaterials rawMaterials;
 	private supplyorders supplyOrder;
+	private int quantity;
 	
 	public SupplyOrderItem() {
 		
 	}
 	
-	public product getProduct() {
-		return this.product;
+	public rawmaterials getRawMaterials() {
+		return this.rawMaterials;
 	}
 	
-	public void setProduct(product p) {
-		this.product = p;
+	public void setRawMaterials(rawmaterials r) {
+		this.rawMaterials = r;
 	}
 	
 	public supplyorders getSupplyOrders() {
@@ -25,6 +26,14 @@ public class SupplyOrderItem {
 	
 	public void setSupplyOrders(supplyorders supplyOrder) {
 		this.supplyOrder = supplyOrder;
+	}
+	
+	public int getQuantity() {
+		return this.quantity;
+	}
+	
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 	
 	

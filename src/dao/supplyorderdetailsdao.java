@@ -13,6 +13,7 @@ package dao;
 import java.util.ArrayList;
 import java.sql.*;
 import model.*;
+import temporary_models.SupplyOrderItem;
 
 public class supplyorderdetailsdao {
     public static ArrayList<supplyorderdetails> viewsupplyorderdetails(int code)throws SQLException
@@ -51,8 +52,24 @@ public class supplyorderdetailsdao {
     
         }
     
-    public static void AddSupplyOrderDetails(supplyorders sb) {
+    public static void AddSupplyOrderDetails(SupplyOrderItem item) {
     	Connection c = dbconnect.getDBConnection();
-    	String sql = "INSERT INTO eagle.supplyorderdetails (";
+    	String sql = "INSERT INTO eagle.supplyorderdetails (SupplyOrderNum, RawMaterialCode, QuantityOrdered, UnitOfMeasurement) VALUES(?, ?, ?, ?);";
+    	
+    	supplyorders sb = item.getSupplyOrders();
+    	rawmaterials rawm = item.getRawMaterials();
+    	
+    	try {
+    		PreparedStatement ps = c.prepareCall(sql);
+    		ps.setInt(1, sb.getSupplyOrderNum());
+    		ps.setInt(2, rawm.getRawMaterialCode());
+    		ps.setInt(3, item.getQuantity());
+    		ps.setString(4, rawm.getUnitOfMeasurement());
+    		
+    		ps.executeUpdate();
+    		
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
     }
 }
