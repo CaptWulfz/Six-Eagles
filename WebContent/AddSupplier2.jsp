@@ -42,7 +42,7 @@
 							
 						
 						<button type="submit" name = "submit" class="btn btn-primary" style="margin-left: 35%;"><i class="glyphicon glyphicon-log-in"></i> Submit</button></a>
-						<a href = "home.jsp" <button type="button" class="btn btn-default">Cancel</button></a>
+						<a href = "home.jsp"><button type="button" class="btn btn-default">Cancel</button></a>
 					</form>
 				</div>
 			</div>

@@ -131,7 +131,15 @@
 				    </div>
 	        </div>
 			<div class="form-group">
-	        	<label for="unitOfMeasurement" class="col-sm-3 control-label">Unit of Measurement</label>
+				<label for="unitOfMeasurement" class="col-sm-3 control-label" id = "tooltip">Unit of Measurement <img src = "images/tooltip-icon.png" height = "10" width = "10">
+	        		<span class = "tooltiptext">
+	        		E.g:<br>
+	        		Liquid Items : Liters <br>
+	        		Solid Items : Kg <br>
+	        		Eggs : by Dozens<br>
+	        		Cubed Items (Knorr Cubes) : Per Cube<br>
+	        		</span>
+	        	</label>
 	        	<label class="col-sm-1 control-label">: </label>
 				    <div class="col-sm-8">
 				    	
@@ -233,5 +241,43 @@
 		td a:hover {
 			text-decoration: none;
 			color: black;
+		}
+		
+		#tooltip {
+		    position: relative;
+		    display: inline-block;
+		    border-bottom: 1px dotted black;
+		}
+		
+		#tooltip .tooltiptext {
+			visibility: hidden;
+			width: 300px;
+		    background-color: black;
+		    color: #fff;
+		    text-align: justify;
+		    padding-left: 10px;
+		    padding: 5px;
+		    border-radius: 6px;	
+		    
+		    position: absolute;
+		    z-index: 1;
+		    top: 100%;
+		    left: 50%;
+		    margin-left: -60px;
+		}
+		
+		#tooltip:hover .tooltiptext {
+			visibility: visible;
+		}
+		
+		#tooltip .tooltiptext::after {
+		    content: " ";
+		    position: absolute;
+		    bottom: 100%;  /* At the top of the tooltip */
+		    left: 50%;
+		    margin-left: -5px;
+		    border-width: 5px;
+		    border-style: solid;
+		    border-color: transparent transparent black transparent;
 		}
 	</style>

@@ -144,14 +144,16 @@
 				    <div class="col-sm-8">
 				      <input type="text" min="0" step="0.01" class="form-control" id="packaging" placeholder="Packaging" name="packaging" autocomplete="off">
 				    </div>
-                        </div>
+            </div>
+            
 			<div class="form-group">
 	        	<label for="availableStock" class="col-sm-3 control-label">Amount</label>
 	        	<label class="col-sm-1 control-label">: </label>
 				    <div class="col-sm-8">
 				      <input type="text" min="0" step="0.01" class="form-control" id="Amount" placeholder="Amount" name="Amount" autocomplete="off">
 				    </div>
-                        </div>
+            </div>
+                        
 			<div class="form-group">
 	        	<label for="unitOfMeasurement" class="col-sm-3 control-label" id = "tooltip">Unit of Measurement <img src = "images/tooltip-icon.png" height = "10" width = "10">
 	        		<span class = "tooltiptext">
@@ -164,9 +166,13 @@
 	        	</label>
 	        	<label class="col-sm-1 control-label">: </label>
 				    <div class="col-sm-8">
-				      <input type="text" class="form-control" id="unitOfMeasurement" placeholder="Unit of Measurement" name="unitOfMeasurement" autocomplete="off">
+				    	<select class = "form-control" id = "unitOfMeasurement" name = "unitOfMeasurement">
+				    		<option value = "Kg">Kg</option>
+				    		<option value = "Grams">Liters</option>
+				    		<option value = "Dozen">Dozen</option>
+			    			<option value = "Per Cube">Per Cube</option>
+			    		</select>
 				    </div>
-                        </div>
 	        </div>
 			
 		<div class="modal-footer">
