@@ -111,22 +111,25 @@
 							<tr>
 								<th>Supplier ID</th>
 								<th>Supply Order Num</th>
+								<th>Ingredient Brand</th>
 								<th>Order Date</th>
 								<th>Delivery Date</th>
 							<tr>
 							<% for (SupplyOrderItem cartItem: supplyOrdersCart) { 
-								supplyorders item = cartItem.getSupplyOrders();%>
+								supplyorders item = cartItem.getSupplyOrders();
+								rawmaterials rawm = cartItem.getRawMaterials();%>
 								<tr>
 									<th><%=item.getSupplierName() %></th>
 									<th><%=item.getSupplyOrderNum() %></th>
+									<th><%= rawm.getIngredientBrand()%></th>
 									<th><%=item.getOrderDate() %></th>
 									<th><%=item.getDeliveryDate() %><th>
 								</tr>	
 							<% } %>
 						</table>
 					</div>
-					<form action = "newClientOrderDetails" method = "post">
-						<button id = "clearButton" type="submit" name = "submitButton" value = "Remove" class="btn btn-default">Clear Cart</button>
+					<form action = "manageSupplyOrder" method = "post">
+						<button id = "clearButton" type="submit" name = "submit" value = "Remove" class="btn btn-default">Clear Cart</button>
 					</form>
 				</div>
 			</div>

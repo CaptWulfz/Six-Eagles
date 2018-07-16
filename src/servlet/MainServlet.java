@@ -15,30 +15,16 @@ import javax.servlet.http.HttpSession;
 import dao.Supplierdao;
 import dao.clientdao;
 import dao.ingredientsdao;
-import dao.productdao;
 import dao.rawmaterialsdao;
 import dao.supplyorderdetailsdao;
 import dao.supplyordersdao;
 import model.Client;
 import model.ingredients;
-import model.product;
 import model.rawmaterials;
 import model.suppliers;
 import model.supplyorders;
 import temporary_models.SupplyOrderItem;
-
-class URLPatterns {
-	public final static String HOME = "/home";
-	public final static String INGREDIENTS = "/ingredients"; 
-	public final static String RAWMATS = "/rawmats";
-	public final static String CLIENTORDER = "/newClientOrder";
-	public final static String SUPPLIERORDER = "/newSupplierOrder";
-	public final static String LOGOUT = "/logOut";
-	public final static String CLIENTS = "/clients";
-	public final static String SUPPLIERS = "/suppliers";
-	public final static String LOGIN = "/login";
-	public final static String MANAGESUPPLYORDER = "/manageSupplyOrder";
-}
+import url_patterns.URLPatterns;
 
 /**
  * Servlet implementation class MainServlet
@@ -333,11 +319,12 @@ public class MainServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		String actionToDo = request.getParameter("submit");
-		int rawmCode = Integer.parseInt(request.getParameter("rawmCode"));
+		
 		
 		System.out.println(actionToDo);
 		
 		if (actionToDo.equals("addToOrder")) {
+			int rawmCode = Integer.parseInt(request.getParameter("rawmCode"));
 			ArrayList<SupplyOrderItem> supplyOrdersCart = (ArrayList<SupplyOrderItem>) session.getAttribute("supplyOrdersCart");
 			SupplyOrderItem item = new SupplyOrderItem();
 			
@@ -406,6 +393,30 @@ public class MainServlet extends HttpServlet {
 	        	}
 	        }
 			
+		} else if (actionToDo.equals("Remove")) {
+			ArrayList<SupplyOrderItem> supplyOrdersCart = (ArrayList<SupplyOrderItem>) session.getAttribute("supplyOrdersCart");
+			 supplyOrdersCart = new ArrayList<SupplyOrderItem>();
+			
+			 session.setAttribute("supplyOrdersCart", supplyOrdersCart);
+			 
+			 try {
+				ArrayList<suppliers> suppliersList = Supplierdao.viewSupplier();
+				request.setAttribute("suppliersList",  suppliersList);
+	        } catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        
+			try {
+				ArrayList<rawmaterials> rawMaterialsList = rawmaterialsdao.viewRaw();
+				
+				request.setAttribute("rawMaterialsList", rawMaterialsList);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			request.getRequestDispatcher("newsupplierorder2.jsp").forward(request, response);
+			 
 		}
 		
 	}

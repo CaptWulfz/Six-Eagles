@@ -17,11 +17,20 @@ import javax.servlet.http.HttpSession;
 
 import dao.Usersdao;
 import model.Users;
+import url_patterns.URLPatterns;
 
 /**
  * Servlet Filter implementation class MainFilter
  */
-@WebFilter(urlPatterns = {"/home", "/clients", "/suppliers"})
+@WebFilter(urlPatterns = {URLPatterns.HOME,
+						  URLPatterns.INGREDIENTS,
+						  URLPatterns.RAWMATS,
+						  URLPatterns.CLIENTORDER,
+						  URLPatterns.SUPPLIERORDER,
+						  URLPatterns.CLIENTS,
+						  URLPatterns.SUPPLIERS,
+						  URLPatterns.MANAGESUPPLYORDER
+						  })
 public class MainFilter implements Filter {
 
     /**
