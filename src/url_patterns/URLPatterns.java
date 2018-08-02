@@ -11,4 +11,12 @@ public class URLPatterns {
 	public final static String SUPPLIERS = "/suppliers";
 	public final static String LOGIN = "/login";
 	public final static String MANAGESUPPLYORDER = "/manageSupplyOrder";
+	public final static String CREATEUSER = "/createUser";
+	public final static String SUBMITCREATEUSERREQUEST = "/submitCreateUserRequest";
+	public final static String ADDUSERTODB = "/addUserToDB";
+	public final static String CHANGECODE = "/changeProductCode";
+	public final static String SUBMITCHANGECODE = "/submitChangeCode";
+	public final static String INVENTORY = "/inventory";
+	public final static String CHANGETHRESHOLDS = "/changeThresholds";
+	public final static String CHANGEINGRTHREHSOLDS = "/changeIngrThresholds";
 }

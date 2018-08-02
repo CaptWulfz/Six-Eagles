@@ -73,7 +73,7 @@
 							<div class="form-group">
 								<label class="control-label col-sm-4" for="col3">Quantity:</label>
 								<div class="col-sm-7">
-									<input type="number" class="dolor form-control" id="quantity" name="quantity" placeholder="Quantity" style="margin-bottom: 5px; width: 50%;">
+									<input type="number" class="dolor form-control" id="quantity" name="quantity" placeholder="Quantity" value = 0 style="margin-bottom: 5px; width: 50%;">
 								</div>
 							
 								<button type="submit" name = "submitButton" value = "addToCart" class="btn btn-primary" style="margin-left: 35%;"><i class="glyphicon glyphicon-log-in"></i> Submit</button>
@@ -99,14 +99,20 @@
 								<th>Price per Piece</th>
 								<th>Total Price</th>
 							</tr>
-							<% for (CartItem item: cart) { %>
+							<% double total = 0;
+							for (CartItem item: cart) { %>
 								<tr>
 									<th><%=item.getName() %></th>
 									<th><%=item.getQuantity() %></th>
 									<th><%=item.getPricePerPiece() %></th>
-									<th><%=item.getTotalPrice() %><th>
+									<th><%=item.getTotalPrice() %></th>
 								</tr>	
-							<% } %>
+							<%  	total += item.getTotalPrice();
+								} %>
+							<tr>
+								<th colspan = "3"> Running Total: </th>
+								<th><%=total %></th>
+							<tr>
 						</table>
 					</div>
 					<form action = "newClientOrderDetails" method = "post">

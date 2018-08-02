@@ -11,21 +11,29 @@ import java.io.Serializable;
  *
  * @author Desmond
  */
+/**
+ * @author JAROD
+ *
+ */
 public class Users implements Serializable{
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int StaffId;
+	private int UserId;
+	private String Firstname;
+	private String Lastname;
     private String Username;
     private String Password;
+    private String Position;
+    private String Address;
     private String Userhash;
     
-    public Users(int ID,String Username, String Password)
+    public Users(int ID, String Username, String Password)
     {
         this.Username=Username;
         this.Password=Password;
-        this.StaffId=ID;
+        this.UserId=ID;
     }
     public Users(String Username, String Password)
     {
@@ -33,19 +41,28 @@ public class Users implements Serializable{
         this.Password=Password;
     
     }
+    
+    public Users(String firstName, String lastName, String userName, String password, String position, String address) {
+    	this.Firstname = firstName;
+    	this.Lastname = lastName;
+    	this.Username = userName;
+    	this.Password = password;
+    	this.Position = position;
+    	this.Address = address;
+    }
 
     /**
      * @return the StaffId
      */
-    public int getStaffId() {
-        return StaffId;
+    public int getUserId() {
+        return this.UserId;
     }
 
     /**
      * @param StaffId the StaffId to set
      */
-    public void setStaffId(int StaffId) {
-        this.StaffId = StaffId;
+    public void setUserId(int UserId) {
+        this.UserId = UserId;
     }
 
     /**
@@ -83,6 +100,32 @@ public class Users implements Serializable{
     public void setUserhash(String hash) {
     	this.Userhash = hash;
     }
+	public String getFirstname() {
+		return Firstname;
+	}
+	public void setFirstname(String firstname) {
+		Firstname = firstname;
+	}
+	public String getLastname() {
+		return Lastname;
+	}
+	public void setLastname(String lastname) {
+		Lastname = lastname;
+	}
+	public String getPosition() {
+		return Position;
+	}
+	public void setPosition(String position) {
+		Position = position;
+	}
+	public String getAddress() {
+		return Address;
+	}
+	public void setAddress(String address) {
+		Address = address;
+	}
+    
+    
     
     
 }

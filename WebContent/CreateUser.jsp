@@ -31,7 +31,7 @@
 				<div class = "messages">
 					
 				<div class="panel-body">
-					<form class="form-horizontal" action="" method = "POST">
+					<form class="form-horizontal" action="submitCreateUserRequest" method = "POST">
 						<div class="form-group">
 							<label class="control-label col-sm-5" for="col1">Firstname:</label>
 							<div class="col-sm-7">
@@ -68,18 +68,8 @@
 							<div class="col-sm-7">
 								<select class="form-control" id="productName" name="Position" style = "width : 300px">
 									<option value = ""></option>
-									<option name = "Operation" value = "Operation"> Operation </option>
-									<option name = "HR Department" value = "HR Department"> HR Department </option>
-									<option name = "Finance" value = "Finance"> Finance </option>
-									<option name = "Admin" value = "Admin"> Admin </option>
-									<option name = "Secretary" value = "Secretary"> Secretary </option>
-									<option name = "IT Department" value = "IT Department"> IT Department </option>
-									<option name = "Marketing" value = "Marketing"> Marketing </option>
-									<option name = "Internal" value = "Internal"> Internal </option>
-									<option name = "IT Head" value = "IT Head"> IT Head </option>
-									<option name = "Maintenance" value = "Maintenance"> Maintenance </option>
-									
-										
+									<option value = "Admin">Admin</option>
+									<option value = "Staff">Staff</option>										
 								</select>
 							</div>
 						</div>
@@ -90,8 +80,15 @@
 							</div>
 						</div>
 						
-						<button type="submit" name = "submit" class="btn btn-primary" style="margin-left: 35%;"><i class="glyphicon glyphicon-log-in"></i> Submit</button></a>
-						<a href = "home.jsp" <button type="button" class="btn btn-default">Cancel</button></a>
+						<% String errorMessage = (String) request.getAttribute("errorMessage"); 
+						   if (errorMessage != null) { %>
+							<div style = "color:red">
+								<b><center><% out.println(errorMessage); %></center></b>
+							</div>
+						<% } %>
+						
+						<button type="submit" name = "submitButton" value = "submitUserRequest" class="btn btn-primary" style="margin-left: 35%;"><i class="glyphicon glyphicon-log-in"></i> Submit</button>
+						<button type="submit" name = "submitButton" value = "cancelUserRequest" class="btn btn-default">Cancel</button>
 					</form>
 				</div>
 			</div>

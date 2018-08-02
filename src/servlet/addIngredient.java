@@ -69,11 +69,9 @@ public class addIngredient extends HttpServlet {
       //  int ingredientCode = Integer.parseInt(request.getParameter("ingredientCode"));
         String ingredientName = request.getParameter("ingredientName");
         double availableStock = Double.parseDouble(request.getParameter("availableStock"));
-        int threshold = Integer.parseInt(request.getParameter("threshold"));
-        int ceiling = Integer.parseInt(request.getParameter("ceiling"));
         String unitOfMeasurement = request.getParameter("unitOfMeasurement");
         
-        ingredients a = new ingredients(ingredientName, availableStock, threshold, ceiling, unitOfMeasurement);
+        ingredients a = new ingredients(ingredientName, availableStock, 0, 0, unitOfMeasurement);
         PrintWriter pw=response.getWriter();
        // pw.println(a.getIngredientName());
        // pw.println(a.getStock());

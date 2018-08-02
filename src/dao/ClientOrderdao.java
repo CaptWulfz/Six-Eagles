@@ -23,14 +23,14 @@ public class ClientOrderdao {
           boolean x = false;
         
         Connection connect = dbconnect.getDBConnection();
-        String query ="INSERT INTO orders(PURCHASEORDERNO,CLIENTID,STAFFID,ORDERDATE,DELIVERYDATE,STATUSID,STATUSDETAILS)VALUES (?,?,?,?,?,?,?)";
+        String query ="INSERT INTO orders(PURCHASEORDERNO,CLIENTID,USERID,ORDERDATE,DELIVERYDATE,STATUSID,STATUSDETAILS)VALUES (?,?,?,?,?,?,?)";
         try{
 
             PreparedStatement p = connect.prepareCall(query);
             
             p.setInt(1,order.getPurchaseOrderNum());
             p.setInt(2,order.getClientID());
-            p.setInt(3,order.getStaffID());
+            p.setInt(3,order.getUserID());
             p.setString(4,order.getOrderdate());
             p.setString(5,order.getDeliverydate());
             p.setInt(6,order.getStatus());

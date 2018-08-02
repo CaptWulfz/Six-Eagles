@@ -77,20 +77,20 @@
 						<div class="form-group">
 							<label class="control-label col-sm-5" for="col2">Quantity:</label>
 							<div class="col-sm-7">
-								<input type="number" class="ipsum form-control" id="quantity" name = "quantity" style="width: 150px;">
+								<input type="number" class="ipsum form-control" id="quantity" name = "quantity" value = 0 style="width: 150px;">
 							</div>
 						</div>
 						
 						<div class="form-group">
 							<label class="control-label col-sm-5" for="col3">Date Ordered:</label>
 							<div class="col-sm-7">
-								<input type="text" class="dolor form-control" id="rdate" name="orderDate" placeholder="yyyy-mm-dd" style="margin-bottom: 5px; width: 150px;">
+								<input type="date" class="dolor form-control" id="rdate" name="orderDate" placeholder="yyyy-mm-dd" style="margin-bottom: 5px; width: 150px;">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-sm-5" for="col4">Delivery Date:</label>
 							<div class="col-sm-7">
-								<input type="text" class="sit form-control" id="ddate" name="deliveryDate" placeholder="yyyy-mm-dd" style="margin-bottom: 5px; width: 150px;">
+								<input type="date" class="sit form-control" id="ddate" name="deliveryDate" placeholder="yyyy-mm-dd" style="margin-bottom: 5px; width: 150px;">
 							</div>
 						</div>
 						<button type="submit" name = "submit" value = "addToOrder" class="btn btn-primary" style="margin-left: 35%;"><i class="glyphicon glyphicon-log-in"></i> Submit</button></a>
@@ -123,7 +123,7 @@
 									<th><%=item.getSupplyOrderNum() %></th>
 									<th><%= rawm.getIngredientBrand()%></th>
 									<th><%=item.getOrderDate() %></th>
-									<th><%=item.getDeliveryDate() %><th>
+									<th><%=item.getDeliveryDate() %></th>
 								</tr>	
 							<% } %>
 						</table>

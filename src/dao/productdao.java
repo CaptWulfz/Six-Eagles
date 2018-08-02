@@ -15,6 +15,46 @@ import model.rawmaterials;
  * @author Roano
  */
 public class productdao {
+	
+	public static void changeProductCode(int code, int newCode) {
+		Connection connect = dbconnect.getDBConnection();
+        String query ="update products set productcode = ? where productcode = ?";
+        try {
+        	PreparedStatement p = connect.prepareStatement(query);
+        	p.setInt(1, newCode);
+        	p.setInt(2, code);
+        	p.executeUpdate();
+        } catch (Exception e) {
+        	e.printStackTrace();
+        } finally {
+        	try {
+        		connect.close();
+        	} catch (SQLException e) {
+        		e.printStackTrace();
+        	}
+        }
+	}
+	
+	public static void changeThresholds(int code, int threshold, int ceiling) {
+		Connection c = dbconnect.getDBConnection();
+        String sql ="update products set Threshold = ?, Ceiling = ? where productcode = ?";
+        try {
+        	PreparedStatement p = c.prepareStatement(sql);
+        	p.setInt(1, threshold);
+        	p.setInt(2, ceiling);
+        	p.setInt(3, code);
+        	p.executeUpdate();
+        } catch (Exception e) {
+        	e.printStackTrace();
+        } finally {
+        	try {
+        		c.close();
+        	} catch (SQLException e) {
+        		e.printStackTrace();
+        	}
+        }
+	}
+	
     public static boolean addNewProduct(product ing){
         boolean b=false;
         Connection connect = dbconnect.getDBConnection();

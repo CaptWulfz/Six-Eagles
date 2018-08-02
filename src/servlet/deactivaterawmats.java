@@ -49,19 +49,7 @@ public class deactivaterawmats extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-        
-        int icode = Integer.parseInt(request.getParameter("code"));
-        
-        try{
-        rawmaterialsdao.deactivaterawmats(icode);
-        //request.setAttribute("codew", icode);
-        request.getRequestDispatcher("rawmats.jsp").forward(request, response);
-        }
-        catch(Exception e){}
-        
-        
-        
+        doPost(request, response);        
     }
 
     /**
@@ -75,7 +63,18 @@ public class deactivaterawmats extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+    	 int icode = Integer.parseInt(request.getParameter("submitButton"));
+         
+         System.out.println(icode);
+         
+         try{
+         rawmaterialsdao.deactivaterawmats(icode);
+         //request.setAttribute("codew", icode);
+         response.sendRedirect("/Six_Eagles/rawmats");
+         }
+         catch(Exception e){
+         	e.printStackTrace();
+         }
     }
 
     /**

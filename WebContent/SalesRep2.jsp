@@ -76,7 +76,7 @@
 
         <script>
             function myFunction() {
-            window.print();
+            	window.print();
             }
         </script>
 				<!-- /table -->

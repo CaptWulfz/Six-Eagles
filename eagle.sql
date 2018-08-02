@@ -31,7 +31,7 @@ CREATE TABLE `client` (
   `City` varchar(100) DEFAULT NULL,
   `Status` varchar(45) DEFAULT 'Active',
   PRIMARY KEY (`ClientID`)
-) ENGINE=InnoDB AUTO_INCREMENT=10000022 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10000023 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `client` (
 
 LOCK TABLES `client` WRITE;
 /*!40000 ALTER TABLE `client` DISABLE KEYS */;
-INSERT INTO `client` VALUES (10000016,'Ministop','EGI, Taft Ave, Pasay','Pasay','Active'),(10000017,'711','The Manila Residences T2, Taft Ave. Malate Manila','Pasay','Active'),(10000018,'Ministop','Vito Cruz, near Roxas Boulevard','Pasay','Active'),(10000019,'711','One Archers Taft Ave. Manila','Pasay','Active'),(10000020,'Lawson','BGC High Street','Taguig','Active'),(10000021,'Padu','7162','Caloocan','Active');
+INSERT INTO `client` VALUES (10000016,'Ministop','EGI, Taft Ave, Pasay','Pasay','Active'),(10000017,'711','The Manila Residences T2, Taft Ave. Malate Manila','Pasay','Active'),(10000018,'Ministop','Vito Cruz, near Roxas Boulevard','Pasay','Active'),(10000019,'711','One Archers Taft Ave. Manila','Pasay','Active'),(10000020,'Lawson','BGC High Street','Taguig','Active'),(10000021,'Padu','7162','Caloocan','Active'),(10000022,'Fernan','address 123','Quezon','Active');
 /*!40000 ALTER TABLE `client` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -86,7 +86,7 @@ CREATE TABLE `ingredientlists` (
   KEY `fk_ingredientlists_ingredients1_idx` (`IngredientCode`),
   KEY `fk_ingredientlists_products1_idx` (`ProductCode`),
   CONSTRAINT `fk_ingredientlists_ingredients1` FOREIGN KEY (`IngredientCode`) REFERENCES `ingredients` (`IngredientCode`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_ingredientlists_products1` FOREIGN KEY (`ProductCode`) REFERENCES `products` (`ProductCode`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_ingredientlists_products1` FOREIGN KEY (`ProductCode`) REFERENCES `products` (`ProductCode`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -96,7 +96,7 @@ CREATE TABLE `ingredientlists` (
 
 LOCK TABLES `ingredientlists` WRITE;
 /*!40000 ALTER TABLE `ingredientlists` DISABLE KEYS */;
-INSERT INTO `ingredientlists` VALUES (5.00,'Dozen',119,112,NULL),(10.00,'Kg',120,116,NULL);
+INSERT INTO `ingredientlists` VALUES (5.00,'Dozen',456,112,NULL),(10.00,'Kg',120,116,NULL),(30.00,'Kg',121,111,NULL),(2.00,'Dozen',121,111,'Flour'),(20.00,'Kg',122,111,'Flour'),(2.00,'dozen',122,112,'Eggs'),(20.00,'kg',123,111,'Flour'),(3.00,'Dozen',123,112,'Eggs');
 /*!40000 ALTER TABLE `ingredientlists` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -118,7 +118,7 @@ CREATE TABLE `ingredients` (
   `UnitOfMeasurement` varchar(45) NOT NULL,
   `Status` varchar(8) DEFAULT 'Active',
   PRIMARY KEY (`IngredientCode`)
-) ENGINE=InnoDB AUTO_INCREMENT=122 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=123 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,7 +127,7 @@ CREATE TABLE `ingredients` (
 
 LOCK TABLES `ingredients` WRITE;
 /*!40000 ALTER TABLE `ingredients` DISABLE KEYS */;
-INSERT INTO `ingredients` VALUES (111,'Flour',500.00,100,NULL,1000,NULL,'Kg','Active'),(112,'Eggs',325.00,100,NULL,1000,NULL,'Dozen','Active'),(113,'Chocolate',175.00,100,NULL,500,NULL,'Kg','Active'),(114,'Rice',550.00,100,NULL,1000,NULL,'Kg','Active'),(115,'Cheese',275.00,100,NULL,500,NULL,'Kg','Active'),(116,'Ham',275.00,100,NULL,500,NULL,'Kg','Active'),(117,'Noodles',450.00,100,NULL,1000,NULL,'Kg','Active'),(121,'Sugar',600.00,100,NULL,1000,NULL,'Kg','Active');
+INSERT INTO `ingredients` VALUES (111,'Flour',500.00,100,NULL,1000,NULL,'Kg','Active'),(112,'Eggs',325.00,100,NULL,1000,NULL,'Dozen','Active'),(113,'Chocolate',175.00,100,NULL,1000,NULL,'Kg','Active'),(114,'Rice',550.00,100,NULL,1000,NULL,'Kg','Active'),(115,'Cheese',275.00,100,NULL,500,NULL,'Kg','Active'),(116,'Ham',275.00,100,NULL,500,NULL,'Kg','Active'),(117,'Noodles',450.00,100,NULL,1000,NULL,'Kg','Active'),(121,'Sugar',600.00,100,NULL,1000,NULL,'Kg','Active'),(122,'Butter',0.00,0,NULL,0,NULL,'Kg','Active');
 /*!40000 ALTER TABLE `ingredients` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -170,8 +170,8 @@ CREATE TABLE `orderdetails` (
   `QuantityOrdered` int(20) NOT NULL,
   KEY `fk_OrderDetails_Orders1_idx` (`PurchaseOrderNo`),
   KEY `fk_OrderDetails_Products1_idx` (`ProductCode`),
-  CONSTRAINT `fk_OrderDetails_Orders1` FOREIGN KEY (`PurchaseOrderNo`) REFERENCES `orders` (`PurchaseOrderNo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_OrderDetails_Products1` FOREIGN KEY (`ProductCode`) REFERENCES `products` (`ProductCode`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_OrderDetails_Orders1` FOREIGN KEY (`PurchaseOrderNo`) REFERENCES `orders` (`PurchaseOrderNo`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_OrderDetails_Products1` FOREIGN KEY (`ProductCode`) REFERENCES `products` (`ProductCode`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -181,7 +181,7 @@ CREATE TABLE `orderdetails` (
 
 LOCK TABLES `orderdetails` WRITE;
 /*!40000 ALTER TABLE `orderdetails` DISABLE KEYS */;
-INSERT INTO `orderdetails` VALUES (1,119,25.00,1),(1,119,25.00,1),(11,119,25.00,10),(11,120,20.00,20),(45687,119,25.00,2),(12345,119,25.00,65),(165,119,25.00,66),(91567,119,25.00,10);
+INSERT INTO `orderdetails` VALUES (1,456,25.00,1),(1,456,25.00,1),(11,456,25.00,10),(11,120,20.00,20),(45687,456,25.00,2),(12345,456,25.00,65),(165,456,25.00,66),(91567,456,25.00,10),(1234,456,25.00,950),(1234,120,20.00,200),(4567,456,25.00,4);
 /*!40000 ALTER TABLE `orderdetails` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -195,18 +195,17 @@ DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `PurchaseOrderNo` int(20) unsigned NOT NULL,
   `ClientID` int(20) unsigned NOT NULL,
-  `StaffID` int(20) unsigned NOT NULL,
+  `UserID` int(20) unsigned NOT NULL,
   `DeliveryReceiptNo` int(20) unsigned DEFAULT NULL,
   `OrderDate` date DEFAULT NULL,
   `DeliveryDate` date DEFAULT NULL,
   `StatusID` int(11) NOT NULL,
   `StatusDetails` varchar(45) DEFAULT NULL,
   `Comments` longtext,
-  PRIMARY KEY (`PurchaseOrderNo`,`ClientID`,`StaffID`),
+  PRIMARY KEY (`PurchaseOrderNo`,`ClientID`,`UserID`),
   KEY `fk_Orders_Client1_idx` (`ClientID`),
-  KEY `fk_Orders_Staff1_idx` (`StaffID`),
-  CONSTRAINT `fk_Orders_Client1` FOREIGN KEY (`ClientID`) REFERENCES `client` (`ClientID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Orders_Staff1` FOREIGN KEY (`StaffID`) REFERENCES `staff` (`StaffID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_Orders_Staff1_idx` (`UserID`),
+  CONSTRAINT `fk_Orders_Client1` FOREIGN KEY (`ClientID`) REFERENCES `client` (`ClientID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -216,7 +215,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,10000016,101,NULL,'2018-08-07','2018-08-08',2,'Processing',NULL),(2,10000016,101,NULL,'2018-08-08','2018-08-09',2,'Processing',NULL),(3,10000016,101,NULL,'2018-08-09','2018-08-10',2,'Processing',NULL),(4,10000016,101,NULL,'2018-09-08','2018-09-09',2,'Processing',NULL),(5,10000016,101,NULL,'2018-09-08','2018-09-09',2,'Processing',NULL),(6,10000016,101,NULL,'2018-08-08','2018-08-09',2,'Processing',NULL),(7,10000016,101,NULL,'2018-09-08','2018-09-09',2,'Processing',NULL),(8,10000016,101,NULL,'2019-08-08','2018-08-09',2,'Processing',NULL),(9,10000016,101,NULL,'2018-08-08','2018-08-09',2,'Processing',NULL),(10,10000016,101,NULL,'2018-09-08','2018-09-09',2,'Processing',NULL),(11,10000016,101,NULL,'2018-08-08','2018-08-09',2,'Processing',NULL),(15,10000016,101,NULL,'2018-09-08','2018-09-09',2,'Processing',NULL),(165,10000018,101,NULL,'2018-08-09','2018-08-10',2,'Processing',NULL),(888,10000018,101,NULL,'2018-08-08','2018-08-08',2,'Processing',NULL),(4848,10000016,101,NULL,'2018-08-08','2018-08-09',2,'Processing',NULL),(5454,10000016,101,NULL,'2018-08-08','2018-08-09',2,'Processing',NULL),(12345,10000018,101,NULL,'2018-09-08','2018-09-09',2,'Processing',NULL),(45687,10000017,101,NULL,'2018-09-08','2018-09-08',2,'Processing',NULL),(56564,10000016,101,NULL,'2018-08-08','2018-08-08',2,'Processing',NULL),(91567,10000018,101,NULL,'2018-08-08','2018-08-08',2,'Processing',NULL);
+INSERT INTO `orders` VALUES (1,10000016,101,NULL,'2018-08-07','2018-08-08',2,'Delivered',NULL),(11,10000016,101,NULL,'2018-08-08','2018-08-09',2,'Delivered',NULL),(165,10000018,101,NULL,'2018-08-09','2018-08-10',2,'Processing',NULL),(789,10000016,1,NULL,'2018-08-01','2018-08-02',2,'Processing',NULL),(888,10000018,101,NULL,'2018-08-08','2018-08-08',2,'Processing',NULL),(1234,10000022,101,NULL,'2018-07-16','2018-07-31',2,'Processing',NULL),(4567,10000016,1,NULL,'2018-08-02','2018-08-03',2,'Processing',NULL),(4848,10000016,101,NULL,'2018-08-08','2018-08-09',2,'Processing',NULL),(5454,10000016,101,NULL,'2018-08-08','2018-08-09',2,'Processing',NULL),(12345,10000018,101,NULL,'2018-09-08','2018-09-09',2,'Processing',NULL),(45687,10000017,101,NULL,'2018-09-08','2018-09-08',2,'Processing',NULL),(56564,10000016,101,NULL,'2018-08-08','2018-08-08',2,'Processing',NULL),(91567,10000018,101,NULL,'2018-08-08','2018-08-08',2,'Processing',NULL);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -264,7 +263,7 @@ CREATE TABLE `products` (
   `tillCeiling` varchar(45) DEFAULT NULL,
   `Status` varchar(8) DEFAULT 'Active',
   PRIMARY KEY (`ProductCode`)
-) ENGINE=InnoDB AUTO_INCREMENT=121 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=124 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -273,7 +272,7 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (119,'Chicken Empanada',25.00,515,100,NULL,1000,NULL,'Active'),(120,'Ham and Cheese kariman',20.00,400,100,NULL,1000,NULL,'Active');
+INSERT INTO `products` VALUES (120,'Ham and Cheese kariman',20.00,400,100,NULL,1000,NULL,'Active'),(121,'Beef Sandwich',30.00,0,100,NULL,1000,NULL,'Active'),(122,'Chicken Sandwich',40.00,0,0,NULL,0,NULL,'active'),(123,'beef empanada',25.00,0,0,NULL,0,NULL,'active'),(456,'Chicken Empanada',25.00,515,100,NULL,1000,NULL,'Active');
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -295,7 +294,7 @@ CREATE TABLE `rawmaterials` (
   `Status` varchar(8) DEFAULT 'ACTIVE',
   PRIMARY KEY (`RawMaterialCode`),
   KEY `fk_RawMaterials_Ingredients1` (`IngredientCode`)
-) ENGINE=InnoDB AUTO_INCREMENT=514 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=515 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -304,7 +303,7 @@ CREATE TABLE `rawmaterials` (
 
 LOCK TABLES `rawmaterials` WRITE;
 /*!40000 ALTER TABLE `rawmaterials` DISABLE KEYS */;
-INSERT INTO `rawmaterials` VALUES (508,0,'Robin Hood',10.00,'Pack',500.00,'Kg','ACTIVE'),(509,0,'Gold medal',20.00,'Pack',250.00,'Kg','ACTIVE'),(510,0,'SM Bonus',12.00,'Tray',1.00,'Kg','ACTIVE'),(511,0,'Sm Hypermarket',2.00,'Tray',12.00,'Dozen','ACTIVE'),(512,0,'Dairy Queen',20.00,'Box',100.00,'Grams','ACTIVE'),(513,0,'Kit Kat',30.00,'Box',100.00,'Grams','ACTIVE');
+INSERT INTO `rawmaterials` VALUES (508,0,'Robin Hood',10.00,'Pack',500.00,'Kg','ACTIVE'),(509,0,'Gold medal',20.00,'Pack',250.00,'Kg','ACTIVE'),(510,0,'SM Bonus',12.00,'Tray',1.00,'Kg','ACTIVE'),(511,0,'Sm Hypermarket',2.00,'Tray',12.00,'Dozen','ACTIVE'),(512,0,'Dairy Queen',20.00,'Box',100.00,'Grams','ACTIVE'),(513,0,'Kit Kat',30.00,'Box',100.00,'Grams','ACTIVE'),(514,0,'Magnolia',250.00,'paper wrap',5.00,'Grams','ACTIVE');
 /*!40000 ALTER TABLE `rawmaterials` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -509,16 +508,17 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
-  `UserID` int(20) unsigned NOT NULL,
-  `StaffID` int(20) unsigned NOT NULL,
+  `UserID` int(20) unsigned NOT NULL AUTO_INCREMENT,
+  `Firstname` varchar(45) NOT NULL,
+  `Lastname` varchar(45) NOT NULL,
   `Username` varchar(45) NOT NULL,
   `Password` varchar(45) NOT NULL,
+  `Position` varchar(45) NOT NULL,
+  `Address` varchar(45) NOT NULL,
   `Userhash` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`UserID`,`StaffID`),
-  UNIQUE KEY `Userhash_UNIQUE` (`Userhash`),
-  KEY `fk_Users_Staff1_idx` (`StaffID`),
-  CONSTRAINT `fk_Users_Staff1` FOREIGN KEY (`StaffID`) REFERENCES `staff` (`StaffID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`UserID`),
+  UNIQUE KEY `Userhash_UNIQUE` (`Userhash`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -527,7 +527,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,101,'RSoriano','Rovi','c0442e4fba5c481eb7ce2b6fbe57b51e');
+INSERT INTO `users` VALUES (1,'Rovi Elijah','Soriano','RSoriano','Rovi','Admin','Taft Ave Manila','248a57c2e4564ac088a82cbf5d4ad087'),(2,'Anjelo','Padua','AnjeloP','padu','Staff','Taft Ave Manila','741b64fa32f14cb2a490a158a44602c2'),(6,'Jarod','Martinez','Jarom','jaru','Staff','Makati City',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -540,4 +540,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-07-16  9:02:43
+-- Dump completed on 2018-08-02 13:05:33

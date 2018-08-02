@@ -84,7 +84,7 @@ public class addClientOrder extends HttpServlet {
 	        
 	        Users loginUser = (Users) session.getAttribute("loginUser");
 	       
-	        Orders NewOrder= new Orders(PO,client,loginUser.getStaffId(),RD,DD);
+	        Orders NewOrder= new Orders(PO,client,loginUser.getUserId(),RD,DD);
 	        if(ClientOrderdao.addnewClientOrder(NewOrder)) {
 	            session.setAttribute("NewOrder", NewOrder);
 	            //Added Cart

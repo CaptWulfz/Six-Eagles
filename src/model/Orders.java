@@ -12,7 +12,7 @@ package model;
 public class Orders {
     private int PurchaseOrderNum;
     private int ClientID;
-    private int StaffID;
+    private int UserID;
     private int deliveryrecieptNum;
     private String orderdate;
     private String Deliverydate;
@@ -21,10 +21,10 @@ public class Orders {
     private String  Comments;
     
     //initial orders without comments
-    public Orders(int PurchaseOrderNum,int ClientID,int StaffID,String orderdate,String Deliverydate){
+    public Orders(int PurchaseOrderNum,int ClientID,int UserID,String orderdate,String Deliverydate){
         this.PurchaseOrderNum=PurchaseOrderNum;
         this.ClientID=ClientID;
-        this.StaffID=StaffID;
+        this.UserID=UserID;
         this.orderdate=orderdate;
         this.Deliverydate=Deliverydate;
         this.Status=2;
@@ -87,15 +87,15 @@ public class Orders {
     /**
      * @return the StaffID
      */
-    public int getStaffID() {
-        return StaffID;
+    public int getUserID() {
+        return this.UserID;
     }
 
     /**
      * @param StaffID the StaffID to set
      */
-    public void setStaffID(int StaffID) {
-        this.StaffID = StaffID;
+    public void setUserID(int UserID) {
+        this.UserID = UserID;
     }
 
     /**

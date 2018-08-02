@@ -42,6 +42,7 @@
 			<div class="panel-body">
 				<div class="div-action pull pull-right" style="padding-bottom:20px;">
 					<button class="btn btn-default button1" data-toggle="modal" data-target="#addIngredientModal"> <i class="glyphicon glyphicon-plus-sign"></i> Add Ingredient</button>
+					<button class="btn btn-default button1" data-toggle="modal" data-target="#changeThresholdsModal"> <i class="glyphicon glyphicon-plus-sign"></i> Change Thresholds</button>
 				</div> <!-- /div-action -->				
 				
 				<div>
@@ -92,6 +93,60 @@
 </div> <!-- /row -->
 
 
+<div class="modal fade" id="changeThresholdsModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    	
+    	<form class="form-horizontal" id="submitProductForm" action="/Six_Eagles/changeIngrThresholds" method="POST">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title"><i class="fa fa-plus"></i> Change Product Codes</h4>
+	      </div>
+	      <div class="modal-body">
+	        <div class="form-group">
+	        	<label for="productName" class="col-sm-3 control-label">Product Name: </label>
+	        	<label class="col-sm-1 control-label">: </label>
+				    <div class="col-sm-8">
+				     	<select class="form-control" id="city" name="ingrName" style = "width : 300px">
+				     		<% for (ingredients i : ingr) { %>
+				     			<option value = <%=i.getIngredientCode() %>><%= i.getIngredientName()%></option>
+				     		<% } %>
+						</select>
+				    </div>
+	        </div> <!-- /form-group-->	
+			 <div class="form-group">
+	        	<label for="productThreshold" class="col-sm-3 control-label">Threshold: </label>
+	        	<label class="col-sm-1 control-label">: </label>
+				    <div class="col-sm-8">
+				      <input type="number" class="form-control" id="productThreshold" placeholder= 0 name="threshold" autocomplete="off" required>
+				    </div>
+	        </div>    	    
+	        
+	        	 <div class="form-group">
+	        	<label for="productCeiling" class="col-sm-3 control-label">Ceiling: </label>
+	        	<label class="col-sm-1 control-label">: </label>
+				    <div class="col-sm-8">
+				      <input type="number" class="form-control" id="productCeiling" placeholder= 0 name="ceiling" autocomplete="off" required>
+				    </div>
+	        </div>    
+
+	      </div> <!-- /modal-body -->
+	      
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        
+	        <button type="submit" name = "submit" class="btn btn-success" id="createBrandBtn" data-loading-text="Loading..." autocomplete="off">Save Changes</button>
+	      </div>
+	      <!-- /modal-footer -->
+     	</form>
+	     <!-- /.form -->
+    </div>
+    <!-- /modal-content -->
+  </div>
+  <!-- /modal-dailog -->
+</div>
+
+
 <div class="modal fade" id="addIngredientModal" tabindex="-1" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -113,21 +168,21 @@
 	        	<label for="availableStock" class="col-sm-3 control-label">Stock</label>
 	        	<label class="col-sm-1 control-label">: </label>
 				    <div class="col-sm-8">
-				      <input type="number" min="0" class="form-control" id="availableStock" placeholder="Available Stock" name="availableStock" autocomplete="off">
+				      <input type="number" min="0" class="form-control" id="availableStock" placeholder="Available Stock" name="availableStock" value = 0 autocomplete="off">
 				    </div>
 	        </div>
 			  <div class="form-group">
 	        	<label for="threshold" class="col-sm-3 control-label">Threshold</label>
 	        	<label class="col-sm-1 control-label">: </label>
 				    <div class="col-sm-8">
-				      <input type="number" min="0" class="form-control" id="threshold" placeholder="Threshold" name="threshold" autocomplete="off">
+				      <input type="number" min="0" class="form-control" id="threshold" placeholder="Threshold" name="threshold" value = 0 autocomplete="off">
 				    </div>
 	        </div>
 			<div class="form-group">
 	        	<label for="ceiling" class="col-sm-3 control-label">Ceiling</label>
 	        	<label class="col-sm-1 control-label">: </label>
 				    <div class="col-sm-8">
-				      <input type="number" min="0" class="form-control" id="Ceiling" placeholder="Ceiling" name="ceiling" autocomplete="off">
+				      <input type="number" min="0" class="form-control" id="Ceiling" placeholder="Ceiling" name="ceiling" value = 0 autocomplete="off">
 				    </div>
 	        </div>
 			<div class="form-group">

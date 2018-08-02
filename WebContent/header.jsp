@@ -71,7 +71,7 @@
 
   <!--      <li id="navCategories"><a href="categories.jsp"> <i class="glyphicon glyphicon-th-list"></i> Category</a></li>       --> 
 
-        <li id="navProduct"><a href="inventory.jsp"> <i class="glyphicon glyphicon-ruble"></i> Product </a></li>     
+        <li id="navProduct"><a href="/Six_Eagles/inventory"> <i class="glyphicon glyphicon-ruble"></i> Product </a></li>     
 
         <li class="dropdown" id="navOrder">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="glyphicon glyphicon-shopping-cart"></i> Orders <span class="caret"></span></a>
@@ -88,8 +88,10 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="glyphicon glyphicon-user"></i> <span class="caret"></span></a>
           <ul class="dropdown-menu">
           <% Users user = (Users) session.getAttribute("loginUser");
-    		if (user != null) { %>
-			<li id ="topNavAddUser"><a href = "CreateUser.jsp"><i class="glyphicon glyphicon-plus"></i>Create Users</a></li>
+    		if (user != null) { 
+    			if (user.getPosition().equals("Admin")) { %>
+					<li id ="topNavAddUser"><a href = "/Six_Eagles/createUser"><i class="glyphicon glyphicon-plus"></i>Create Users</a></li>
+			 	<% } %>
             <li id="topNavSetting"><a href="setting.jsp"> <i class="glyphicon glyphicon-wrench"></i> Setting</a></li>            
             <li id="topNavLogout"><a href="/Six_Eagles/logOut"> <i class="glyphicon glyphicon-log-out"></i> Logout</a></li>            
           <% } else { %>

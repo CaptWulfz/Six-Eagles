@@ -60,11 +60,11 @@
 					<thead>
                                             
 						<tr>
-                                                        <th><center>Ingredient Code</center></th>
+                                                        <th><center>Raw Material Code</center></th>
                                                         <th><center>Raw Material Brand</center></th>
                                                         <th><center>Unit</center></th>
-							<th><center>Packaging Amount</center></th>
-							<th><center>Packaging</center></th>
+                                                        <th><center>Packaging</center></th>
+                                                        <th><center>Packaging Amount</center></th>
 							<th><center>Total Quantity</center></th>
 							
 						</tr>
@@ -79,10 +79,14 @@
                                                     <td><center><%=r.getRawMaterialCode()%></center></td>
                                                     <td><center><%=r.getIngredientBrand()%></center></td>
                                                     <td><center><%=r.getUnitOfMeasurement()%></center></td>
-                                                    <td><center><%=r.getPackaging()%></center></td>
+                                                    <td><center><%=r.getPackaging() %></center></td>
+                                                    <td><center><%=r.getPackagingAmount() %></center></td>
                                                     <td><center><%=r.getAmount()%></center></td>
-                                                    <td><center><%=r.getPackagingAmount()%></center></td>
-                                <td><center><a href="deactivaterawmats?code=<%=r.getRawMaterialCode()%>"><button class="btn btn-default button1"> <i class="glyphicon glyphicon-plus-sign"></i>Phase out</button></a></center></td>
+                                					<td>
+                                						<form method = "post" action = "/Six_Eagles/deactivaterawmats">
+                                							<center><button type = "submit" value = <%=r.getRawMaterialCode() %> name = "submitButton" class="btn btn-default button1"> <i class="glyphicon glyphicon-plus-sign"></i>Phase out</button></center>
+                                						</form>
+                                					</td>
                                                 </tr>
                                                 <%}%>
 					</thead>

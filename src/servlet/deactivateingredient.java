@@ -48,16 +48,9 @@ public class deactivateingredient extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+       doPost(request, response);
         
-        int icode = Integer.parseInt(request.getParameter("code"));
-        
-        try{
-        ingredientsdao.deactivateingredient(icode);
-        //request.setAttribute("codew", icode);
-        response.sendRedirect("/Six_Eagles/ingredients");
-        }
-        catch(Exception e){}
+      
         
         
     }
@@ -73,7 +66,16 @@ public class deactivateingredient extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+    	  int icode = Integer.parseInt(request.getParameter("submitButton"));
+          
+          try{
+          ingredientsdao.deactivateingredient(icode);
+          //request.setAttribute("codew", icode);
+          response.sendRedirect("/Six_Eagles/ingredients");
+          }
+          catch(Exception e){
+        	  e.printStackTrace();
+          }
     }
 
     /**

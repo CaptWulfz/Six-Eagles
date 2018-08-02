@@ -15,11 +15,13 @@ import javax.servlet.http.HttpSession;
 import dao.Supplierdao;
 import dao.clientdao;
 import dao.ingredientsdao;
+import dao.productdao;
 import dao.rawmaterialsdao;
 import dao.supplyorderdetailsdao;
 import dao.supplyordersdao;
 import model.Client;
 import model.ingredients;
+import model.product;
 import model.rawmaterials;
 import model.suppliers;
 import model.supplyorders;
@@ -38,7 +40,13 @@ import url_patterns.URLPatterns;
 			URLPatterns.CLIENTS,
 			URLPatterns.SUPPLIERS,
 			URLPatterns.LOGIN,
-			URLPatterns.MANAGESUPPLYORDER
+			URLPatterns.MANAGESUPPLYORDER,
+			URLPatterns.CREATEUSER,
+			URLPatterns.CHANGECODE,
+			URLPatterns.SUBMITCHANGECODE,
+			URLPatterns.INVENTORY,
+			URLPatterns.CHANGETHRESHOLDS,
+			URLPatterns.CHANGEINGRTHREHSOLDS
 			})
 public class MainServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -126,11 +134,104 @@ public class MainServlet extends HttpServlet {
 			case URLPatterns.MANAGESUPPLYORDER:
 				addSupplyOrder(request, response);
 				break;
+			case URLPatterns.CREATEUSER:
+				goToCreateUsersPage(request, response);
+				break;
+			case URLPatterns.CHANGECODE:
+				changeProductCode(request, response);
+				break;
+			case URLPatterns.INVENTORY:
+				goToInventory(request, response);
+				break;
+			case URLPatterns.CHANGETHRESHOLDS:
+				changeThreshold(request, response);
+				break;
+			case URLPatterns.CHANGEINGRTHREHSOLDS:
+				changeIngrThreshold(request, response);
+				break;
 		}
+	}
+	
+	private void changeIngrThreshold(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		int code = Integer.parseInt(request.getParameter("ingrName"));
+		int threshold = Integer.parseInt(request.getParameter("threshold"));
+		int ceiling = Integer.parseInt(request.getParameter("ceiling"));
+		
+		ingredientsdao.changeThresholds(code, threshold, ceiling);
+		
+		response.sendRedirect("/Six_Eagles/ingredients");
+	}
+	
+	private void changeThreshold(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		int code = Integer.parseInt(request.getParameter("productName"));
+		int threshold = Integer.parseInt(request.getParameter("threshold"));
+		int ceiling = Integer.parseInt(request.getParameter("ceiling"));
+		
+		productdao.changeThresholds(code, threshold, ceiling);
+		
+		response.sendRedirect("/Six_Eagles/inventory");
+		
+	}
+	
+	private void goToInventory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
+		try {
+			ArrayList<product> prodList = productdao.viewproductactive();
+			ArrayList<ingredients> ingList = ingredientsdao.viewIngredientactive();
+			
+			request.setAttribute("prodList", prodList);
+			request.setAttribute("ingList", ingList);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+		
+		request.getRequestDispatcher("inventory.jsp").forward(request, response);
+	}
+	
+	private void changeProductCode(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		int prodCode = Integer.parseInt(request.getParameter("productName"));
+		int newCode = Integer.parseInt(request.getParameter("productCode"));
+		
+		System.out.println(prodCode + " " + newCode);
+		
+		productdao.changeProductCode(prodCode, newCode);
+		response.sendRedirect("/Six_Eagles/inventory");
+		
+	}
+	
+	//This is the function that goes to the CreateUsers Page
+	private void goToCreateUsersPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpSession session = request.getSession();
+		
+		String errorMessage = (String) session.getAttribute("errorMessage");
+		if (errorMessage != null) {
+			request.setAttribute("errorMessage", errorMessage);
+			session.setAttribute("errorMessage", null);
+		}
+		
+		request.getRequestDispatcher("CreateUser.jsp").forward(request, response);
 	}
 	
 	//This is the function that goes to the home page
 	private void goToHomepage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpSession session = request.getSession();
+		
+		String successMessage = (String) session.getAttribute("successMessage");
+
+		if (successMessage != null) {
+			request.setAttribute("successMessage", successMessage);
+			session.setAttribute("successMessage", null);
+		}
+
 		request.getRequestDispatcher("home.jsp").forward(request, response);		
 	}
 	

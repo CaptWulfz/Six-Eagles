@@ -47,16 +47,9 @@ public class deactivateproduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+    	doPost(request, response);
         
-        int icode = Integer.parseInt(request.getParameter("code"));
         
-        try{
-        productdao.deactivateproduct(icode);
-        //request.setAttribute("codew", icode);
-        request.getRequestDispatcher("inventory.jsp").forward(request, response);
-        }
-        catch(Exception e){}
         
     }
 
@@ -71,7 +64,16 @@ public class deactivateproduct extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+    	int icode = Integer.parseInt(request.getParameter("submitButton"));
+        
+        try{
+        productdao.deactivateproduct(icode);
+        //request.setAttribute("codew", icode);
+        request.getRequestDispatcher("inventory.jsp").forward(request, response);
+        }
+        catch(Exception e){
+        	e.printStackTrace();
+        }
     }
 
     /**

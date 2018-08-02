@@ -55,10 +55,10 @@
 				<table class="table" id="manageSupplierTable">
 					<thead>
 						<tr>
-							<th>Supplier Name</th>
-							<th>Address</th>
-                                                        <th>City</th>
-                                                        <th>Contact</th>
+							<th><center>Supplier Name</center></th>
+							<th><center>Address</center></th>
+                                                        <th><center>City</center></th>
+                                                        <th><center>Contact</center></th>
 						</tr>
                                                 <%
                                                     for(suppliers s:sup){

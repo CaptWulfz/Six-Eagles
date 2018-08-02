@@ -16,6 +16,27 @@ import model.ingredients;
 
 public class ingredientsdao {
     
+	
+	public static void changeThresholds(int code, int threshold, int ceiling) {
+		Connection c = dbconnect.getDBConnection();
+		String sql ="update ingredients set Threshold = ?, Ceiling = ? where ingredientcode = ?";
+		try {
+			PreparedStatement p = c.prepareStatement(sql);
+			p.setInt(1, threshold);
+			p.setInt(2, ceiling);
+			p.setInt(3, code);
+			p.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				c.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
      public static boolean addNewIngredients(ingredients ing){
         boolean b=false;
         Connection connect = dbconnect.getDBConnection();

@@ -14,8 +14,8 @@
 
 <%
     
-    ArrayList<product>prod = productdao.viewproductactive();
-    ArrayList<ingredients>ing=ingredientsdao.viewIngredientactive();
+    ArrayList<product>prod = (ArrayList<product>) request.getAttribute("prodList");
+    ArrayList<ingredients>ing= (ArrayList<ingredients>) request.getAttribute("ingList");
 %>
 
 <html>
@@ -47,7 +47,10 @@
 			<div class="panel-body">
 				<div class="div-action pull pull-right" style="padding-bottom:20px;">
 					<button class="btn btn-default button1" data-toggle="modal" data-target="#addProductModal"> <i class="glyphicon glyphicon-plus-sign"></i> Add Product</button>
-                                        <button class="btn btn-default button1" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-plus-sign"></i>Add Ingredient</button>
+                    <button class="btn btn-default button1" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-plus-sign"></i>Add Ingredient</button>
+                    <button class="btn btn-default button1" data-toggle="modal" data-target="#changeCodeModal"> <i class="glyphicon glyphicon-plus-sign"></i> Change Product Codes</button>
+                    <button class="btn btn-default button1" data-toggle="modal" data-target="#changeThresholdsModal"> <i class="glyphicon glyphicon-plus-sign"></i> Change Thresholds</button>
+                                        
                                                     <div class="modal fade" id="myModal" role="dialog">
                                                         <div class="modal-dialog">
 
@@ -89,10 +92,10 @@
                                                                                 </div>
                                                                         </div>
                                                               <div class="form-group">
-                                                                            <label for="productPrice" class="col-sm-3 control-label">Amount</label>
+                                                                            <label for="productPrice" class="col-sm-3 control-label">Quantity</label>
                                                                             <label class="col-sm-1 control-label">: </label>
                                                                                         <div class="col-sm-8">
-                                                                                          <input type="text" class="form-control" id="amountadd" placeholder="Amount" name="amountadd" autocomplete="off">
+                                                                                          <input type="text" class="form-control" id="amountadd" placeholder="Quantity" name="amountadd" autocomplete="off">
                                                                                         </div>
                                                                     </div>
                                                                                     <div class="form-group">
@@ -132,16 +135,21 @@
                                                         
                                                 %>
                                                 
-                                                <tr>
-                                                    <td><center><%=p.getProductname()%></center></td>
-                                                    <td><center><%=p.getProductprice()%></center></td>
-                                                    <td><center><%=p.getStock()%></center></td>
-                                                    <td><center><%=p.getThreshold()%></center></td>
-                                                    <td><center><%=p.getCeiling()%></center></td>
-                                <td><center><a href="deactivateproduct?code=<%=p.getProductcode()%>"><button class="btn btn-default button1"><i class="glyphicon glyphicon-plus-sign"></i>Phase Out</button></a></center><td>
-                                                
-                                <td><center><a href="viewIngredientslist?code=<%=p.getProductcode()%>"><button class="btn btn-default button1"><i class="glyphicon glyphicon-plus-sign"></i>View ingredients</button></a></center><td>
-                                    </tr>
+                               <tr>
+                                   <td><center><%=p.getProductname()%></center></td>
+                                   <td><center><%=p.getProductprice()%></center></td>
+                                   <td><center><%=p.getStock()%></center></td>
+                                   <td><center><%=p.getThreshold()%></center></td>
+                                   <td><center><%=p.getCeiling()%></center></td>
+                                	<td>
+	                                	<form method = "post" action = "/Six_Eagles/deactivateproduct">
+	                                		<center><button type = "submit" name = "submitButton" value = <%=p.getProductcode()%> class="btn btn-default button1"><i class="glyphicon glyphicon-plus-sign"></i>Phase Out</button></center>
+	                                	</form>
+                               		</td>	
+                                               
+                                	<td><center><a href="viewIngredientslist?code=<%=p.getProductcode()%>"><button class="btn btn-default button1"><i class="glyphicon glyphicon-plus-sign"></i>View ingredients</button></a></center></td>
+                                	
+                                </tr>
                                                 <% } %>
 					</thead>
 				</table>
@@ -205,7 +213,104 @@
       </div> 
     </div>
 </div>
-		
+
+<div class="modal fade" id="changeCodeModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    	
+    	<form class="form-horizontal" id="submitProductForm" action="/Six_Eagles/changeProductCode" method="POST">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title"><i class="fa fa-plus"></i> Change Product Codes</h4>
+	      </div>
+	      <div class="modal-body">
+	        <div class="form-group">
+	        	<label for="productName" class="col-sm-3 control-label">Product Name: </label>
+	        	<label class="col-sm-1 control-label">: </label>
+				    <div class="col-sm-8">
+				     	<select class="form-control" id="city" name="productName" style = "width : 300px">
+				     		<% for (product p : prod) { %>
+				     			<option value = <%=p.getProductcode() %>><%= p.getProductname()%></option>
+				     		<% } %>
+						</select>
+				    </div>
+	        </div> <!-- /form-group-->	
+			 <div class="form-group">
+	        	<label for="productCode" class="col-sm-3 control-label">Product Code: </label>
+	        	<label class="col-sm-1 control-label">: </label>
+				    <div class="col-sm-8">
+				      <input type="number" class="form-control" id="productCode" placeholder="Code" name="productCode" autocomplete="off" required>
+				    </div>
+	        </div>    	        
+
+	      </div> <!-- /modal-body -->
+	      
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        
+	        <button type="submit" name = "submit" class="btn btn-success" id="createBrandBtn" data-loading-text="Loading..." autocomplete="off">Save Changes</button>
+	      </div>
+	      <!-- /modal-footer -->
+     	</form>
+	     <!-- /.form -->
+    </div>
+    <!-- /modal-content -->
+  </div>
+  <!-- /modal-dailog -->
+</div>	
+
+<div class="modal fade" id="changeThresholdsModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    	
+    	<form class="form-horizontal" id="submitProductForm" action="/Six_Eagles/changeThresholds" method="POST">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title"><i class="fa fa-plus"></i> Change Product Codes</h4>
+	      </div>
+	      <div class="modal-body">
+	        <div class="form-group">
+	        	<label for="productName" class="col-sm-3 control-label">Product Name: </label>
+	        	<label class="col-sm-1 control-label">: </label>
+				    <div class="col-sm-8">
+				     	<select class="form-control" id="city" name="productName" style = "width : 300px">
+				     		<% for (product p : prod) { %>
+				     			<option value = <%=p.getProductcode() %>><%= p.getProductname()%></option>
+				     		<% } %>
+						</select>
+				    </div>
+	        </div> <!-- /form-group-->	
+			 <div class="form-group">
+	        	<label for="productThreshold" class="col-sm-3 control-label">Threshold: </label>
+	        	<label class="col-sm-1 control-label">: </label>
+				    <div class="col-sm-8">
+				      <input type="number" class="form-control" id="productThreshold" placeholder= 0 name="threshold" autocomplete="off" required>
+				    </div>
+	        </div>    	    
+	        
+	        	 <div class="form-group">
+	        	<label for="productCeiling" class="col-sm-3 control-label">Ceiling: </label>
+	        	<label class="col-sm-1 control-label">: </label>
+				    <div class="col-sm-8">
+				      <input type="number" class="form-control" id="productCeiling" placeholder= 0 name="ceiling" autocomplete="off" required>
+				    </div>
+	        </div>    
+
+	      </div> <!-- /modal-body -->
+	      
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        
+	        <button type="submit" name = "submit" class="btn btn-success" id="createBrandBtn" data-loading-text="Loading..." autocomplete="off">Save Changes</button>
+	      </div>
+	      <!-- /modal-footer -->
+     	</form>
+	     <!-- /.form -->
+    </div>
+    <!-- /modal-content -->
+  </div>
+  <!-- /modal-dailog -->
+</div>	
 
 		
 <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog">
@@ -236,7 +341,7 @@
 	        	<label for="availableStock" class="col-sm-3 control-label">Stocks Available: </label>
 	        	<label class="col-sm-1 control-label">: </label>
 				    <div class="col-sm-8">
-				      <input type="number" class="form-control" id="availableStock" placeholder="Available Stock" name="availableStock" autocomplete="off" required>
+				      <input type="number" class="form-control" id="availableStock" placeholder="Available Stock" value = 0 name="availableStock" autocomplete="off" required>
 				    </div>
 	        </div>
 
@@ -244,14 +349,14 @@
 	        	<label for="threshold" class="col-sm-3 control-label">Threshold: </label>
 	        	<label class="col-sm-1 control-label">: </label>
 				    <div class="col-sm-8">
-				      <input type="number" class="form-control" id="threshold" placeholder="Threshold" name="threshold" autocomplete="off">
+				      <input type="number" class="form-control" id="threshold" placeholder="Threshold" name="threshold" value = 0 autocomplete="off">
 				    </div>
 	        </div>
 			 <div class="form-group">
 	        	<label for="ceiling" class="col-sm-3 control-label">Ceiling: </label>
 	        	<label class="col-sm-1 control-label">: </label>
 				    <div class="col-sm-8">
-				      <input type="number" class="form-control" id="ceiling" placeholder="Ceiling" name="ceiling" autocomplete="off">
+				      <input type="number" class="form-control" id="ceiling" placeholder="Ceiling" name="ceiling" value = 0 autocomplete="off">
 				    </div>
 	        </div>	         	        
 
