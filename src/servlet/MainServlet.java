@@ -46,7 +46,13 @@ import url_patterns.URLPatterns;
 			URLPatterns.SUBMITCHANGECODE,
 			URLPatterns.INVENTORY,
 			URLPatterns.CHANGETHRESHOLDS,
-			URLPatterns.CHANGEINGRTHREHSOLDS
+			URLPatterns.CHANGEINGRTHREHSOLDS,
+			URLPatterns.REACTIVATECLIENT,
+			URLPatterns.REACTIVATEINGREDIENT,
+			URLPatterns.PRODUCTPHYSICALCOUNT,
+			URLPatterns.REACTIVATEPRODUCT,
+			URLPatterns.VIEWINACTIVEPRODUCTS,
+			URLPatterns.UPDATEINVENTORY
 			})
 public class MainServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -149,7 +155,80 @@ public class MainServlet extends HttpServlet {
 			case URLPatterns.CHANGEINGRTHREHSOLDS:
 				changeIngrThreshold(request, response);
 				break;
+			case URLPatterns.REACTIVATECLIENT:
+				goToReactivateClientsPage(request, response);
+				break;
+			case URLPatterns.REACTIVATEINGREDIENT:
+				goToReactivateIngredients(request, response);
+				break;
+			case URLPatterns.PRODUCTPHYSICALCOUNT:
+				goToProductsPhysicalCountPage(request, response);
+				break;
+			case URLPatterns.VIEWINACTIVEPRODUCTS:
+				goToInactiveProducts(request, response);
+			case URLPatterns.UPDATEINVENTORY:
+				goToProduceProducts(request, response);
+				break;
 		}
+	}
+	
+	private void goToProduceProducts(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
+			ArrayList<product> prodList = productdao.viewproductactive();
+			request.setAttribute("prodList", prodList); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		request.getRequestDispatcher("updateprodad.jsp").forward(request, response);
+	}
+	
+	private void goToInactiveProducts(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
+			ArrayList<product> prodList = productdao.viewproductdeactive();
+			request.setAttribute("prodList", prodList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		request.getRequestDispatcher("reactivateinventory.jsp").forward(request, response);
+		
+	}
+	
+	private void goToProductsPhysicalCountPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		try {
+			ArrayList<product> prodList = productdao.viewproductactive();
+			request.setAttribute("prodList", prodList);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		request.getRequestDispatcher("physicalcount.jsp").forward(request, response);
+		
+	}
+	
+	private void goToReactivateIngredients(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
+			ArrayList<ingredients> ingrList = ingredientsdao.viewIngredientdeactive();
+			request.setAttribute("ingrList", ingrList);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		request.getRequestDispatcher("reactivateingredient.jsp").forward(request, response);
+	}
+	
+	private void goToReactivateClientsPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ArrayList<Client> clientList;
+		try {
+			clientList = clientdao.viewClientdeactive();
+			request.setAttribute("clientList", clientList);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		request.getRequestDispatcher("reactivateclient.jsp").forward(request, response);
 	}
 	
 	private void changeIngrThreshold(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -5,19 +5,22 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import = "java.util.ArrayList" %>
+<%@page import = "model.product" %>
 <!DOCTYPE html>
 
+<% ArrayList<product> prodList = (ArrayList<product>) request.getAttribute("prodList"); %>
 
 <html>
     <jsp:include page="header.jsp"/>
 	<body data-spy="scroll" data-target=".navbar" data-offset="50">
 		<div class="area container-fluid">
 			<ol class="breadcrumb">
-			  <li><a href="home.php">Home</a></li>		
-			  <li><a href = "inventory.jsp">Add Product</a></li>
-			  <li><a class = "active">Physical Count</a></li>
-			  <li><a href="reactivateinventory.jsp">Reactivate Product</a></li>
-                       <li><a href = "updateprodad.jsp">Update Product</a></li>
+			  <li><a href="/Six_Eagles/home">Home</a></li>		
+			  <li><a href = "/Six_Eagles/inventory">View Products</a></li>
+			  <li><a class = "active">Product Physical Count</a></li>
+			  <li><a href="/Six_Eagles/viewInactiveProducts">Reactivate Product</a></li>
+              <li><a href = "/Six_Eagles/updateInventory">Produce Product</a></li>
 			</ol>
 			<div class="panel panel-default" style="width: 100%; margin-left: 0%;">
 		
@@ -33,15 +36,16 @@
 							<label class="control-label col-sm-5" for="col2">Product:</label>
 							<div class="col-sm-7">
 								<select class="form-control" id="productName" name="productName" style = "width : 300px">
-									<option value = ""></option>
-									
+									<% for (product p : prodList) { %>
+										<option value = <%=p.getProductcode() %>><%=p.getProductname()%></option>
+									<% } %>
 								</select>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-sm-5" for="col1">Physical Count:</label>
 							<div class="col-sm-7">
-								<input type="number" class="lorem form-control" name = "physicalCount" id="col1" style="width: 300px;">
+								<input type="number" min = "0" class="lorem form-control" name = "physicalCount" id="col1" style="width: 300px;">
 							</div>
 						</div>
 						

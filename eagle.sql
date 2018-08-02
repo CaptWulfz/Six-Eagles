@@ -40,7 +40,7 @@ CREATE TABLE `client` (
 
 LOCK TABLES `client` WRITE;
 /*!40000 ALTER TABLE `client` DISABLE KEYS */;
-INSERT INTO `client` VALUES (10000016,'Ministop','EGI, Taft Ave, Pasay','Pasay','Active'),(10000017,'711','The Manila Residences T2, Taft Ave. Malate Manila','Pasay','Active'),(10000018,'Ministop','Vito Cruz, near Roxas Boulevard','Pasay','Active'),(10000019,'711','One Archers Taft Ave. Manila','Pasay','Active'),(10000020,'Lawson','BGC High Street','Taguig','Active'),(10000021,'Padu','7162','Caloocan','Active'),(10000022,'Fernan','address 123','Quezon','Active');
+INSERT INTO `client` VALUES (10000016,'Ministop','EGI, Taft Ave, Pasay','Pasay','Active'),(10000017,'711','The Manila Residences T2, Taft Ave. Malate Manila','Pasay','Active'),(10000018,'Ministop','Vito Cruz, near Roxas Boulevard','Pasay','Active'),(10000019,'711','One Archers Taft Ave. Manila','Pasay','Active'),(10000020,'Lawson','BGC High Street','Taguig','Active'),(10000021,'Padu','7162','Caloocan','Active'),(10000022,'Fernan','address 123','Quezon','active');
 /*!40000 ALTER TABLE `client` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -96,7 +96,7 @@ CREATE TABLE `ingredientlists` (
 
 LOCK TABLES `ingredientlists` WRITE;
 /*!40000 ALTER TABLE `ingredientlists` DISABLE KEYS */;
-INSERT INTO `ingredientlists` VALUES (5.00,'Dozen',456,112,NULL),(10.00,'Kg',120,116,NULL),(30.00,'Kg',121,111,NULL),(2.00,'Dozen',121,111,'Flour'),(20.00,'Kg',122,111,'Flour'),(2.00,'dozen',122,112,'Eggs'),(20.00,'kg',123,111,'Flour'),(3.00,'Dozen',123,112,'Eggs');
+INSERT INTO `ingredientlists` VALUES (5.00,'Dozen',456,112,'Eggs'),(10.00,'Kg',120,116,NULL),(30.00,'Kg',121,111,'Flour'),(2.00,'Dozen',121,111,'Flour'),(20.00,'Kg',122,111,'Flour'),(2.00,'dozen',122,112,'Eggs'),(20.00,'kg',123,111,'Flour'),(3.00,'Dozen',123,112,'Eggs');
 /*!40000 ALTER TABLE `ingredientlists` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -127,7 +127,7 @@ CREATE TABLE `ingredients` (
 
 LOCK TABLES `ingredients` WRITE;
 /*!40000 ALTER TABLE `ingredients` DISABLE KEYS */;
-INSERT INTO `ingredients` VALUES (111,'Flour',500.00,100,NULL,1000,NULL,'Kg','Active'),(112,'Eggs',325.00,100,NULL,1000,NULL,'Dozen','Active'),(113,'Chocolate',175.00,100,NULL,1000,NULL,'Kg','Active'),(114,'Rice',550.00,100,NULL,1000,NULL,'Kg','Active'),(115,'Cheese',275.00,100,NULL,500,NULL,'Kg','Active'),(116,'Ham',275.00,100,NULL,500,NULL,'Kg','Active'),(117,'Noodles',450.00,100,NULL,1000,NULL,'Kg','Active'),(121,'Sugar',600.00,100,NULL,1000,NULL,'Kg','Active'),(122,'Butter',0.00,0,NULL,0,NULL,'Kg','Active');
+INSERT INTO `ingredients` VALUES (111,'Flour',500.00,100,NULL,1000,NULL,'Kg','Active'),(112,'Eggs',315.00,100,NULL,1000,NULL,'Dozen','Active'),(113,'Chocolate',175.00,100,NULL,1000,NULL,'Kg','Active'),(114,'Rice',550.00,100,NULL,1000,NULL,'Kg','Active'),(115,'Cheese',275.00,100,NULL,500,NULL,'Kg','Active'),(116,'Ham',265.00,100,NULL,500,NULL,'Kg','Active'),(117,'Noodles',450.00,100,NULL,1000,NULL,'Kg','Active'),(121,'Sugar',600.00,100,NULL,1000,NULL,'Kg','Active'),(122,'Butter',0.00,100,NULL,1000,NULL,'Kg','active');
 /*!40000 ALTER TABLE `ingredients` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -181,7 +181,7 @@ CREATE TABLE `orderdetails` (
 
 LOCK TABLES `orderdetails` WRITE;
 /*!40000 ALTER TABLE `orderdetails` DISABLE KEYS */;
-INSERT INTO `orderdetails` VALUES (1,456,25.00,1),(1,456,25.00,1),(11,456,25.00,10),(11,120,20.00,20),(45687,456,25.00,2),(12345,456,25.00,65),(165,456,25.00,66),(91567,456,25.00,10),(1234,456,25.00,950),(1234,120,20.00,200),(4567,456,25.00,4);
+INSERT INTO `orderdetails` VALUES (1,456,25.00,1),(1,456,25.00,1),(11,456,25.00,10),(11,120,20.00,20),(45687,456,25.00,2),(12345,456,25.00,65),(165,456,25.00,66),(91567,456,25.00,10),(1234,456,25.00,950),(1234,120,20.00,200),(4567,456,25.00,4),(741,122,40.00,50);
 /*!40000 ALTER TABLE `orderdetails` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -196,17 +196,19 @@ CREATE TABLE `orders` (
   `PurchaseOrderNo` int(20) unsigned NOT NULL,
   `ClientID` int(20) unsigned NOT NULL,
   `UserID` int(20) unsigned NOT NULL,
-  `DeliveryReceiptNo` int(20) unsigned DEFAULT NULL,
+  `DeliveryReceiptNo` int(20) unsigned NOT NULL AUTO_INCREMENT,
   `OrderDate` date DEFAULT NULL,
   `DeliveryDate` date DEFAULT NULL,
   `StatusID` int(11) NOT NULL,
   `StatusDetails` varchar(45) DEFAULT NULL,
   `Comments` longtext,
-  PRIMARY KEY (`PurchaseOrderNo`,`ClientID`,`UserID`),
+  PRIMARY KEY (`DeliveryReceiptNo`,`PurchaseOrderNo`,`ClientID`,`UserID`),
+  UNIQUE KEY `DeliveryReceiptNo_UNIQUE` (`DeliveryReceiptNo`),
+  UNIQUE KEY `PurchaseOrderNo_UNIQUE` (`PurchaseOrderNo`),
   KEY `fk_Orders_Client1_idx` (`ClientID`),
   KEY `fk_Orders_Staff1_idx` (`UserID`),
   CONSTRAINT `fk_Orders_Client1` FOREIGN KEY (`ClientID`) REFERENCES `client` (`ClientID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -215,7 +217,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,10000016,101,NULL,'2018-08-07','2018-08-08',2,'Delivered',NULL),(11,10000016,101,NULL,'2018-08-08','2018-08-09',2,'Delivered',NULL),(165,10000018,101,NULL,'2018-08-09','2018-08-10',2,'Processing',NULL),(789,10000016,1,NULL,'2018-08-01','2018-08-02',2,'Processing',NULL),(888,10000018,101,NULL,'2018-08-08','2018-08-08',2,'Processing',NULL),(1234,10000022,101,NULL,'2018-07-16','2018-07-31',2,'Processing',NULL),(4567,10000016,1,NULL,'2018-08-02','2018-08-03',2,'Processing',NULL),(4848,10000016,101,NULL,'2018-08-08','2018-08-09',2,'Processing',NULL),(5454,10000016,101,NULL,'2018-08-08','2018-08-09',2,'Processing',NULL),(12345,10000018,101,NULL,'2018-09-08','2018-09-09',2,'Processing',NULL),(45687,10000017,101,NULL,'2018-09-08','2018-09-08',2,'Processing',NULL),(56564,10000016,101,NULL,'2018-08-08','2018-08-08',2,'Processing',NULL),(91567,10000018,101,NULL,'2018-08-08','2018-08-08',2,'Processing',NULL);
+INSERT INTO `orders` VALUES (1,10000016,101,1,'2018-08-07','2018-08-08',2,'Delivered',NULL),(11,10000016,101,2,'2018-08-08','2018-08-09',2,'Delivered',NULL),(165,10000018,101,3,'2018-08-09','2018-08-10',2,'Processing',NULL),(888,10000018,101,5,'2018-08-08','2018-08-08',2,'Processing',NULL),(1234,10000022,101,6,'2018-07-16','2018-07-31',2,'Processing',NULL),(4567,10000016,1,7,'2018-08-02','2018-08-03',2,'Processing',NULL),(4848,10000016,101,8,'2018-08-08','2018-08-09',2,'Processing',NULL),(5454,10000016,101,9,'2018-08-08','2018-08-09',2,'Processing',NULL),(12345,10000018,101,10,'2018-09-08','2018-09-09',2,'Processing',NULL),(45687,10000017,101,11,'2018-09-08','2018-09-08',2,'Processing',NULL),(56564,10000016,101,12,'2018-08-08','2018-08-08',2,'Processing',NULL),(91567,10000018,101,13,'2018-08-08','2018-08-08',2,'Processing',NULL),(741,10000016,1,14,'2018-08-16','2018-08-17',2,'Processing',NULL),(159764,10000016,1,15,'2018-08-02','2018-08-03',2,'Processing',NULL),(159754,10000016,1,16,'2018-08-02','2018-08-03',2,'Processing',NULL);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -272,7 +274,7 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (120,'Ham and Cheese kariman',20.00,400,100,NULL,1000,NULL,'Active'),(121,'Beef Sandwich',30.00,0,100,NULL,1000,NULL,'Active'),(122,'Chicken Sandwich',40.00,0,0,NULL,0,NULL,'active'),(123,'beef empanada',25.00,0,0,NULL,0,NULL,'active'),(456,'Chicken Empanada',25.00,515,100,NULL,1000,NULL,'Active');
+INSERT INTO `products` VALUES (120,'Ham and Cheese kariman',20.00,401,100,NULL,1000,NULL,'Active'),(121,'Beef Sandwich',30.00,0,100,NULL,1000,NULL,'Active'),(122,'Chicken Sandwich',40.00,0,0,NULL,0,NULL,'active'),(123,'beef empanada',25.00,0,0,NULL,0,NULL,'active'),(456,'Chicken Empanada',25.00,517,100,NULL,1000,NULL,'active');
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -527,7 +529,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Rovi Elijah','Soriano','RSoriano','Rovi','Admin','Taft Ave Manila','248a57c2e4564ac088a82cbf5d4ad087'),(2,'Anjelo','Padua','AnjeloP','padu','Staff','Taft Ave Manila','741b64fa32f14cb2a490a158a44602c2'),(6,'Jarod','Martinez','Jarom','jaru','Staff','Makati City',NULL);
+INSERT INTO `users` VALUES (1,'Rovi Elijah','Soriano','RSoriano','Rovi','Admin','Taft Ave Manila','88953ce2b7794b24a6fb58939cc590f3'),(2,'Anjelo','Padua','AnjeloP','padu','Staff','Taft Ave Manila','741b64fa32f14cb2a490a158a44602c2'),(6,'Jarod','Martinez','Jarom','jaru','Staff','Makati City',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -540,4 +542,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-02 13:05:33
+-- Dump completed on 2018-08-02 21:58:24

@@ -7,12 +7,16 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import dao.*;
+import model.ingredientslists;
+import model.product;
 /**
  *
  * @author Roano
@@ -48,16 +52,9 @@ public class viewIngredientslist extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        doPost(request, response);
         
-        int icode = Integer.parseInt(request.getParameter("code"));
-        
-        try{
-        ingredientslistsdao.viewproductingredient(icode);
-        request.setAttribute("codew", icode);
-        request.getRequestDispatcher("viewIngredient.jsp").forward(request, response);
-        }
-        catch(Exception e){}
+     
         
         
     }
@@ -73,7 +70,18 @@ public class viewIngredientslist extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+    	   int icode = Integer.parseInt(request.getParameter("submitButton"));
+           
+           try{
+           ArrayList<ingredientslists> ingrList = ingredientslistsdao.viewproductingredient(icode);
+           product p = productdao.getProduct(icode);
+           request.setAttribute("product", p);
+           request.setAttribute("ingrList", ingrList);
+           request.getRequestDispatcher("viewIngredient.jsp").forward(request, response);
+           }
+           catch(Exception e){
+           	e.printStackTrace();
+           }
     }
 
     /**

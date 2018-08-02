@@ -25,11 +25,11 @@
 	<div class="col-md-12">
 
 		<ol class="breadcrumb">
-		  <li><a href="home.jsp">Home</a></li>		
-		  <li><a href="inventory.jsp" >Add Product</a></li>
-		  <li><a href="physicalcount.jsp">Physical Count</a></li>
+		  <li><a href="/Six_Eagles/home">Home</a></li>		
+		  <li><a href="/Six_Eagles/inventory">View Products</a></li>
+		  <li><a href="/Six_Eagles/productPhysicalCount">Product Physical Count</a></li>
 		  <li><a class = "active" >Reactivate Product</a></li>
-		  <li><a href="updateprodad.jsp">Update Inventory</a></li>
+		  <li><a href="/Six_Eagles/updateInventory">Produce Product</a></li>
 		</ol>
 
 		<div class="panel panel-default">
@@ -109,30 +109,32 @@
 				<table class="table" id="manageProductTable">
 					<thead>
 						<tr>
-                                                    <th><center>Name</center></th>
-                                                    <th><center>Price</center></th>
-                                                    <th><center>Stocks (in Pcs.)</center></th>
-                                                    <th><center>Threshold</center></th>
-                                                    <th><center>Ceiling</center></th>
-                                                    <th><center>Status</center></th>
-						</tr>
-                                                
-                                                <%
-                                                    
-                                                    for(product p : prod){
-                                                        
-                                                %>
-                                                
-                                                <tr>
-                                                    <td><center><%=p.getProductname()%></center></td>
-                                                    <td><center><%=p.getProductprice()%></center></td>
-                                                    <td><center><%=p.getStock()%></center></td>
-                                                    <td><center><%=p.getThreshold()%></center></td>
-                                                    <td><center><%=p.getCeiling()%></center></td>
-                                <td><center><a href="viewIngredientslist?code=<%=p.getProductcode()%>"><button class="btn btn-default button1"><i class="glyphicon glyphicon-plus-sign"></i>View ingredients</button></a></center><td>
-                                    <td><center><a href="reactivateproduct?code=<%=p.getProductcode()%>"><button class="btn btn-default button1"><i class="glyphicon glyphicon-plus-sign"></i>Reactivate</button></a></center><td>
-                                                </tr>
-                                                <% } %>
+	                        <th><center>Name</center></th>
+	                        <th><center>Price</center></th>
+	                        <th><center>Stocks (in Pcs.)</center></th>
+	                        <th><center>Threshold</center></th>
+	                        <th><center>Ceiling</center></th>
+	                        <th><center>Status</center></th>
+						</tr>                     
+                           <% for (product p : prod){ %>     
+	                           <tr>
+	                               <td><center><%=p.getProductname()%></center></td>
+	                               <td><center><%=p.getProductprice()%></center></td>
+	                               <td><center><%=p.getStock()%></center></td>
+	                               <td><center><%=p.getThreshold()%></center></td>
+	                               <td><center><%=p.getCeiling()%></center></td>
+	                               <td>
+	                              		<form method = "post" action = "/Six_Eagles/viewIngredientslist">
+	                              		<center><button type = "submit" name = "submitButton" value = "<%=p.getProductcode()%>" class="btn btn-default button1"><i class="glyphicon glyphicon-plus-sign"></i>View ingredients</button></center>
+	                             		</form>
+	                                <td>
+	                                <td>
+	                                	<form method = "post" action = "/Six_Eagles/reactivateproduct">
+	                                		<center><button type = "submit" name = "submitButton" value = "<%=p.getProductcode()%>" class="btn btn-default button1"><i class="glyphicon glyphicon-plus-sign"></i>Reactivate</button></center>
+	                                	</form>
+	                                <td>
+	                          	</tr>
+                            <% } %>
 					</thead>
 				</table>
 				<!-- /table -->

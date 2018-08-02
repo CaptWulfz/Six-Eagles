@@ -69,7 +69,7 @@ public class deactivateproduct extends HttpServlet {
         try{
         productdao.deactivateproduct(icode);
         //request.setAttribute("codew", icode);
-        request.getRequestDispatcher("inventory.jsp").forward(request, response);
+        response.sendRedirect("/Six_Eagles/inventory");
         }
         catch(Exception e){
         	e.printStackTrace();

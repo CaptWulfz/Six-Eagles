@@ -12,7 +12,7 @@
 <!DOCTYPE html>
 <%
     
-    ArrayList<product>prod = productdao.viewproductactive();
+    ArrayList<product> prod = (ArrayList<product>) request.getAttribute("prodList");
     
 %>
 
@@ -28,10 +28,10 @@
 	<div class="col-md-12">
 
 		<ol class="breadcrumb">
-		  <li><a href="home.jsp">Home</a></li>		
-		  <li><a href = "inventory.jsp">Add Product</a></li>
-		  <li><a href="physicalcount.jsp">Physical Count</a></li>	
-		  <li><a href="ReactivateInventory.jsp">Reactivate Product</a></li>
+		  <li><a href="/Six_Eagles/home">Home</a></li>		
+		  <li><a href = "/Six_Eagles/inventory">Add Product</a></li>
+		  <li><a href="/Six_Eagles/productPhysicalCount">Physical Count</a></li>	
+		  <li><a href="/Six_Eagles/viewInactiveProducts">Reactivate Product</a></li>
 		  <li><a class="active">Update Product</a></li>
 
 

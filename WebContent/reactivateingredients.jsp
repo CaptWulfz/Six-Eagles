@@ -11,7 +11,7 @@
 
 <!DOCTYPE html>
 <%
-    ArrayList<ingredients>ingr=ingredientsdao.viewIngredientdeactive();
+    ArrayList<ingredients>ingr = (ArrayList<ingredients>) request.getAttribute("ingrList");
     
 %>
 <html>

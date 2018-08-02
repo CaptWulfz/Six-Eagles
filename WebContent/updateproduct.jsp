@@ -19,10 +19,11 @@
 	<div class="col-md-12">
 
 		<ol class="breadcrumb">
-		  <li><a href="home.jsp">Home</a></li>		
-		  <li><a href = "inventory.jsp">Add Product</a></li>
-		  <li><a href="physicalcount.jsp">Physical Count</a></li>	
-		  <li><a class="active">Make Product</a></li>
+		  <li><a href="/Six_Eagles/home">Home</a></li>		
+		  <li><a href = "/Six_Eagles/inventory">View Products</a></li>
+		  <li><a href="/Six_Eagles/productPhysicalCount">Product Physical Count</a></li>	
+		  <li><a href="/Six_Eagles/viewInactiveProducts">Reactivate Product</a></li>
+		  <li><a class="active">Produce Product</a></li>
 
 
 		<div class="panel panel-default">

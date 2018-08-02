@@ -47,17 +47,7 @@ public class reactivateproduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-        
-        int icode = Integer.parseInt(request.getParameter("code"));
-        
-        try{
-        productdao.reactivateproduct(icode);
-        //request.setAttribute("codew", icode);
-        request.getRequestDispatcher("reactivateinventory.jsp").forward(request, response);
-        }
-        catch(Exception e){}
-        
+        doPost(request, response);    
     }
 
     /**
@@ -71,7 +61,16 @@ public class reactivateproduct extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        int icode = Integer.parseInt(request.getParameter("submitButton"));
+        
+        try{
+        productdao.reactivateproduct(icode);
+        response.sendRedirect("/Six_Eagles/viewInactiveProducts");
+        }
+        catch(Exception e){
+        	e.printStackTrace();
+        }
     }
 
     /**

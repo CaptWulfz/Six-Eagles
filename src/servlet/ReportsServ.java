@@ -18,6 +18,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import dao.*;
 import dao.SalesRepdao;
+import excel_writer.ExcelWriter;
+import jxl.write.WriteException;
 /**
  *
  * @author AJ's Laptop
@@ -50,7 +52,8 @@ public class ReportsServ extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+    	doPost(request, response);
     }
 
     /**
@@ -67,6 +70,7 @@ public class ReportsServ extends HttpServlet {
         processRequest(request, response);
          String Start=request.getParameter("start");
          String End=request.getParameter("end");
+         
           int reportVal = Integer.valueOf(request.getParameter("drop"));
           if(reportVal==1){
             request.setAttribute("start", Start);
@@ -84,7 +88,16 @@ public class ReportsServ extends HttpServlet {
             
             request.getRequestDispatcher("InventoryRep.jsp").forward(request, response);
           }
-         
+          
+         /*
+          ExcelWriter writer = new ExcelWriter();
+          try {
+ 			writer.writeExcel("C:\\Users\\JAROD\\Desktop");
+ 		} catch (WriteException e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		}
+ 		*/
 
          
     }

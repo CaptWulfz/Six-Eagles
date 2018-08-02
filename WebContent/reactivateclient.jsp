@@ -11,7 +11,7 @@
 
 <!DOCTYPE html>
 <%
-    ArrayList<Client>cl=clientdao.viewClientdeactive();
+    ArrayList<Client>cl = (ArrayList<Client>) request.getAttribute("clientList");
     
 %>
 <html>
@@ -27,8 +27,8 @@
 	<div class="col-md-12">
 
 		<ol class="breadcrumb">
-		  <li><a href="home.jsp">Home</a></li>		
-		  <li><a href="client.jsp" >Create Client</a></li>
+		  <li><a href="/six_Eagles/home">Home</a></li>		
+		  <li><a href="/Six_Eagles/clients" >Create Client</a></li>
                   <li><a class = "active" >Reactivate Client</a></li>
 		</ol>
 

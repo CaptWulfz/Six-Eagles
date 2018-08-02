@@ -48,9 +48,9 @@
 	</script>   
 		<div class="area container-fluid">
 		<ol class="breadcrumb">
-	   	    <li><a href="home.jsp">Home</a></li>		
-		    <li><a class = "active">Client</a></li>
-			<li><a href = "newsupplierorder.jsp">Supplier</a></li>
+	   	    <li><a href="/Six_Eagles/home">Home</a></li>		
+		    <li><a class = "active">Client Order</a></li>
+			<li><a href = "/Six_Eagles/newSupplierOrder">Supplier Order</a></li>
 		</ol>
 			<div class="panel panel-default" style="width: 100%; margin-left: 0%;">
 				<div class="panel-heading">
@@ -87,7 +87,7 @@
 						<div class="form-group">
 							<label class="control-label col-sm-5" for="col1">Purchase Order Number:</label>
 							<div class="col-sm-7">
-								<input type="number" class="lorem form-control" name = "purchaseOrder" id="col1" style="width: 300px;">
+								<input type="number" min = 0 class="lorem form-control" name = "purchaseOrder" id="col1" style="width: 300px;">
 							</div>
 						</div>
 						

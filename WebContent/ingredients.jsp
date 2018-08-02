@@ -31,7 +31,7 @@
 		<ol class="breadcrumb">
 			<li><a href="/Six_Eagles/home">Home</a></li>
 			<li><a class = "active">Add Ingredients</a></li>
-			<li><a href="reactivateingredients.jsp">Reactivate Ingredient</a></li>
+			<li><a href="/Six_Eagles/reactivateIngredient">Reactivate Ingredient</a></li>
 <!--		  <li class="active">Brand</li>   -->
 		</ol>
 	
@@ -75,8 +75,11 @@
                                                     <td><center><%=i.getStock()%></center></td>
                                                     <td><center><%=i.getThreshold()%></center></td>
                                                     <td><center><%=i.getCeiling()%></center></td>
-                                                    
-                                                    <td><center><a href="deactivateingredient?code=<%=i.getIngredientCode()%>"><button class="btn btn-default button1"> <i class="glyphicon glyphicon-plus-sign"></i> Deactivate</button></a></center></td>
+                                                    <td>
+                                                    	<form method = "post" action = "/Six_Eagles/deactivateingredient">
+                                                    		<center><button type = "submit" name = "submitButton" value = <%=i.getIngredientCode() %> class="btn btn-default button1"> <i class="glyphicon glyphicon-plus-sign"></i> Deactivate</button></center>
+                                                   		</form>
+                                                    </td>
                                                 </tr>
                                                 <%}%>
 					</thead>
@@ -100,7 +103,7 @@
     	<form class="form-horizontal" id="submitProductForm" action="/Six_Eagles/changeIngrThresholds" method="POST">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title"><i class="fa fa-plus"></i> Change Product Codes</h4>
+	        <h4 class="modal-title"><i class="fa fa-plus"></i> Change Ingredient Thresholds</h4>
 	      </div>
 	      <div class="modal-body">
 	        <div class="form-group">

@@ -33,11 +33,11 @@
 	<div class="col-md-12">
 
 		<ol class="breadcrumb">
-		  <li><a href="home.jsp">Home</a></li>		
-		  <li><a class = "active">Add Product</a></li>
-		  <li><a href="physicalcount.jsp">Physical Count</a></li>
-		  <li><a href="reactivateinventory.jsp">Reactivate Product</a></li>
-		  <li><a href="updateprodad.jsp">Update Inventory</a></li>
+		  <li><a href="/Six_Eagles/home">Home</a></li>		
+		  <li><a class = "active">View Products</a></li>
+		  <li><a href="/Six_Eagles/productPhysicalCount">Product Physical Count</a></li>
+		  <li><a href="/Six_Eagles/viewInactiveProducts">Reactivate Product</a></li>
+		  <li><a href="/Six_Eagles/updateInventory">Produce Products</a></li>
 		</ol>
 
 		<div class="panel panel-default">
@@ -59,7 +59,7 @@
                                                               <form class="form-horizontal" id="submitRawMaterialsForm" action="addIngredientlistsmodal" method="POST">
                                                             <div class="modal-header">
                                                               <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                              <h4 class="modal-title">Modal Header</h4>
+                                                              <h4 class="modal-title">Add Ingredient to Product</h4>
                                                             </div>
                                                             <div class="modal-body">
                                                                 <div class="form-group">
@@ -147,7 +147,11 @@
 	                                	</form>
                                		</td>	
                                                
-                                	<td><center><a href="viewIngredientslist?code=<%=p.getProductcode()%>"><button class="btn btn-default button1"><i class="glyphicon glyphicon-plus-sign"></i>View ingredients</button></a></center></td>
+                                	<td>
+	                                	<form method = "post" action = "/Six_Eagles/viewIngredientslist">
+	                                		<center><button type = "submit" name = "submitButton" value = <%=p.getProductcode() %> class="btn btn-default button1"><i class="glyphicon glyphicon-plus-sign"></i>View ingredients</button></center>
+	                                	</form>
+                                	</td>
                                 	
                                 </tr>
                                                 <% } %>
@@ -266,7 +270,7 @@
     	<form class="form-horizontal" id="submitProductForm" action="/Six_Eagles/changeThresholds" method="POST">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title"><i class="fa fa-plus"></i> Change Product Codes</h4>
+	        <h4 class="modal-title"><i class="fa fa-plus"></i> Change Product Thresholds</h4>
 	      </div>
 	      <div class="modal-body">
 	        <div class="form-group">

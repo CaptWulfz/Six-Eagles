@@ -19,4 +19,11 @@ public class URLPatterns {
 	public final static String INVENTORY = "/inventory";
 	public final static String CHANGETHRESHOLDS = "/changeThresholds";
 	public final static String CHANGEINGRTHREHSOLDS = "/changeIngrThresholds";
+	public final static String CREATEREPORTS = "/createReports";
+	public final static String REACTIVATECLIENT = "/reactivateClient";
+	public final static String REACTIVATEINGREDIENT = "/reactivateIngredient";
+	public final static String PRODUCTPHYSICALCOUNT = "/productPhysicalCount";
+	public final static String VIEWINACTIVEPRODUCTS = "/viewInactiveProducts";
+	public final static String REACTIVATEPRODUCT = "/reactivateProduct";
+	public final static String UPDATEINVENTORY = "/updateInventory";
 }

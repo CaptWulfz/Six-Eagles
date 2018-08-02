@@ -74,12 +74,11 @@ public class makeProduct extends HttpServlet {
 
        
              if(makeP){
-               request.getRequestDispatcher("inventory.jsp").forward(request, response);
+              response.sendRedirect("/Six_Eagles/inventory");
                
                }
                else{
-               request.getRequestDispatcher("home.jsp").forward(request, response);
-               //request.getRequestDispatcher("test.jsp").forward(request, response);
+               response.sendRedirect("/Six_Eagles/home");
                }
    
 

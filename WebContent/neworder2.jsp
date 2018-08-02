@@ -42,9 +42,9 @@
 	</script>   
 		<div class="area container-fluid">
 			<ol class="breadcrumb">
-		   	    <li><a href="home.jsp">Home</a></li>		
+		   	    <li><a href="/Six_Eagles/home">Home</a></li>		
 			    <li><a class = "active">Client</a></li>
-				<li><a href = "newsupplierorder.jsp">Supplier</a></li>
+				<li><a href = "/Six_Eagles/newSupplierOrder">Supplier</a></li>
 			</ol>
 		
 			<div id = "cartOptions" class="panel panel-default" style="width: 49%; margin-left: 0%;">
@@ -73,7 +73,7 @@
 							<div class="form-group">
 								<label class="control-label col-sm-4" for="col3">Quantity:</label>
 								<div class="col-sm-7">
-									<input type="number" class="dolor form-control" id="quantity" name="quantity" placeholder="Quantity" value = 0 style="margin-bottom: 5px; width: 50%;">
+									<input type="number" min = 0 class="dolor form-control" id="quantity" name="quantity" placeholder="Quantity" value = 0 style="margin-bottom: 5px; width: 50%;">
 								</div>
 							
 								<button type="submit" name = "submitButton" value = "addToCart" class="btn btn-primary" style="margin-left: 35%;"><i class="glyphicon glyphicon-log-in"></i> Submit</button>
@@ -106,11 +106,12 @@
 									<th><%=item.getQuantity() %></th>
 									<th><%=item.getPricePerPiece() %></th>
 									<th><%=item.getTotalPrice() %></th>
+									<td><center><button type = "submit" name = "submitButton" class = "btn btn-default"></button></center></td>
 								</tr>	
 							<%  	total += item.getTotalPrice();
 								} %>
 							<tr>
-								<th colspan = "3"> Running Total: </th>
+								<th colspan = "3"> <strong>Running Total:</strong> </th>
 								<th><%=total %></th>
 							<tr>
 						</table>
@@ -200,5 +201,6 @@
 			margin-top: 15px;
 			margin-right: 5px;
 		}
+		
 	</style>
 </html>

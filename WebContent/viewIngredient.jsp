@@ -15,14 +15,9 @@
 <!DOCTYPE html>
 
 <%
-    int code = (Integer)request.getAttribute("codew");
     
-    
-    //ArrayList<product>prod = productdao.viewproduct();
-    //ArrayList<ingredients>ing=ingredientsdao.viewIngredient();
-    ArrayList<ingredientslists>ilist=ingredientslistsdao.viewproductingredient(code);
-    
-    boolean test = ilist.isEmpty();
+	product p = (product) request.getAttribute("product");
+    ArrayList<ingredientslists>ilist = (ArrayList<ingredientslists>) request.getAttribute("ingrList"); 
 %>
 
 <html>
@@ -41,19 +36,18 @@
 	<div class="col-md-12">
 
 		<ol class="breadcrumb">
-		  <li><a href="home.jsp">Home</a></li>
+		  <li><a href="/Six_Eagles/home">Home</a></li>
 		</ol>
 
 		<div class="panel panel-default">
 			<div class="panel-heading">
-			<div class="page-heading"><b>View ingredient</b></div>
+			<div class="page-heading"><b><%=p.getProductname() %>'s Ingredients</b></div>
 			</div> <!-- /panel-heading -->
 			<div class="panel-body">			
 				
 				<table class="table" id="manageProductTable">
 					<thead>
 						<tr>
-                                                    <th><center>Code</center></th>
                                                     <th><center>Name</center></th>
                                                     <th><center>Unit</center></th>
                                                     <th><center>Amount</center></th>
@@ -68,7 +62,6 @@
                                                 %>
                                                 
                                                 <tr>
-                                                    <td><center><%=in.getIngredientCode()%></center></td>
                                                     <td><center><%=in.getName()%></center></td>
                                                     <td><center><%=in.getUnitOfMeasurement()%></center></td>
                                                     <td><center><%=in.getAmount()%></center></td> 

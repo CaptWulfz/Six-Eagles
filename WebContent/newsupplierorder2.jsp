@@ -36,8 +36,8 @@
 	</script>   
 		<div class="area container-fluid">
 		<ol class="breadcrumb">
-	   	    <li><a href="home.jsp">Home</a></li>		
-		    <li><a href = "neworder.jsp">Client</a></li>
+	   	    <li><a href="/Six_Eagles/home">Home</a></li>		
+		    <li><a href = "/Six_Eagles/newClientOrder">Client</a></li>
 			<li><a class = "active">Supplier</a></li>
 		</ol>
 			<div id = "supplierOrder" class="panel panel-default" style="width: 48%; margin-left: 0%;">
@@ -61,7 +61,7 @@
 						<div class="form-group">
 							<label class="control-label col-sm-5" for="col1">Supply Order Number:</label>
 							<div class="col-sm-7">
-								<input type="number" class="lorem form-control" name = "supplyOrder" id="col1" style="width: 150px;">
+								<input type="number" min = 0 class="lorem form-control" name = "supplyOrder" id="col1" style="width: 150px;">
 							</div>
 						</div>
 						<div class="form-group">
@@ -77,7 +77,7 @@
 						<div class="form-group">
 							<label class="control-label col-sm-5" for="col2">Quantity:</label>
 							<div class="col-sm-7">
-								<input type="number" class="ipsum form-control" id="quantity" name = "quantity" value = 0 style="width: 150px;">
+								<input type="number" min = 0 class="ipsum form-control" id="quantity" name = "quantity" value = 0 style="width: 150px;">
 							</div>
 						</div>
 						

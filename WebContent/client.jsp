@@ -39,9 +39,9 @@
 	<div class="col-md-12">
 
 		<ol class="breadcrumb">
-		  <li><a href="home.jsp">Home</a></li>		
+		  <li><a href="/Six_Eagles/home">Home</a></li>		
 		  <li><a class = "active">Create Client</a></li>
-                  <li><a href="reactivateclient.jsp">Reactivate Client</a></li>
+                  <li><a href="/Six_Eagles/reactivateClient">Reactivate Client</a></li>
 		</ol>
 
 		<div class="panel panel-default">
