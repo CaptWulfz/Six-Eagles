@@ -7,13 +7,13 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import = "java.util.ArrayList" %>
 <%@page import = "model.suppliers" %>
-<%@page import = "model.rawmaterials" %>
+<%@page import = "model.ingredients" %>
 <%@page import = "model.supplyorders" %>
 <%@page import = "temporary_models.SupplyOrderItem" %>
 <!DOCTYPE html>
 
 <% ArrayList<suppliers> suppliersList = (ArrayList<suppliers>) request.getAttribute("suppliersList");
-   ArrayList<rawmaterials> rawMaterialsList = (ArrayList<rawmaterials>) request.getAttribute("rawMaterialsList");
+   ArrayList<ingredients> ingrList = (ArrayList<ingredients>) session.getAttribute("ingrList");
    ArrayList<SupplyOrderItem> supplyOrdersCart = (ArrayList<SupplyOrderItem>) session.getAttribute("supplyOrdersCart");
 %>
 
@@ -33,6 +33,12 @@
 		  };
 		  date_input.datepicker(options);
 		})
+		
+		function changeSupplierStock() {
+			var form = document.getElementById("addOrders");
+			
+			form.submit();
+		}
 	</script>   
 		<div class="area container-fluid">
 		<ol class="breadcrumb">
@@ -40,7 +46,7 @@
 		    <li><a href = "/Six_Eagles/newClientOrder">Client</a></li>
 			<li><a class = "active">Supplier</a></li>
 		</ol>
-			<div id = "supplierOrder" class="panel panel-default" style="width: 48%; margin-left: 0%;">
+			<div id = "supplierOrder" class="panel panel-default" style="width: 46%; margin-left: 0%;">
 				<div class="panel-heading">
 					New Supplier Order
 				</div>
@@ -51,10 +57,13 @@
 						<div class="form-group">
 							<label class="control-label col-sm-5" for="col1">Supplier Name:</label>
 							<div class="col-sm-7">
-								<select class = "form-control" id = "supplierName" name = "supplierName" style = "width: 150px">
-									<% for (suppliers s: suppliersList) { %>
-											<option value = "<%=s.getSupplierID()%>"><%= s.getSupplierName() %></option>
-									<% } %>
+								<select onchange = "changeSupplierStock()" class = "form-control" id = "supplierName" name = "supplierName" style = "width: 150px">
+									<%	int index = (int) request.getAttribute("index"); 
+										int i = 0;
+										for (suppliers s: suppliersList) { %>
+											<option value = "<%=s.getSupplierID()%>" <% if (index == i) { out.print("selected"); } %>><%= s.getSupplierName() %></option>
+									<% 		i++;
+										} %>
 								</select>
 							</div>
 						</div>
@@ -65,11 +74,11 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="control-label col-sm-5" for="col2">Ingredient Brand:</label>
+							<label class="control-label col-sm-5" for="col2">Ingredient Name:</label>
 							<div class="col-sm-7">
-								<select class="form-control" id="ingredientCode" name="rawmCode" style = "width : 150px">
-									<% for (rawmaterials r : rawMaterialsList) { %>
-										<option value = "<%=r.getRawMaterialCode()%>"><%=r.getIngredientBrand() %></option>
+								<select class="form-control" id="ingredientCode" name="ingrCode" style = "width : 150px">
+									<% for (ingredients ingr: ingrList) { %>
+										<option value = "<%=ingr.getIngredientCode()%>"><%=ingr.getIngredientName() %></option>
 									<% } %>
 								</select>
 							</div>
@@ -93,14 +102,14 @@
 								<input type="date" class="sit form-control" id="ddate" name="deliveryDate" placeholder="yyyy-mm-dd" style="margin-bottom: 5px; width: 150px;">
 							</div>
 						</div>
-						<button type="submit" name = "submit" value = "addToOrder" class="btn btn-primary" style="margin-left: 35%;"><i class="glyphicon glyphicon-log-in"></i> Submit</button></a>
-						<button type="submit" name = "submit" value = "checkout" class="btn btn-default">Done</button>
+						<button type="submit" name = "submitBtn" value = "addToOrder" class="btn btn-primary" style="margin-left: 35%;"><i class="glyphicon glyphicon-log-in"></i> Submit</button></a>
+						<button type="submit" name = "submitBtn" value = "checkout" class="btn btn-default">Done</button>
 					</form>
 				</div>
 			</div>
 		</div>
 		
-		<div id = "cart" class="panel panel-default" style="width: 49%; margin-left: 0%;">
+		<div id = "cart" class="panel panel-default" style="width: 52%; margin-left: 0%;">
 				<div class="panel-heading">
 					Cart
 				</div>
@@ -111,19 +120,25 @@
 							<tr>
 								<th>Supplier ID</th>
 								<th>Supply Order Num</th>
-								<th>Ingredient Brand</th>
+								<th>Ingredient Name</th>
 								<th>Order Date</th>
 								<th>Delivery Date</th>
 							<tr>
-							<% for (SupplyOrderItem cartItem: supplyOrdersCart) { 
+							<% for (int j = 0; j < supplyOrdersCart.size(); j++ ) {
+								SupplyOrderItem cartItem = supplyOrdersCart.get(j);
 								supplyorders item = cartItem.getSupplyOrders();
-								rawmaterials rawm = cartItem.getRawMaterials();%>
+								ingredients ingr = cartItem.getIngredient();%>
 								<tr>
 									<th><%=item.getSupplierName() %></th>
 									<th><%=item.getSupplyOrderNum() %></th>
-									<th><%= rawm.getIngredientBrand()%></th>
+									<th><%=ingr.getIngredientName()%></th>
 									<th><%=item.getOrderDate() %></th>
 									<th><%=item.getDeliveryDate() %></th>
+									<td>
+										<form method = "post" action = "/Six_Eagles/removeSupplyOrder">
+											<center><button type = "submit" name = "submitButton" value = <%=j %> class = "btn btn-default"><img src = "images/Minus-Icon.png" height = "15" width = "15"></button></center>
+										</form>
+									</td>
 								</tr>	
 							<% } %>
 						</table>
@@ -194,6 +209,12 @@
 		#orderTable tr th {
 			border: 1px solid black;
 			padding: 5px;
+			text-align: center;
+		}
+		
+		td {
+			padding: 5px;
+			padding-bottom: 10px;
 			text-align: center;
 		}
 		

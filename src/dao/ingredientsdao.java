@@ -107,6 +107,31 @@ public class ingredientsdao {
         return x;
         
     }
+     
+    public static ingredients getIngredientByCode(int code) {
+    	ingredients i = null;
+    	Connection c = dbconnect.getDBConnection();
+    	String sql = "SELECT * FROM eagle.ingredients WHERE IngredientCode = ? AND Status = 'Active';";
+    	
+    	try {
+    		PreparedStatement p = c.prepareStatement(sql);
+    		p.setInt(1, code);
+    		ResultSet rs = p.executeQuery();
+    		while (rs.next()) {
+    			i = new ingredients(rs.getInt(1),rs.getString(2), rs.getDouble(3), rs.getInt(4), rs.getInt(6), rs.getString(8));
+    		}
+    	} catch (SQLException e) {
+    		e.printStackTrace();
+    	} finally {
+    		try {
+    			c.close();
+    		} catch (Exception e) {
+    			e.printStackTrace();
+    		}
+    	}
+    	
+    	return i;
+    }
     
     public static ingredients getIngredientByName(String key) throws SQLException {
     	ingredients ingr = null;

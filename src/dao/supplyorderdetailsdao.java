@@ -20,7 +20,7 @@ public class supplyorderdetailsdao {
         {
             ArrayList<supplyorderdetails>supplyorderdetails=new ArrayList();
             Connection c=dbconnect.getDBConnection();
-            String sql="SELECT SUPPLYORDERNUM,RAWMATERIALCODE,QUANTITYORDERED,UNITOFMEASUREMENT FROM eagle.supplyorderdetails WHERE supplyordernum = ?";
+            String sql="SELECT * FROM eagle.supplyorderdetails WHERE supplyordernum = ?";
             
             try
             {
@@ -54,17 +54,17 @@ public class supplyorderdetailsdao {
     
     public static void AddSupplyOrderDetails(SupplyOrderItem item) {
     	Connection c = dbconnect.getDBConnection();
-    	String sql = "INSERT INTO eagle.supplyorderdetails (SupplyOrderNum, RawMaterialCode, QuantityOrdered, UnitOfMeasurement) VALUES(?, ?, ?, ?);";
+    	String sql = "INSERT INTO eagle.supplyorderdetails (SupplyOrderNum, IngredientCode, QuantityOrdered, UnitOfMeasurement) VALUES(?, ?, ?, ?);";
     	
     	supplyorders sb = item.getSupplyOrders();
-    	rawmaterials rawm = item.getRawMaterials();
+    	ingredients ingr = item.getIngredient();
     	
     	try {
     		PreparedStatement ps = c.prepareCall(sql);
     		ps.setInt(1, sb.getSupplyOrderNum());
-    		ps.setInt(2, rawm.getRawMaterialCode());
+    		ps.setInt(2, ingr.getIngredientCode());
     		ps.setInt(3, item.getQuantity());
-    		ps.setString(4, rawm.getUnitOfMeasurement());
+    		ps.setString(4, ingr.getUnitOfMeasurement());
     		
     		ps.executeUpdate();
     		

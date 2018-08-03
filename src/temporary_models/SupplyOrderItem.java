@@ -1,10 +1,10 @@
 package temporary_models;
 
-import model.rawmaterials;
+import model.ingredients;
 import model.supplyorders;
 
 public class SupplyOrderItem {
-	private rawmaterials rawMaterials;
+	private ingredients ingredient;
 	private supplyorders supplyOrder;
 	private int quantity;
 	
@@ -12,12 +12,12 @@ public class SupplyOrderItem {
 		
 	}
 	
-	public rawmaterials getRawMaterials() {
-		return this.rawMaterials;
+	public ingredients getIngredient() {
+		return this.ingredient;
 	}
 	
-	public void setRawMaterials(rawmaterials r) {
-		this.rawMaterials = r;
+	public void setIngredient(ingredients i) {
+		this.ingredient = i;
 	}
 	
 	public supplyorders getSupplyOrders() {

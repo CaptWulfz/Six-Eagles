@@ -136,24 +136,24 @@
                             <div class="col-sm-8">
                                 <label class="col-sm-1 control-label">: </label>
                                 <div class="col-sm-8">
-				<select class="form-control" id="city" name="city" style = "width : 300px">
-                                            <option value="Caloocan">Caloocan</option>
-                                            <option value="LasPiñas">Las Piñas</option>
-                                            <option value="Makati">Makati</option>
-                                            <option value="Malabon">Malabon</option>
-                                            <option value="Mandaluyong">Mandaluyong</option>
-                                            <option value="Manila">Manila</option>
-                                            <option value="Marikina">Marikina</option>
-                                            <option value="Muntinlupa">Muntinlupa</option>
-                                            <option value="Navotas">Navotas</option>
-                                            <option value="Parañaque">Parañaque</option>
-                                            <option value="Pasay">Pasay</option>
-                                            <option value="Pasig">Pasig</option>
-                                            <option value="Quezon">Quezon</option>
-                                            <option value="SanJuan">SanJuan</option>
-                                            <option value="Taguig">Taguig</option>
-                                            <option value="Valenzuela">Valenzuela</option> 
-				</select>
+									<select class="form-control" id="city" name="city" style = "width : 300px">
+	                                     <option value="Caloocan">Caloocan</option>
+	                                     <option value="LasPiñas">Las Piñas</option>
+	                                     <option value="Makati">Makati</option>
+	                                     <option value="Malabon">Malabon</option>
+	                                     <option value="Mandaluyong">Mandaluyong</option>
+	                                     <option value="Manila">Manila</option>
+	                                     <option value="Marikina">Marikina</option>
+	                                     <option value="Muntinlupa">Muntinlupa</option>
+	                                     <option value="Navotas">Navotas</option>
+	                                     <option value="Parañaque">Parañaque</option>
+	                                     <option value="Pasay">Pasay</option>
+	                                     <option value="Pasig">Pasig</option>
+	                                     <option value="Quezon">Quezon</option>
+	                                     <option value="SanJuan">SanJuan</option>
+	                                     <option value="Taguig">Taguig</option>
+	                                     <option value="Valenzuela">Valenzuela</option> 
+									</select>
                                 </div>
                             </div>
                     </div>                

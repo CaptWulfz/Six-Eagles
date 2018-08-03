@@ -12,13 +12,13 @@ package model;
 public class supplyorderdetails {
     
     private int SupplyOrderNum;
-    private int RawMaterialCode;
+    private int IngredientCode;
     private double Quantity;
     private String Unit;
     
-    public supplyorderdetails(int SON,int RMC, double Q, String U){
+    public supplyorderdetails(int SON,int iCode, double Q, String U){
         this.SupplyOrderNum=SON;
-        this.RawMaterialCode=RMC;
+        this.IngredientCode=iCode;
         this.Quantity=Q;
         this.Unit=U;
     }
@@ -40,15 +40,15 @@ public class supplyorderdetails {
     /**
      * @return the RawMaterialCode
      */
-    public int getRawMaterialCode() {
-        return RawMaterialCode;
+    public int getIngredientCode() {
+        return this.IngredientCode;
     }
 
     /**
      * @param RawMaterialCode the RawMaterialCode to set
      */
-    public void setRawMaterialCode(int RawMaterialCode) {
-        this.RawMaterialCode = RawMaterialCode;
+    public void setRawMaterialCode(int code) {
+        this.IngredientCode = code;
     }
 
     /**

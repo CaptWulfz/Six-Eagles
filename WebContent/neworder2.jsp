@@ -17,8 +17,8 @@
 
 <!DOCTYPE html>
 <%
-    ArrayList<Client>cl=clientdao.viewClientactive();
-    ArrayList<product>prod = productdao.viewproductactive();
+    ArrayList<Client>cl = (ArrayList<Client>) request.getAttribute("clientList");
+    ArrayList<product>prod = (ArrayList<product>) request.getAttribute("prodList");
     ArrayList<CartItem> cart = (ArrayList<CartItem>) session.getAttribute("cart");
      
 %>
@@ -47,7 +47,7 @@
 				<li><a href = "/Six_Eagles/newSupplierOrder">Supplier</a></li>
 			</ol>
 		
-			<div id = "cartOptions" class="panel panel-default" style="width: 49%; margin-left: 0%;">
+			<div id = "cartOptions" class="panel panel-default" style="width: 46%; margin-left: 0%;">
 				<div class="panel-heading">
 					New Client Order
 				</div>
@@ -75,9 +75,10 @@
 								<div class="col-sm-7">
 									<input type="number" min = 0 class="dolor form-control" id="quantity" name="quantity" placeholder="Quantity" value = 0 style="margin-bottom: 5px; width: 50%;">
 								</div>
-							
-								<button type="submit" name = "submitButton" value = "addToCart" class="btn btn-primary" style="margin-left: 35%;"><i class="glyphicon glyphicon-log-in"></i> Submit</button>
-								<button type="submit" name = "submitButton" value = "checkout" class="btn btn-default">Done</button>
+								
+								<button type="submit" name = "submitButton" value = "addToCart" class="btn btn-primary" style="margin-left: 35%;"><i class="glyphicon glyphicon-log-in"></i> Add To Cart</button>
+								<button type = "submit" name = "submitButton" value = "subtractFromCart" class = "btn btn-primary" style="margin-left: 28%;"><i class="glyphicon glyphicon-log-in"></i> Subtract From Cart</button> <br>
+								<button type="submit" name = "submitButton" value = "checkout" class="btn btn-default" style="margin-left: 42%;">Done</button>
 							</div>
 						</form>                                            
 	                   
@@ -85,7 +86,7 @@
 				</div>
 			</div>
 			
-			<div id = "cart" class="panel panel-default" style="width: 49%; margin-left: 0%;">
+			<div id = "cart" class="panel panel-default" style="width: 52%; margin-left: 0%;">
 				<div class="panel-heading">
 					Cart
 				</div>
@@ -100,13 +101,18 @@
 								<th>Total Price</th>
 							</tr>
 							<% double total = 0;
-							for (CartItem item: cart) { %>
+							for (int i = 0; i < cart.size(); i++) { 
+								CartItem item = cart.get(i);%>
 								<tr>
 									<th><%=item.getName() %></th>
 									<th><%=item.getQuantity() %></th>
 									<th><%=item.getPricePerPiece() %></th>
 									<th><%=item.getTotalPrice() %></th>
-									<td><center><button type = "submit" name = "submitButton" class = "btn btn-default"></button></center></td>
+									<td>
+										<form method = "post" action = "removeClientOrder">
+											<center><button type = "submit" name = "submitButton" value = <%=i%> class = "btn btn-default"><img src = "images/Minus-Icon.png" height = "15" width = "15"></button></center>
+										</form>
+									</td>
 								</tr>	
 							<%  	total += item.getTotalPrice();
 								} %>
@@ -161,6 +167,12 @@
 		#orderTable tr th {
 			border: 1px solid black;
 			padding: 5px;
+			text-align: center;
+		}
+		
+		td {
+			padding: 5px;
+			padding-bottom: 10px;
 			text-align: center;
 		}
 		

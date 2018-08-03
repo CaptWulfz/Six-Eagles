@@ -89,6 +89,16 @@ public class addClientOrder extends HttpServlet {
 	            session.setAttribute("NewOrder", NewOrder);
 	            //Added Cart
 	            session.setAttribute("cart", new  ArrayList<CartItem>());
+	            
+	            try {
+					ArrayList<Client> clientList = clientdao.viewClientactive();
+					ArrayList<product> prodList = productdao.viewproductactive();
+					request.setAttribute("clientList", clientList);
+					request.setAttribute("prodList", prodList);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+	            
 	            request.getRequestDispatcher("neworder2.jsp").forward(request, response); 
 	        } else {  
 	        	request.getRequestDispatcher("neworder.jsp").forward(request, response); 

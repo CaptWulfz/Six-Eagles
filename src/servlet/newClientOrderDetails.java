@@ -6,6 +6,7 @@
 package servlet;
 
 import dao.ClientOrderdao;
+import dao.clientdao;
 import dao.productdao;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Orders;
+import model.Client;
 import model.OrderDetails;
 import model.Users;
 import model.product;
@@ -65,6 +67,15 @@ public class newClientOrderDetails extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    	try {
+			ArrayList<Client> clientList = clientdao.viewClientactive();
+			ArrayList<product> prodList = productdao.viewproductactive();
+			request.setAttribute("clientList", clientList);
+			request.setAttribute("prodList", prodList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		request.getRequestDispatcher("neworder2.jsp").forward(request,  response);
     }
 
     /**
@@ -79,82 +90,130 @@ public class newClientOrderDetails extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     	HttpSession session=request.getSession();
-    	if(session.getAttribute("loginUser") != null) {
-    		String actionToDo = request.getParameter("submitButton");
-    	
-    		ArrayList<CartItem> cart = (ArrayList<CartItem>) session.getAttribute("cart");
-    	
-    		System.out.println(actionToDo);
-    	
-    		if (actionToDo.equals(ButtonActions.ADDTOCART)) {
 
-    			Orders cartItem = (Orders) session.getAttribute("NewOrder");
+		String actionToDo = request.getParameter("submitButton");
+	
+		ArrayList<CartItem> cart = (ArrayList<CartItem>) session.getAttribute("cart");
+	
+		System.out.println("To do is: " + actionToDo);
+	
+		if (actionToDo.equals(ButtonActions.ADDTOCART)) {
+
+			Orders cartItem = (Orders) session.getAttribute("NewOrder");
  
     			int ProdCode = Integer.parseInt(request.getParameter("productCode"));
-    			int QTY= Integer.parseInt(request.getParameter("quantity"));
-    			
-	 	        // Get The Product Using the Product Code
-	 	        try {
-					product p = productdao.getProduct(ProdCode);
-					CartItem newItem = new CartItem(ProdCode, p.getProductname(), QTY, p.getProductprice(), (p.getProductprice() * QTY));
+			int QTY= Integer.parseInt(request.getParameter("quantity"));
+			
+ 	        // Get The Product Using the Product Code
+ 	        try {
+				product p = productdao.getProduct(ProdCode);
+				CartItem newItem = new CartItem(ProdCode, p.getProductname(), QTY, p.getProductprice(), (p.getProductprice() * QTY));
+				
+				int index = itemExistsInCart(newItem.getName(), cart);
+				
+				if (index != -1) {
+					CartItem existingItem = cart.get(index);
 					
-					int index = itemExistsInCart(newItem.getName(), cart);
+					existingItem.setQuantity(existingItem.getQuantity() + QTY);
+					existingItem.setTotalPrice(existingItem.getQuantity() * existingItem.getPricePerPiece());
 					
-					if (index != -1) {
-						CartItem existingItem = cart.get(index);
-						
-						existingItem.setQuantity(existingItem.getQuantity() + QTY);
-						existingItem.setTotalPrice(existingItem.getQuantity() * existingItem.getPricePerPiece());
-						
-						cart.set(index, existingItem);
-						
-					} else {
-						cart.add(newItem);			
-					}
-				} catch (SQLException e) {
-					Logger.getLogger(newClientOrderDetails.class.getName()).log(Level.SEVERE, null, e);
+					cart.set(index, existingItem);
+					
+				} else {
+					cart.add(newItem);			
 				}
+			} catch (SQLException e) {
+				Logger.getLogger(newClientOrderDetails.class.getName()).log(Level.SEVERE, null, e);
+			}
  	        
-	 	       session.setAttribute("cart", cart);
-	 	        
-	 	       request.getRequestDispatcher("neworder2.jsp").forward(request, response);
-	 	        
-	    	} else if (actionToDo.equals(ButtonActions.CHECKOUT)){
-	    		Orders Order = (Orders) session.getAttribute("NewOrder");
-	    		
-	    		cart = (ArrayList<CartItem>) session.getAttribute("cart");
-	    		
-    	        OrderDetails NewOrderDetails;
-    	        
-    	        for (CartItem item: cart) {
-    	        	NewOrderDetails = new OrderDetails(Order.getPurchaseOrderNum(),item.getProductCode(),item.getPricePerPiece(),item.getQuantity());
-    	        	ClientOrderdao.addnewClientOrderDetails(NewOrderDetails);
-    	        }
-    	        
-    	        request.getRequestDispatcher("home.jsp").forward(request, response);
-    	        
-    	        /* Commented Out
-    	        if(ClientOrderdao.addnewClientOrderDetails(NewOrderDetails)){
-    	            request.getRequestDispatcher("neworder2.jsp").forward(request, response); 
-    	               
-    	        } else {     
-    	        	request.getRequestDispatcher("neworder2.jsp").forward(request, response); 
-    	        }
-    	        */
-    	        
-	    		
-	    		
-	    	} else if (actionToDo.equals(ButtonActions.REMOVE)){
-	    		
-	    		cart = (ArrayList<CartItem>) session.getAttribute("cart");
-	    		cart = new ArrayList<CartItem>();
-	    		session.setAttribute("cart", cart);
-	    		request.getRequestDispatcher("neworder2.jsp").forward(request,  response);
-	    		
-	    	}
-	    } else {
-	   		request.getRequestDispatcher("login.jsp").forward(request, response);  
-	    }
+ 	       try {
+    			ArrayList<Client> clientList = clientdao.viewClientactive();
+    			ArrayList<product> prodList = productdao.viewproductactive();
+    			request.setAttribute("clientList", clientList);
+    			request.setAttribute("prodList", prodList);
+ 	       } catch (Exception e) {
+    			e.printStackTrace();
+ 	       }
+ 	        
+ 	       session.setAttribute("cart", cart);
+ 	        
+ 	       request.getRequestDispatcher("neworder2.jsp").forward(request, response);
+ 	        
+    	} else if (actionToDo.equals(ButtonActions.CHECKOUT)){
+    		Orders Order = (Orders) session.getAttribute("NewOrder");
+    		
+    		cart = (ArrayList<CartItem>) session.getAttribute("cart");
+    		
+	        OrderDetails NewOrderDetails;
+	        
+	        for (CartItem item: cart) {
+	        	NewOrderDetails = new OrderDetails(Order.getPurchaseOrderNum(),item.getProductCode(),item.getPricePerPiece(),item.getQuantity());
+	        	ClientOrderdao.addnewClientOrderDetails(NewOrderDetails);
+	        }
+	        
+	        request.getRequestDispatcher("home.jsp").forward(request, response);
+	        
+	        /* Commented Out
+	        if(ClientOrderdao.addnewClientOrderDetails(NewOrderDetails)){
+	            request.getRequestDispatcher("neworder2.jsp").forward(request, response); 
+	               
+	        } else {     
+	        	request.getRequestDispatcher("neworder2.jsp").forward(request, response); 
+	        }
+	        */
+	        
+    		
+    		
+    	} else if (actionToDo.equals(ButtonActions.REMOVE)){
+    		
+    		cart = (ArrayList<CartItem>) session.getAttribute("cart");
+    		cart = new ArrayList<CartItem>();
+    		session.setAttribute("cart", cart);
+    		
+    		try {
+    			ArrayList<Client> clientList = clientdao.viewClientactive();
+    			ArrayList<product> prodList = productdao.viewproductactive();
+    			request.setAttribute("clientList", clientList);
+    			request.setAttribute("prodList", prodList);
+    		} catch (Exception e) {
+    			e.printStackTrace();
+    		}
+    		
+    		request.getRequestDispatcher("neworder2.jsp").forward(request,  response);
+    		
+    	} else if (actionToDo.equals("subtractFromCart")) {
+    		cart = (ArrayList<CartItem>) session.getAttribute("cart");
+    		int ProdCode = Integer.parseInt(request.getParameter("productCode"));
+			int QTY= Integer.parseInt(request.getParameter("quantity"));
+    		
+			try {
+				product p = productdao.getProduct(ProdCode);
+				int index = itemExistsInCart(p.getProductname(), cart);
+				
+				if (index != -1) {
+					int currQty = cart.get(index).getQuantity();
+					int newQty;
+					if (currQty < QTY)
+						newQty = 0;
+					else
+						newQty = currQty - QTY;
+					cart.get(index).setQuantity(newQty);
+					cart.get(index).setTotalPrice(newQty * cart.get(index).getPricePerPiece());
+					session.setAttribute("cart", cart);
+					
+					ArrayList<Client> clientList = clientdao.viewClientactive();
+	    			ArrayList<product> prodList = productdao.viewproductactive();
+	    			request.setAttribute("clientList", clientList);
+	    			request.setAttribute("prodList", prodList);
+				} else {
+					request.setAttribute("errorMessage", "No such item exists in the cart!!!");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			request.getRequestDispatcher("neworder2.jsp").forward(request, response);
+    	}
     }
     
     private int itemExistsInCart(String name, ArrayList<CartItem> cart) {

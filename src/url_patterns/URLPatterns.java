@@ -26,4 +26,7 @@ public class URLPatterns {
 	public final static String VIEWINACTIVEPRODUCTS = "/viewInactiveProducts";
 	public final static String REACTIVATEPRODUCT = "/reactivateProduct";
 	public final static String UPDATEINVENTORY = "/updateInventory";
+	public final static String REMOVECLIENTORDER = "/removeClientOrder";
+	public final static String REMOVESUPPLYORDER = "/removeSupplyOrder";
+	public final static String ADDSTOCK = "/addStock";
 }

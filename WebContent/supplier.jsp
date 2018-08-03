@@ -8,10 +8,12 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import = "dao.Supplierdao" %>
 <%@page import = "model.suppliers" %>
+<%@page import = "model.ingredients" %>
 
 <!DOCTYPE html>
 <%
     ArrayList<suppliers>sup= (ArrayList<suppliers>) request.getAttribute("suppliersList");
+    ArrayList<ingredients> ingrList = (ArrayList<ingredients>) request.getAttribute("ingrList");
     
 %>
 
@@ -50,6 +52,7 @@
 			<div class="panel-body">
 				<div class="div-action pull pull-right" style="padding-bottom:20px;">
 					<button class="btn btn-default button1" data-toggle="modal" data-target="#addSupplierModal"> <i class="glyphicon glyphicon-plus-sign"></i> Add Supplier</button>
+					<button class="btn btn-default button1" data-toggle="modal" data-target="#supplierStockModal"> <i class="glyphicon glyphicon-plus-sign"></i> Add Supplier Stock</button>
 				</div> <!-- /div-action -->				
 				
 				<table class="table" id="manageSupplierTable">
@@ -83,7 +86,54 @@
 </div> <!-- /row -->
 </div>		
 		
-		
+	
+<div class="modal fade" id="supplierStockModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    	
+    	<form class="form-horizontal" id="submitProductForm" action="addStock" method="POST">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title"><i class="fa fa-plus"></i> Add Supplier Stock</h4>
+	      </div>
+	      <div class="modal-body">
+	        <div class="form-group">
+	        	<label for="productName" class="col-sm-3 control-label">Supplier Name: </label>
+	        	<label class="col-sm-1 control-label">: </label>
+				    <div class="col-sm-8">
+				    	<select class="form-control" id="supplierName" name="supplierName" style = "width : 300px">
+				    		<% for (suppliers s : sup ) { %>
+				    			<option value = <%=s.getSupplierID() %>><%=s.getSupplierName()%></option>
+				    		<% } %>
+				    	</select>
+				    </div>
+	        </div> <!-- /form-group-->	
+			 <div class="form-group">
+	        	<label for="productPrice" class="col-sm-3 control-label">Ingredient: </label>
+	        	<label class="col-sm-1 control-label">: </label>
+				    <div class="col-sm-8">
+						<select class = "form-control" id = "ingredientName" name = "ingredientName" style = "width : 300px">
+				      		<% for (ingredients i : ingrList) { %>
+				    			<option value = <%=i.getIngredientCode() %>><%=i.getIngredientName()%></option>
+				    		<% } %>
+				      	</select>
+				    </div>
+	        </div>
+	      </div> <!-- /modal-body -->
+	      
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        
+	        <button type="submit" name = "submit" class="btn btn-success" id="createBrandBtn" data-loading-text="Loading..." autocomplete="off">Add To Supplier Stock</button>
+	      </div>
+	      <!-- /modal-footer -->
+     	</form>
+	     <!-- /.form -->
+    </div>
+    <!-- /modal-content -->
+  </div>
+  <!-- /modal-dailog -->
+</div>		
 
 		
 <div class="modal fade" id="addSupplierModal" tabindex="-1" role="dialog">
