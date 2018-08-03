@@ -13,8 +13,8 @@
 
 
 <%
-    ArrayList<supplyorders>sord=supplyordersdao.viewSupplyOrders();
-    ArrayList<suppliers>sup=Supplierdao.viewSupplier();
+    ArrayList<supplyorders>sord = (ArrayList<supplyorders>) request.getAttribute("supplyOrders");
+    ArrayList<suppliers>sup = (ArrayList<suppliers>) request.getAttribute("suppliersList");
     
 %>
 <html>	
@@ -22,11 +22,11 @@
 	<body data-spy="scroll" data-target=".navbar" data-offset="50">
 		<div class="area container-fluid">
 		<ol class="breadcrumb">
-	   	    <li><a href="home.jsp">Home</a></li>		
-		    <li><a href = "orders.jsp">Client</a></li>
-                    <li><a href = "Archivedsupplyorders.jsp">Archived Client Orders</a></li>
+	   	    <li><a href="/Six_Eagles/home">Home</a></li>		
+		    <li><a href = "/Six_Eagles/manageOrders">Client</a></li>
+            <li><a href = "/Six_Eagles/viewArchivedClientOrders">Archived Client Orders</a></li>
 			<li><a class = "active">Supplier</a></li>
-                        <li><a href = "Archivedsupplyorders.jsp">ARchived Supply Orders</a></li>
+            <li><a href = "/Six_Eagles/viewArchivedSupplyOrders">Archived Supply Orders</a></li>
 		</ol>
 			<div class="panel panel-default">
 				<div class="panel-heading">

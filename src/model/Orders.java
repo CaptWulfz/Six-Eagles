@@ -43,8 +43,9 @@ public class Orders {
         
     //}
     
-    public Orders(int PurchaseOrderNum,int Deliveryreceiptnum,String orderdate,String Deliverydate,String StatusDetails){
+    public Orders(int PurchaseOrderNum, int clientID, int Deliveryreceiptnum,String orderdate,String Deliverydate,String StatusDetails){
         this.PurchaseOrderNum=PurchaseOrderNum;
+        this.ClientID = clientID;
         this.deliveryrecieptNum=Deliveryreceiptnum;
         this.orderdate=orderdate;
         this.Deliverydate=Deliverydate;

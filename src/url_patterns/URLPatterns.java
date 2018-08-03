@@ -29,4 +29,7 @@ public class URLPatterns {
 	public final static String REMOVECLIENTORDER = "/removeClientOrder";
 	public final static String REMOVESUPPLYORDER = "/removeSupplyOrder";
 	public final static String ADDSTOCK = "/addStock";
+	public final static String MANAGEORDERS = "/manageOrders";
+	public final static String VIEWARCHIVEDCLIENTORDERS = "/viewArchivedClientOrders";
+	public final static String VIEWSUPPLYORDERS = "/viewSupplyOrders";
 }

@@ -6,10 +6,17 @@
 package servlet;
 
 import dao.ClientOrderdao;
+import dao.ingredientsdao;
 import dao.ingredientslistsdao;
 import dao.orderdetailsdao;
+import dao.productdao;
+import model.OrderDetails;
+import model.product;
+
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -50,16 +57,9 @@ public class vieworderdetails extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+       doPost(request, response);
         
-        int icode = Integer.parseInt(request.getParameter("code"));
-        
-        try{
-        orderdetailsdao.vieworderdetails(icode);
-        request.setAttribute("codew", icode);
-        request.getRequestDispatcher("vieworderdetails.jsp").forward(request, response);
-        }
-        catch(Exception e){}
+       
         
     }
 
@@ -74,7 +74,23 @@ public class vieworderdetails extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+    	 int icode = Integer.parseInt(request.getParameter("submitBtn"));
+         
+         try{
+        	 ArrayList<OrderDetails> orderDetails = orderdetailsdao.vieworderdetails(icode);
+        	 ArrayList<product> prodList = new ArrayList<product>();
+        	 for (OrderDetails od : orderDetails) {
+        		 product p = productdao.getProduct(od.getProductCode());
+        		 prodList.add(p);
+        	 }
+        	 
+        	 request.setAttribute("orderDetails", orderDetails);
+        	 request.setAttribute("prodList", prodList);
+        	 request.getRequestDispatcher("vieworderdetails.jsp").forward(request, response);
+         }
+         catch(Exception e){
+        	 e.printStackTrace();
+         }
     }
 
     /**

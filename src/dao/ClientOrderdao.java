@@ -97,7 +97,7 @@ public class ClientOrderdao {
         {
             ArrayList<Orders>Orders=new ArrayList();
             Connection c=dbconnect.getDBConnection();
-            String sql="SELECT PURCHASEORDERNO, DELIVERYRECEIPTNO, ORDERDATE, DELIVERYDATE, STATUSDETAILS FROM eagle.orders Where statusdetails='Processing' or statusdetails='Late';";
+            String sql="SELECT PURCHASEORDERNO, CLIENTID, DELIVERYRECEIPTNO, ORDERDATE, DELIVERYDATE, STATUSDETAILS FROM eagle.orders Where statusdetails='Processing' or statusdetails='Late';";
             
             try
             {
@@ -105,7 +105,7 @@ public class ClientOrderdao {
             PreparedStatement pStmt=c.prepareCall(sql);
             ResultSet rs=pStmt.executeQuery();
              while (rs.next()){
-                 Orders.add(new Orders(rs.getInt(1),rs.getInt(2),rs.getString(3),rs.getString(4),rs.getString(5)));
+                 Orders.add(new Orders(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getString(4),rs.getString(5), rs.getString(6)));
                  
              }
              
@@ -136,7 +136,7 @@ public class ClientOrderdao {
         {
             ArrayList<Orders>Orders=new ArrayList();
             Connection c=dbconnect.getDBConnection();
-            String sql="SELECT PURCHASEORDERNO, DELIVERYRECEIPTNO, ORDERDATE, DELIVERYDATE, STATUSDETAILS FROM eagle.orders Where statusdetails='delivered';";
+            String sql="SELECT PURCHASEORDERNO, CLIENTID, DELIVERYRECEIPTNO, ORDERDATE, DELIVERYDATE, STATUSDETAILS FROM eagle.orders Where statusdetails='delivered';";
             
             try
             {
@@ -144,7 +144,7 @@ public class ClientOrderdao {
             PreparedStatement pStmt=c.prepareCall(sql);
             ResultSet rs=pStmt.executeQuery();
              while (rs.next()){
-                 Orders.add(new Orders(rs.getInt(1),rs.getInt(2),rs.getString(3),rs.getString(4),rs.getString(5)));
+                 Orders.add(new Orders(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getString(4),rs.getString(5), rs.getString(6)));
                  
              }
              

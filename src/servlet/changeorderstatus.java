@@ -74,13 +74,9 @@ public class changeorderstatus extends HttpServlet {
         
         try {
             if(ClientOrderdao.changestatus(code, status)){
-                //session.setAttribute("NewOrder", NewOrder);
-                request.getRequestDispatcher("orders.jsp").forward(request, response);
-                
-            }
-            else{
-                 
-                request.getRequestDispatcher("home.jsp").forward(request, response);
+               response.sendRedirect("/Six_Eagles/manageOrders");               
+            } else {
+            	response.sendRedirect("/Six_Eagles/home");
             }
         } catch (SQLException ex) {
             Logger.getLogger(changeorderstatus.class.getName()).log(Level.SEVERE, null, ex);

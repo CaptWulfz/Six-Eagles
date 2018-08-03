@@ -77,7 +77,7 @@
           <ul class="dropdown-menu">            
             <li id="topNavAddOrder"><a href="/Six_Eagles/newClientOrder"> <i class="glyphicon glyphicon-plus"></i> Add New Client Order</a></li>
             <li id="topNavAddOrder"><a href="/Six_Eagles/newSupplierOrder"> <i class="glyphicon glyphicon-plus"></i> Add New Supplier Order</a></li>            
-            <li id="topNavManageOrder"><a href="orders.jsp"> <i class="glyphicon glyphicon-edit"></i> Manage Orders</a></li>            
+            <li id="topNavManageOrder"><a href="/Six_Eagles/manageOrders"> <i class="glyphicon glyphicon-edit"></i> Manage Orders</a></li>            
           </ul>
         </li> 
 		

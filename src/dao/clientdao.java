@@ -16,7 +16,32 @@ import model.Client;
 
 
 public class clientdao {
-   
+	
+	public static Client getClientByID(int id) throws SQLException {
+		Client cl = null;
+		Connection c = dbconnect.getDBConnection();
+        String sql="SELECT * FROM eagle.client WHERE ClientID = ?;";
+        
+        try {
+        	PreparedStatement p = c.prepareStatement(sql);
+        	p.setInt(1, id);
+        	ResultSet rs = p.executeQuery();
+        	while (rs.next()) {
+        		cl = new Client(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4));
+        	}
+        } catch (SQLException e) {
+        	e.printStackTrace();
+        } finally {
+        	try {
+        		c.close();
+        	} catch (Exception e) {
+        		e.printStackTrace();
+        	}
+        }
+        
+        return cl;
+	}
+	
     public static ArrayList<Client> viewClientactive()throws SQLException
         {
             ArrayList<Client>Client=new ArrayList();

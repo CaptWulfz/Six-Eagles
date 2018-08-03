@@ -21,7 +21,7 @@ public class orderdetailsdao {
         {
             ArrayList<OrderDetails>OrderDetails=new ArrayList();
             Connection c=dbconnect.getDBConnection();
-            String sql="SELECT PRODUCTCODE, UNITPRICE, QUANTITYORDERED FROM eagle.orderdetails WHERE PurchaseOrderNo = ?";
+            String sql="SELECT * FROM eagle.orderdetails WHERE PurchaseOrderNo = ?";
             
             try
             {
@@ -30,7 +30,7 @@ public class orderdetailsdao {
             pStmt.setInt(1,code);
             ResultSet rs=pStmt.executeQuery();
              while (rs.next()){
-                 OrderDetails.add(new OrderDetails(rs.getInt(1),rs.getDouble(2),rs.getInt(3)));
+                 OrderDetails.add(new OrderDetails(rs.getInt(1), rs.getInt(2), rs.getDouble(3),rs.getInt(4)));
                  
             }
              

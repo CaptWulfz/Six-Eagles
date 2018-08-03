@@ -8,6 +8,7 @@
 <%@page import="model.OrderDetails"%>
 <%@page import = "dao.ClientOrderdao" %>
 <%@page import= "model.Orders" %>
+<%@page import = "model.product" %>
 <%@page import="java.util.ArrayList"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -15,7 +16,8 @@
 <% 
 int code = (Integer)request.getAttribute("codew");
 
-ArrayList<OrderDetails>orderdetails = orderdetailsdao.vieworderdetails(code);
+ArrayList<OrderDetails>orderdetails = (ArrayList<OrderDetails>) request.getAttribute("orderDetails");
+ArrayList<product> prodList = (ArrayList<product>) request.getAttribute("prodList");
 
 %>
 <html>	
@@ -33,25 +35,22 @@ ArrayList<OrderDetails>orderdetails = orderdetailsdao.vieworderdetails(code);
 					<table class="table table-hover" align = "center">
 						<thead>
 							<tr>
-                                                            <th><center>Purchase Order No.</center></th>
-                                                            <th><center>Product Code</center></th>
-                                                            <th><center>Unit Price</center></th>
-                                                            <th><center>Quantity Ordered</center></th>
-                                                            <!--<th><center>Comments</center></th>-->
+	                            <th><center>Purchase Order No.</center></th>
+	                            <th><center>Product Code</center></th>
+	                            <th><center>Unit Price</center></th>
+	                            <th><center>Quantity Ordered</center></th>
+	                            <!--<th><center>Comments</center></th>-->
 							</tr>
-                                                        
-                                                        <%
-                                                        for(OrderDetails o : orderdetails){
-                                                         %>
-                                                         
-                                                         <tr>
-                                                    <td><center><%=o.getPurchaseOrderNum()%></center></td>
-                                                    <td><center><%=o.getProductCode()%></center></td>
-                                                    <td><center><%=o.getUnitprice()%></center></td>
-                                                    <td><center><%=o.getQtyOrdered()%></center></td>
-                                        <td><center><a href="vieworderdetails?code=<%=o.getPurchaseOrderNum()%>"><button class="btn btn-default button1"><i class="glyphicon glyphicon-plus-sign"></i>View Order Details</button></a></center><td>
-                                                </tr>
-                                                <%}%>
+                            	<% for(int i = 0; i < orderdetails.size(); i++) { 
+                              		OrderDetails o = orderdetails.get(i);
+                              		product p = prodList.get(i);					%>
+                               		<tr>
+                           				<td><center><%=o.getPurchaseOrderNum()%></center></td>
+                            			<td><center><%=p.getProductname()%></center></td>
+                            			<td><center><%=o.getUnitprice()%></center></td>
+                            			<td><center><%=o.getQtyOrdered()%></center></td>
+                      				</tr>
+                                 <% } %>
 						</thead>
 						<tbody>
 						

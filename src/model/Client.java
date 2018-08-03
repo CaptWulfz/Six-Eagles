@@ -53,7 +53,7 @@ public class Client  implements Serializable{
      * @return the ClientName
      */
     public String getClientName() {
-        return ClientName;
+        return this.ClientName;
     }
 
     /**

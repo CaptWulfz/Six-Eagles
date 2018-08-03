@@ -7,12 +7,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import = "dao.ClientOrderdao" %>
 <%@page import= "model.Orders" %>
+<%@page import = "model.Client" %>
 <%@page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 
 <% 
 
-ArrayList<Orders>order = ClientOrderdao.viewClientOrderdelivered();
+ArrayList<Orders>order = (ArrayList<Orders>) request.getAttribute("ordersList");
+ArrayList<Client> clientList = (ArrayList<Client>) request.getAttribute("clientList");
 
 %>
 
@@ -21,43 +23,47 @@ ArrayList<Orders>order = ClientOrderdao.viewClientOrderdelivered();
 	<body data-spy="scroll" data-target=".navbar" data-offset="50">
 		<div class="area container-fluid">
 		<ol class="breadcrumb">
-	   	    <li><a href="home.jsp">Home</a></li>		
-		    <li><a href = "orders.jsp">Client</a></li>
+	   	    <li><a href="/Six_Eagles/home">Home</a></li>		
+		    <li><a href = "/Six_Eagles/manageOrders">Client</a></li>
 			<li><a class = "active">Archived Client Orders</a></li>
-			<li><a href = "supplyorders.jsp">Supplier</a></li>
+			<li><a href = "/Six_Eagles/viewSupplyOrders">Supplier</a></li>
 		</ol>
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					Orders
 				</div>
 				<div class="panel-body">
-                                    <div class="div-action pull pull-right" style="padding-bottom:20px;">
-					<button class="btn btn-default button1" data-toggle="modal" data-target="#addIngredientModal"> <i class="glyphicon glyphicon-plus-sign"></i> Delivery Receipt Number</button>
+                <div class="div-action pull pull-right" style="padding-bottom:20px;">
+					
 				</div> <!-- /div-action -->
 					<table class="table table-hover" align = "center">
 						<thead>
 							<tr>
                                                             <th><center>Purchase Order No.</center></th>
+                                                            <th><center>Client Name</center></th>
                                                             <th><center>Delivery Receipt No.</center></th>
                                                             <th><center>Order Date</center></th>
                                                             <th><center>Delivery Date</center></th>
                                                             <th><center>Status</center></th>
                                                             <!--<th><center>Comments</center></th>-->
 							</tr>
-                                                        
-                                                        <%
-                                                        for(Orders o : order){
-                                                         %>
-                                                         
-                                                         <tr>
-                                                    <td><center><%=o.getPurchaseOrderNum()%></center></td>
-                                                    <td><center><%=o.getDeliveryrecieptNum()%></center></td>
-                                                    <td><center><%=o.getOrderdate()%></center></td>
-                                                    <td><center><%=o.getDeliverydate()%></center></td>
-                                                    <td><center><%=o.getStatusDetails()%></center></td>
-                                        <td><center><a href="vieworderdetails?code=<%=o.getPurchaseOrderNum()%>"><button class="btn btn-default button1"><i class="glyphicon glyphicon-plus-sign"></i>View Order Details</button></a></center><td>
-                                                </tr>
-                                                <%}%>
+							<% for(int i = 0; i < order.size(); i++) {
+                         		Orders o = order.get(i);
+                        	  	Client c = clientList.get(i); %>
+                                	<tr>
+                                    	<td><center><%=o.getPurchaseOrderNum()%></center></td>
+                                    	<td><center><%=c.getClientName() %></center>
+                                        <td><center><%=o.getDeliveryrecieptNum()%></center></td>
+                                        <td><center><%=o.getOrderdate()%></center></td>
+                                        <td><center><%=o.getDeliverydate()%></center></td>
+                                        <td><center><%=o.getStatusDetails()%></center></td>
+                                		<td>
+                                			<form method = "post" action = "/Six_Eagles/vieworderdetails">
+                                				<center><button type = "submit" name = "submitBtn" value = "<%=o.getPurchaseOrderNum() %>" class="btn btn-default button1"><i class="glyphicon glyphicon-plus-sign"></i>View Order Details</button></center>
+                                			</form>
+                                		<td>
+                                    </tr>
+                             <%}%>
 						</thead>
 						<tbody>
 						

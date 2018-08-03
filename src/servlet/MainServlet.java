@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.ClientOrderdao;
 import dao.SupplierStockService;
 import dao.Supplierdao;
 import dao.clientdao;
@@ -21,6 +22,7 @@ import dao.rawmaterialsdao;
 import dao.supplyorderdetailsdao;
 import dao.supplyordersdao;
 import model.Client;
+import model.Orders;
 import model.SupplierStock;
 import model.ingredients;
 import model.product;
@@ -54,7 +56,10 @@ import url_patterns.URLPatterns;
 			URLPatterns.PRODUCTPHYSICALCOUNT,
 			URLPatterns.REACTIVATEPRODUCT,
 			URLPatterns.VIEWINACTIVEPRODUCTS,
-			URLPatterns.UPDATEINVENTORY
+			URLPatterns.UPDATEINVENTORY,
+			URLPatterns.MANAGEORDERS,
+			URLPatterns.VIEWARCHIVEDCLIENTORDERS,
+			URLPatterns.VIEWSUPPLYORDERS
 			})
 public class MainServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -171,7 +176,68 @@ public class MainServlet extends HttpServlet {
 			case URLPatterns.UPDATEINVENTORY:
 				goToProduceProducts(request, response);
 				break;
+			case URLPatterns.MANAGEORDERS:
+				goToManageOrders(request, response);
+				break;
+			case URLPatterns.VIEWARCHIVEDCLIENTORDERS:
+				goToArchivedClientOrders(request, response);
+				break;
+			case URLPatterns.VIEWSUPPLYORDERS:
+				goToSupplyOrders(request, response);
+				break;
 		}
+	}
+	
+	private void goToSupplyOrders(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		 try {
+			ArrayList<supplyorders>supplyOrders = supplyordersdao.viewSupplyOrders();
+			ArrayList<suppliers>suppliersList =Supplierdao.viewSupplier();
+			request.setAttribute("supplyOrders", supplyOrders);
+			request.setAttribute("suppliersList", suppliersList);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		 
+		 request.getRequestDispatcher("supplyorders.jsp").forward(request, response);
+		 
+	}
+	
+	private void goToArchivedClientOrders(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
+			ArrayList<Orders> ordersList = ClientOrderdao.viewClientOrderdelivered();
+			ArrayList<Client> clientList = new ArrayList<Client>();
+			
+			for (Orders o : ordersList) {
+				Client c = clientdao.getClientByID(o.getClientID());
+				clientList.add(c);
+			}
+			
+			request.setAttribute("clientList", clientList);
+			request.setAttribute("ordersList", ordersList);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		request.getRequestDispatcher("ArchivedClientOrders.jsp").forward(request, response);
+	}
+	
+	private void goToManageOrders(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
+			ArrayList<Orders> ordersList = ClientOrderdao.viewClientOrder();
+			ArrayList<Client> clientList = new ArrayList<Client>();
+			
+			for (Orders o : ordersList) {
+				Client c = clientdao.getClientByID(o.getClientID());
+				clientList.add(c);
+			}
+			
+			request.setAttribute("clientList", clientList);
+			request.setAttribute("ordersList", ordersList);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		request.getRequestDispatcher("orders.jsp").forward(request, response);
 	}
 	
 	private void goToProduceProducts(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
