@@ -455,7 +455,7 @@ public class MainServlet extends HttpServlet {
 	//This is the function for going to the servlet for a new Supplier Order
 	private void addNewSupplierOrder(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
 		ArrayList<suppliers> suppliersList = Supplierdao.viewSupplier();
-		ArrayList<supplyorders> supplyOrdersCart = new ArrayList<supplyorders>();
+		ArrayList<supplyorders> supplyOrdersCart;
 		
 		request.setAttribute("suppliersList",  suppliersList);
 		
@@ -492,8 +492,12 @@ public class MainServlet extends HttpServlet {
 		
 		System.out.println("INDEX IS: " + request.getAttribute("index"));
 		
+		supplyOrdersCart = (ArrayList<supplyorders>) session.getAttribute("supplyOrdersCart");
 		
-		session.setAttribute("supplyOrdersCart", supplyOrdersCart);
+		if (supplyOrdersCart == null) {
+			supplyOrdersCart = new ArrayList<supplyorders>();
+			session.setAttribute("supplyOrdersCart", supplyOrdersCart);
+		}
 		
 		request.getRequestDispatcher("newsupplierorder2.jsp").forward(request, response);
 	}
