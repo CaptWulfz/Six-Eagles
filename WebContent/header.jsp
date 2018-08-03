@@ -66,8 +66,7 @@
         <li id="navSuppliers"><a href="/Six_Eagles/suppliers"><i class="glyphicon glyphicon-apple"></i>  Suppliers</a></li> 
         
         <li id="navBrand"><a href="/Six_Eagles/ingredients"><i class="glyphicon glyphicon-apple"></i>  Ingredients</a></li> 
-        
-        <li id="navBrand"><a href="/Six_Eagles/rawmats"><i class="glyphicon glyphicon-apple"></i>  Raw Materials</a></li>        
+              
 
   <!--      <li id="navCategories"><a href="categories.jsp"> <i class="glyphicon glyphicon-th-list"></i> Category</a></li>       --> 
 

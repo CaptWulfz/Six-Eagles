@@ -56,7 +56,10 @@
                                                     <td><center><%=c.getClientName()%></center></td>
                                                     <td><center><%=c.getAddress()%></center></td>
                                                     <td><center><%=c.getCity()%></center></td>
-                                <td><center><a href="reactivateclient?code=<%=c.getClientID()%>"><button class="btn btn-default button1"> <i class="glyphicon glyphicon-plus-sign"></i> Reactivate</button></a></center></td>
+                                					<td>
+                                						<form metehod = "post" action = "/Six_Eagles/reactivateclient">
+                                							<center><button type = "submit" name = "submitBtn" value = <%=c.getClientID() %> class="btn btn-default button1"> <i class="glyphicon glyphicon-plus-sign"></i> Reactivate</button></center></td>
+                                                		</form>
                                                 </tr>
                                                 <%}%>
 					</thead>

@@ -32,8 +32,7 @@ public class deactivateclient extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -48,17 +47,7 @@ public class deactivateclient extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-        
-        int icode = Integer.parseInt(request.getParameter("code"));
-        
-        try{
-        clientdao.deactivateclient(icode);
-        //request.setAttribute("codew", icode);
-        request.getRequestDispatcher("client.jsp").forward(request, response);
-        }
-        catch(Exception e){}
-        
+    	doPost(request, response); 
     }
 
     /**
@@ -72,7 +61,17 @@ public class deactivateclient extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+    	int icode = Integer.parseInt(request.getParameter("submitBtn"));
+        
+        try{
+        clientdao.deactivateclient(icode);
+        //request.setAttribute("codew", icode);
+        response.sendRedirect("/Six_Eagles/clients");
+        }
+        catch(Exception e){
+        	e.printStackTrace();
+        }
+        
     }
 
     /**

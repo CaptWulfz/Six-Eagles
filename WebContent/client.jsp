@@ -85,8 +85,11 @@
                                                     <td><center><%=c.getClientName()%></center></td>
                                                     <td><center><%=c.getAddress()%></center></td>
                                                     <td><center><%=c.getCity()%></center></td>
-                                <td><center><a href="deactivateclient?code=<%=c.getClientID()%>"><button class="btn btn-default button1"> <i class="glyphicon glyphicon-plus-sign"></i> Deactivate</button></a></center></td>
-                                              
+                                					<td>
+                                						<form method = "post" action = "deactivateclient">
+                                							<center><button type = "submit" name = "submitBtn" value = <%=c.getClientID() %> class="btn btn-default button1"> <i class="glyphicon glyphicon-plus-sign"></i> Deactivate</button></center>
+                                						</form>
+                                					</td>
                                                 </tr>
                                                 <%}
 }

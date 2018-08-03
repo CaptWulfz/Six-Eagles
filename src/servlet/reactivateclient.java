@@ -48,18 +48,7 @@ public class reactivateclient extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-        
-        int icode = Integer.parseInt(request.getParameter("code"));
-        
-        try{
-        clientdao.reactivateclient(icode);
-        //request.setAttribute("codew", icode);
-        request.getRequestDispatcher("reactivateclient.jsp").forward(request, response);
-        }
-        catch(Exception e){}
-        
-        
+    	doPost(request, response);
     }
 
     /**
@@ -73,7 +62,16 @@ public class reactivateclient extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+    	 int icode = Integer.parseInt(request.getParameter("submitBtn"));
+         
+         try{
+         clientdao.reactivateclient(icode);
+         //request.setAttribute("codew", icode);
+         response.sendRedirect("/Six_Eagles/reactivateClient");
+         }
+         catch(Exception e){
+        	 e.printStackTrace();
+         }
     }
 
     /**

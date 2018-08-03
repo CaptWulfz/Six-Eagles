@@ -218,7 +218,7 @@ public class MainServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		request.getRequestDispatcher("reactivateingredient.jsp").forward(request, response);
+		request.getRequestDispatcher("reactivateingredients.jsp").forward(request, response);
 	}
 	
 	private void goToReactivateClientsPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -61,7 +61,11 @@
                                                     <td><center><%=i.getThreshold()%></center></td>
                                                     <td><center><%=i.getCeiling()%></center></td>
                                                     <td><center><%=i.getUnitOfMeasurement()%></center></td>
-                                                    <td><center><a href="reactivateingredient?code=<%=i.getIngredientCode()%>"><button class="btn btn-default button1"> <i class="glyphicon glyphicon-plus-sign"></i> Reactivate</button></a></center></td>
+                                                    <td>
+                                                    	<form method = "post" action = "/Six_Eagles/reactivateingredient">
+                                                    		<center><button type = "submit" name = "submitBtn" value = <%=i.getIngredientCode() %> class="btn btn-default button1"> <i class="glyphicon glyphicon-plus-sign"></i> Reactivate</button></center>
+                                                		</form>
+                                                	</td>
                                                 </tr>
                                                 <%}%>
 					</thead>

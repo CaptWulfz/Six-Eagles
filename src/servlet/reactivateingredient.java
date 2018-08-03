@@ -47,17 +47,7 @@ public class reactivateingredient extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-        
-        int icode = Integer.parseInt(request.getParameter("code"));
-        
-        try{
-        ingredientsdao.reactivateingredient(icode);
-        //request.setAttribute("codew", icode);
-        request.getRequestDispatcher("reactivateingredients.jsp").forward(request, response);
-        }
-        catch(Exception e){}
-        
+        doPost(request, response);
     }
 
     /**
@@ -71,7 +61,17 @@ public class reactivateingredient extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+    	
+    	int icode = Integer.parseInt(request.getParameter("submitBtn"));
+        
+        try{
+        ingredientsdao.reactivateingredient(icode);
+        //request.setAttribute("codew", icode);
+        response.sendRedirect("/Six_Eagles/reactivateIngredient");
+        }
+        catch(Exception e){
+        	e.printStackTrace();
+        }
     }
 
     /**
