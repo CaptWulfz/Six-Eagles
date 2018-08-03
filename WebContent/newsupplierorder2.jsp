@@ -13,7 +13,7 @@
 <!DOCTYPE html>
 
 <% ArrayList<suppliers> suppliersList = (ArrayList<suppliers>) request.getAttribute("suppliersList");
-   ArrayList<ingredients> ingrList = (ArrayList<ingredients>) session.getAttribute("ingrList");
+   ArrayList<ingredients> ingrList = (ArrayList<ingredients>) request.getAttribute("ingrList");
    ArrayList<SupplyOrderItem> supplyOrdersCart = (ArrayList<SupplyOrderItem>) session.getAttribute("supplyOrdersCart");
 %>
 
@@ -58,7 +58,7 @@
 							<label class="control-label col-sm-5" for="col1">Supplier Name:</label>
 							<div class="col-sm-7">
 								<select onchange = "changeSupplierStock()" class = "form-control" id = "supplierName" name = "supplierName" style = "width: 150px">
-									<%	int index = (int) request.getAttribute("index"); 
+									<%	int index = (Integer) request.getAttribute("index"); 
 										int i = 0;
 										for (suppliers s: suppliersList) { %>
 											<option value = "<%=s.getSupplierID()%>" <% if (index == i) { out.print("selected"); } %>><%= s.getSupplierName() %></option>
@@ -70,7 +70,7 @@
 						<div class="form-group">
 							<label class="control-label col-sm-5" for="col1">Supply Order Number:</label>
 							<div class="col-sm-7">
-								<input type="number" min = 0 class="lorem form-control" name = "supplyOrder" id="col1" style="width: 150px;">
+								<input type="number" mi n = 0 class="lorem form-control" name = "supplyOrder" id="col1" style="width: 150px;">
 							</div>
 						</div>
 						<div class="form-group">
