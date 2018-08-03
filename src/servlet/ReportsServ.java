@@ -14,12 +14,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import dao.*;
 import dao.SalesRepdao;
 import excel_writer.ExcelWriter;
 import jxl.write.WriteException;
+import model.ingredients;
+import model.product;
 /**
  *
  * @author AJ's Laptop
@@ -85,6 +90,23 @@ public class ReportsServ extends HttpServlet {
           else if(reportVal==2){
             request.setAttribute("start", Start);
             request.setAttribute("end", End);
+            
+            try {
+				ArrayList<ingredients> ingrList = ingredientsdao.viewIngredientactive();
+				ArrayList<product> prodList = productdao.viewproductactive();
+				
+				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+				LocalDate localDate = LocalDate.now();
+				String dateToday = dtf.format(localDate);
+				
+				request.setAttribute("dateToday", dateToday);
+				request.setAttribute("ingrList", ingrList);
+				request.setAttribute("prodList", prodList);
+				
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
             
             request.getRequestDispatcher("InventoryRep.jsp").forward(request, response);
           }

@@ -8,15 +8,14 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="model.InvenRepRaw"%>
 <%@page import="model.InvenRepIng"%>
+<%@page import = "model.ingredients" %>
+<%@page import = "model.product" %>
 <%@page import="model.InvenRepProd"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <% 
-    String startDate=(String)request.getAttribute("start");
-    String endDate=(String)request.getAttribute("end");
-    ArrayList<InvenRepRaw>inven=invenRepdao.viewInvenRaw(startDate,endDate);
-    ArrayList<InvenRepIng>inven2=invenRepdao.viewInvenIng(startDate,endDate);
-    ArrayList<InvenRepProd>inven3=invenRepdao.viewInvenProd(startDate,endDate);
+    ArrayList<ingredients> ingrList = (ArrayList<ingredients>) request.getAttribute("ingrList");
+    ArrayList<product> prodList = (ArrayList<product>) request.getAttribute("prodList");
     
     
 %>
@@ -35,7 +34,7 @@
 	<div class="col-md-12">
 
 		<ol class="breadcrumb">
-		  <li><a href="home.jsp">Home</a></li>		
+		  <li><a href="/Six_Eagles/home">Home</a></li>		
 		  <li><a class = "active">Sales Report</a></li>
 		</ol>
 
@@ -52,79 +51,62 @@
         <title>Inventory Report</title>
     </head>
     <body>
-        <h1>Inventory Report from:<%=startDate%> to <%=endDate%></h1>
-        <table class="table" id="invenRepTable" name="Raw_table" border="1"> Raw Table:
+        <h2>Inventory Report Today: <%=request.getAttribute("dateToday") %></h2>
+        <table class="table" id="invenRepTable" name="Ing_table" border="1"> <h3>Ingredients:</h3>
 		<thead>
 			<tr>
-                            <th><center>Audit ID</center></th>
-                            <th><center>Raw Code</center></th>
-                            <th><center>Name</center></th>
-                            <th><center>Quantity</center></th>
-                            <th><center>Audit Log</center></th>
-			</tr>                        
-                         <%for(InvenRepRaw c:inven){%>
-                         
-                        <tr>
-                            <td><center><%=c.getAudit_id()%></center></td>
-                            <td><center><%=c.getProdCode()%></center></td>
-                            <td><center><%=c.getAuditNameRaw()%></center></td>
-                            <td><center><%=c.getRW_Quantity()%></center></td>
-                            <td><center><%=c.getAuditLog()%></center></td>
-                            
-                        </tr>
-                        <%}%>
-		</thead>
-	</table>
-          <table class="table" id="invenRepTable" name="Ing_table" border="1">Ingredients Table:
-		<thead>
-			<tr>
-                            <th><center>Audit ID</center></th>
                             <th><center>Ingredient Code</center></th>
-                            <th><center>Name</center></th>
+                            <th><center>Ingredient Name</center></th>
                             <th><center>Quantity</center></th>
-                            <th><center>Audit Log</center></th>
 			</tr>                        
-                         <%for(InvenRepIng c:inven2){%>
+                         <%for(ingredients i : ingrList){%>
                          
                         <tr>
-                            <td><center><%=c.getAudit_id()%></center></td>
-                            <td><center><%=c.getProdCode()%></center></td>
-                            <td><center><%=c.getAuditNameIng()%></center></td>
-                            <td><center><%=c.getRW_Quantity()%></center></td>
-                            <td><center><%=c.getAuditLog()%></center></td>
+                            <td><center><%=i.getIngredientCode()%></center></td>
+                            <td><center><%=i.getIngredientName()%></center></td>
+                            <td><center><%=i.getStock()%></center></td>
                             
                         </tr>
                         <%}%>
 		</thead>
 	</table>
-                <table class="table" id="invenRepTable" name="Prod_table" border="1">Products Table:
+	
+	<table class="table" id="invenRepTable" name="Prod_table" border="1"> <h3>Products:</h3>
 		<thead>
 			<tr>
-                            <th><center>Audit ID</center></th>
                             <th><center>Product Code</center></th>
-                            <th><center>Name</center></th>
-                            <th><center>Quantity</center></th>
-                            <th><center>Audit Log</center></th>
+                            <th><center>Product name</center></th>
+                            <th><center>Available Stock</center></th>
 			</tr>                        
-                         <%for(InvenRepProd c:inven3){%>
+                         <%for(product p :prodList){%>
                          
                         <tr>
-                            <td><center><%=c.getAudit_id()%></center></td>
-                            <td><center><%=c.getProdCode()%></center></td>
-                            <td><center><%=c.getAuditNameProd()%></center></td>
-                            <td><center><%=c.getRW_Quantity()%></center></td>
-                            <td><center><%=c.getAuditLog()%></center></td>
-                            
+                            <td><center><%=p.getProductcode()%></center></td>
+                            <td><center><%=p.getProductname()%></center></td>
+                            <td><center><%=p.getStock()%></center></td>    
                         </tr>
                         <%}%>
 		</thead>
 	</table>
-                  <button onclick="myFunction()" placeholder="Print">Print</button>
-
+                
+     <button onclick="myFunction()" class = "noprint" placeholder="Print">Print</button>
+	
         <script>
             function myFunction() {
             window.print();
             }
         </script>
+        <style>
+        	@media print {
+        		.breadcrumb {
+        			visibility: hidden;
+        		}
+        		
+        		.noprint {
+        			visibility: hidden;
+        		}
+        	}
+        
+        </style>
     </body>
 </html>
