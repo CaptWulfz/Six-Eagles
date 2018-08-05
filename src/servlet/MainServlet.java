@@ -420,9 +420,10 @@ public class MainServlet extends HttpServlet {
 	//This is the function that goes to the Suppliers Page
 	private void goToSuppliersPage(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
 		ArrayList<suppliers> suppliersList = Supplierdao.viewSupplier();
-
+		ArrayList<ingredients> ingrList = ingredientsdao.viewIngredientactive();
 		
 		request.setAttribute("suppliersList", suppliersList);
+		request.setAttribute("ingrList", ingrList);
 		
 		request.getRequestDispatcher("supplier.jsp").forward(request, response);
 		

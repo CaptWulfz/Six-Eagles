@@ -166,7 +166,7 @@
 				    			<div class="col-sm-8">
 									<select class = "form-control" id = "ingredientName" name = "ingredientName" style = "width : 300px">
 				      					<% for (ingredients i : ingrList) { %>
-				      						<option value = "<%=i.getIngredientCode() %>"> <%=i.getIngredientName() %> </option>
+				      						<option value = <%=i.getIngredientCode() %>> <%=i.getIngredientName() %> </option>
 				      					<% } %>
 				      				</select>
 				   				 </div>
