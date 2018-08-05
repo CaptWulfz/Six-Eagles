@@ -61,32 +61,46 @@
       <ul class="nav navbar-nav navbar-right">        
       	<li id="navDashboard"><a href="/Six_Eagles/home"><i class="glyphicon glyphicon-list-alt"></i>  Dashboard</a></li>    
         
-        <li id="navClients"><a href="/Six_Eagles/clients"><i class="glyphicon glyphicon-apple"></i>  Clients</a></li> 
-        
-        <li id="navSuppliers"><a href="/Six_Eagles/suppliers"><i class="glyphicon glyphicon-apple"></i>  Suppliers</a></li> 
-        
-        <li id="navBrand"><a href="/Six_Eagles/ingredients"><i class="glyphicon glyphicon-apple"></i>  Ingredients</a></li> 
-              
+        <% Users user = (Users) session.getAttribute("loginUser"); 
+      		if (user != null) { 
+      			if (user.getPosition().equals("Admin")) { %>
+			        <li id="navClients"><a href="/Six_Eagles/clients"><i class="glyphicon glyphicon-apple"></i>  Clients</a></li> 
+			        
+			        <li id="navSuppliers"><a href="/Six_Eagles/suppliers"><i class="glyphicon glyphicon-apple"></i>  Suppliers</a></li> 
+			        
+			        <li id="navBrand"><a href="/Six_Eagles/ingredients"><i class="glyphicon glyphicon-apple"></i>  Ingredients</a></li> 
+              	
 
   <!--      <li id="navCategories"><a href="categories.jsp"> <i class="glyphicon glyphicon-th-list"></i> Category</a></li>       --> 
 
-        <li id="navProduct"><a href="/Six_Eagles/inventory"> <i class="glyphicon glyphicon-ruble"></i> Product </a></li>     
-
+       				<li id="navProduct"><a href="/Six_Eagles/inventory"> <i class="glyphicon glyphicon-ruble"></i> Product </a></li>     
+				<% } %>
+         	<% } %>
         <li class="dropdown" id="navOrder">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="glyphicon glyphicon-shopping-cart"></i> Orders <span class="caret"></span></a>
-          <ul class="dropdown-menu">            
-            <li id="topNavAddOrder"><a href="/Six_Eagles/newClientOrder"> <i class="glyphicon glyphicon-plus"></i> Add New Client Order</a></li>
-            <li id="topNavAddOrder"><a href="/Six_Eagles/newSupplierOrder"> <i class="glyphicon glyphicon-plus"></i> Add New Supplier Order</a></li>            
+          <ul class="dropdown-menu">           
+          <%  
+      		if (user != null) { 
+      			if (user.getPosition().equals("Admin")) { %> 
+		            <li id="topNavAddOrder"><a href="/Six_Eagles/newClientOrder"> <i class="glyphicon glyphicon-plus"></i> Add New Client Order</a></li>
+		            <li id="topNavAddOrder"><a href="/Six_Eagles/newSupplierOrder"> <i class="glyphicon glyphicon-plus"></i> Add New Supplier Order</a></li> 
+                <% } %>
+         	<% } %>       
             <li id="topNavManageOrder"><a href="/Six_Eagles/manageOrders"> <i class="glyphicon glyphicon-edit"></i> Manage Orders</a></li>            
           </ul>
         </li> 
 		
-        <li id="navReport"><a href="/Six_Eagles/manageReports"> <i class="glyphicon glyphicon-check"></i> Report </a></li>
-
+		 <%  
+      		if (user != null) { 
+      			if (user.getPosition().equals("Admin")) { %> 
+		
+        		<li id="navReport"><a href="/Six_Eagles/manageReports"> <i class="glyphicon glyphicon-check"></i> Report </a></li>
+		 <% } %>
+         	<% } %>  
         <li class="dropdown" id="navSetting">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="glyphicon glyphicon-user"></i> <span class="caret"></span></a>
           <ul class="dropdown-menu">
-          <% Users user = (Users) session.getAttribute("loginUser");
+          <%
     		if (user != null) { 
     			if (user.getPosition().equals("Admin")) { %>
 					<li id ="topNavAddUser"><a href = "/Six_Eagles/createUser"><i class="glyphicon glyphicon-plus"></i> Update User Credentials</a></li>
