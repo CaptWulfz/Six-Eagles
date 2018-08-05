@@ -50,18 +50,10 @@ ArrayList<product> prodList = (ArrayList<product>) request.getAttribute("prodLis
                       				</tr>
                                  <% } %>
 						</thead>
-						<tbody>
-						
-						</tbody>
 					</table>
 				</div>
 			</div>
 		</div>
-		
-						
-											
-		
-		
 	</body>
 	<style>
 		body {

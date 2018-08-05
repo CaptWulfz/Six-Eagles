@@ -1,14 +1,17 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import = "dao.SalesRepdao" %>
+<%@page import= "model.Orders" %>
+<%@page import = "model.Client" %>
 <%@page import = "model.salesRep" %>
 
 <!DOCTYPE html>
 <%
     String startDate=(String)request.getAttribute("start");
     String endDate=(String)request.getAttribute("end");
-    ArrayList<salesRep>cl=SalesRepdao.viewSales2(startDate,endDate);
-    ArrayList<salesRep>cl2=SalesRepdao.viewSales(startDate,endDate);
+    ArrayList<Orders>order = (ArrayList<Orders>) request.getAttribute("ordersList");
+    ArrayList<Client> clientList = (ArrayList<Client>) request.getAttribute("clientList");
+
 %>
 <html>
     <jsp:include page="header.jsp"/>
@@ -31,48 +34,44 @@
 
 		<div class="panel panel-default">
 			<div class="panel-heading">
-			<div class="page-heading"><b>Sales Report</b></div>
+			<div class="page-heading"><b>Client Sales Report</b></div>
 			</div> <!-- /panel-heading -->
 			<div class="panel-body">
 				<div class="div-action pull pull-right" style="padding-bottom:20px;">
 				</div> <!-- /div-action -->				
 				<div class="col-sm-10">
-        <h1>Sales Report from:<%=startDate%> to <%=endDate%></h1>
-        <table class="table" id="salesRepTable" name="SR_table" border="1">
-		<thead>
-			<tr>
-                            <th><center>Product Code</center></th>
-                            <th><center>Product Name</center></th>
-                            <th><center>Delivery Date</center></th>
-                            <th><center>Quantity Ordered</center></th>
-			</tr>                        
-                         <%for(salesRep c:cl){%>
-                        <tr>
-                            <td><center><%=c.getProdCode()%></center></td>
-                            <td><center><%=c.getProdName()%></center></td>
-                            <td><center><%=c.getDeliveryDate()%></center></td>
-                            <td><center><%=c.getQuantityOrdered()%></center></td>
-                        </tr>
-                        <%}%>
-		</thead>
-	</table>
-        <table class="table" id="salesRepTable2" name="SR_table2" border="1">
-		<thead>
-			<tr>
-                            <th><center>Product Code</center></th>
-                            <th><center>Product Name</center></th>
-                            <th><center>Total</center></th>
-			</tr>                        
-                         <%for(salesRep c:cl2){%>
-                        <tr>
-                            <td><center><%=c.getProdCode()%></center></td>
-                            <td><center><%=c.getProdName()%></center></td>
-                            <td><center><%=c.getTotal()%></center></td>
-                        </tr>
-                        <%}%>
-		</thead>
-	</table>
-              <button onclick="myFunction()" placeholder="Print">Print</button>
+        <h2>Sales Report from:<%=startDate%> to <%=endDate%></h2>
+        <table class="table table-hover" align = "center">
+						<thead>
+							<tr>
+	                            <th><center>Purchase Order No.</center></th>
+	                            <th><center>Client Name</center></th>
+	                            <th><center>Delivery Receipt No.</center></th>
+	                            <th><center>Order Date</center></th>
+	                            <th><center>Delivery Date</center></th>
+	                            <th><center>Status</center></th>
+							</tr>
+							<% for(int i = 0; i < order.size(); i++) {
+                         		Orders o = order.get(i);
+                        	  	Client c = clientList.get(i); %>
+                                	<tr>
+                                    	<td><center><%=o.getPurchaseOrderNum()%></center></td>
+                                    	<td><center><%=c.getClientName() %></center>
+                                        <td><center><%=o.getDeliveryrecieptNum()%></center></td>
+                                        <td><center><%=o.getOrderdate()%></center></td>
+                                        <td><center><%=o.getDeliverydate()%></center></td>
+                                        <td><center><%=o.getStatusDetails()%></center></td>
+                                		<td>
+                                			<form method = "post" action = "/Six_Eagles/vieworderdetails">
+                                				<center><button type = "submit" name = "submitBtn" value = "<%=o.getPurchaseOrderNum() %>" class="btn btn-default button1"><i class="glyphicon glyphicon-plus-sign"></i>View Order Details</button></center>
+                                			</form>
+                                		<td>
+                                    </tr>
+                             <%}%>
+						</thead>
+					</table>
+        
+              <button onclick="myFunction()"  class = "noprint">Print</button>
 
         <script>
             function myFunction() {
@@ -97,6 +96,20 @@
 
 	</body>
 	<style>
+		@media print {
+	   		.breadcrumb {
+	   			visibility: hidden;
+	   		}
+	   		
+	   		.btn {
+	   			visibility: hidden;
+	   		}
+	   		
+	   		.noprint {
+	   			visibility: hidden;
+	   		}
+	   	}
+			
 		body {
 			position: relative;
 			background-color: #1E88E5;	

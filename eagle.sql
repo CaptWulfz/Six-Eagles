@@ -127,7 +127,7 @@ CREATE TABLE `ingredients` (
 
 LOCK TABLES `ingredients` WRITE;
 /*!40000 ALTER TABLE `ingredients` DISABLE KEYS */;
-INSERT INTO `ingredients` VALUES (111,'Flour',500.00,100,NULL,1000,NULL,'Kg','Active'),(112,'Eggs',315.00,100,NULL,1000,NULL,'Dozen','Active'),(113,'Chocolate',175.00,100,NULL,1000,NULL,'Kg','Active'),(114,'Rice',550.00,100,NULL,1000,NULL,'Kg','Active'),(115,'Cheese',275.00,100,NULL,500,NULL,'Kg','Active'),(116,'Ham',265.00,100,NULL,500,NULL,'Kg','Active'),(117,'Noodles',450.00,100,NULL,1000,NULL,'Kg','Active'),(121,'Sugar',600.00,100,NULL,1000,NULL,'Kg','Active'),(122,'Butter',0.00,100,NULL,1000,NULL,'Kg','active');
+INSERT INTO `ingredients` VALUES (111,'Flour',512.00,100,NULL,1000,NULL,'Kg','Active'),(112,'Eggs',315.00,100,NULL,1000,NULL,'Dozen','Active'),(113,'Chocolate',175.00,100,NULL,1000,NULL,'Kg','Active'),(114,'Rice',550.00,100,NULL,1000,NULL,'Kg','Active'),(115,'Cheese',275.00,100,NULL,500,NULL,'Kg','Active'),(116,'Ham',265.00,100,NULL,500,NULL,'Kg','Active'),(117,'Noodles',450.00,100,NULL,1000,NULL,'Kg','Active'),(121,'Sugar',600.00,100,NULL,1000,NULL,'Kg','Active'),(122,'Butter',0.00,100,NULL,1000,NULL,'Kg','active');
 /*!40000 ALTER TABLE `ingredients` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -217,7 +217,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,10000016,101,1,'2018-08-07','2018-08-08',2,'Delivered',NULL),(11,10000016,101,2,'2018-08-08','2018-08-09',2,'Delivered',NULL),(165,10000018,101,3,'2018-08-09','2018-08-10',2,'Delivered',NULL),(888,10000018,101,5,'2018-08-08','2018-08-08',2,'Processing',NULL),(1234,10000022,101,6,'2018-07-16','2018-07-31',2,'Processing',NULL),(4567,10000016,1,7,'2018-08-02','2018-08-03',2,'Processing',NULL),(4848,10000016,101,8,'2018-08-08','2018-08-09',2,'Processing',NULL),(5454,10000016,101,9,'2018-08-08','2018-08-09',2,'Processing',NULL),(12345,10000018,101,10,'2018-09-08','2018-09-09',2,'Processing',NULL),(45687,10000017,101,11,'2018-09-08','2018-09-08',2,'Processing',NULL),(56564,10000016,101,12,'2018-08-08','2018-08-08',2,'Processing',NULL),(91567,10000018,101,13,'2018-08-08','2018-08-08',2,'Processing',NULL),(741,10000016,1,14,'2018-08-16','2018-08-17',2,'Processing',NULL),(159764,10000016,1,15,'2018-08-02','2018-08-03',2,'Processing',NULL),(159754,10000016,1,16,'2018-08-02','2018-08-03',2,'Processing',NULL),(4957,10000016,1,24,'2018-08-02','2018-08-03',2,'Processing',NULL),(1679,10000016,1,25,'2018-08-02','2018-08-03',2,'Processing',NULL),(16497,10000016,1,26,'2018-08-02','2018-08-03',2,'Processing',NULL),(66354,10000016,1,27,'2018-08-03','2018-08-04',2,'Processing',NULL),(14657,10000016,1,28,'2018-08-02','2018-08-03',2,'Processing',NULL),(78961,10000016,1,29,'2018-08-02','2018-08-03',2,'Processing',NULL),(78943,10000016,1,30,'2018-08-02','2018-08-03',2,'Processing',NULL),(1789,10000016,1,31,'2018-08-05','2018-08-06',2,'Processing',NULL);
+INSERT INTO `orders` VALUES (1,10000016,101,1,'2018-08-07','2018-08-08',2,'Delivered',NULL),(11,10000016,101,2,'2018-08-08','2018-08-09',2,'Delivered',NULL),(165,10000018,101,3,'2018-08-09','2018-08-10',2,'Delivered',NULL),(888,10000018,101,5,'2018-08-08','2018-08-08',2,'Delivered',NULL),(1234,10000022,101,6,'2018-07-16','2018-07-31',2,'Processing',NULL),(4567,10000016,1,7,'2018-08-02','2018-08-03',2,'Processing',NULL),(4848,10000016,101,8,'2018-08-08','2018-08-09',2,'Processing',NULL),(5454,10000016,101,9,'2018-08-08','2018-08-09',2,'Processing',NULL),(12345,10000018,101,10,'2018-09-08','2018-09-09',2,'Processing',NULL),(45687,10000017,101,11,'2018-09-08','2018-09-08',2,'Processing',NULL),(56564,10000016,101,12,'2018-08-08','2018-08-08',2,'Processing',NULL),(91567,10000018,101,13,'2018-08-08','2018-08-08',2,'Processing',NULL),(741,10000016,1,14,'2018-08-16','2018-08-17',2,'Processing',NULL),(159764,10000016,1,15,'2018-08-02','2018-08-03',2,'Processing',NULL),(159754,10000016,1,16,'2018-08-02','2018-08-03',2,'Processing',NULL),(4957,10000016,1,24,'2018-08-02','2018-08-03',2,'Processing',NULL),(1679,10000016,1,25,'2018-08-02','2018-08-03',2,'Processing',NULL),(16497,10000016,1,26,'2018-08-02','2018-08-03',2,'Processing',NULL),(66354,10000016,1,27,'2018-08-03','2018-08-04',2,'Processing',NULL),(14657,10000016,1,28,'2018-08-02','2018-08-03',2,'Processing',NULL),(78961,10000016,1,29,'2018-08-02','2018-08-03',2,'Processing',NULL),(78943,10000016,1,30,'2018-08-02','2018-08-03',2,'Processing',NULL),(1789,10000016,1,31,'2018-08-05','2018-08-06',2,'Processing',NULL);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -454,7 +454,7 @@ CREATE TABLE `supplierstock` (
   `ingredientID` int(11) NOT NULL,
   PRIMARY KEY (`supplierstockID`),
   UNIQUE KEY `supplierIngredientID_UNIQUE` (`supplierstockID`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -463,7 +463,7 @@ CREATE TABLE `supplierstock` (
 
 LOCK TABLES `supplierstock` WRITE;
 /*!40000 ALTER TABLE `supplierstock` DISABLE KEYS */;
-INSERT INTO `supplierstock` VALUES (1,1,111),(2,2,112),(3,3,115),(4,4,114),(6,3,117);
+INSERT INTO `supplierstock` VALUES (3,3,115),(4,4,114),(6,3,117);
 /*!40000 ALTER TABLE `supplierstock` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -491,7 +491,7 @@ CREATE TABLE `supplyorderdetails` (
 
 LOCK TABLES `supplyorderdetails` WRITE;
 /*!40000 ALTER TABLE `supplyorderdetails` DISABLE KEYS */;
-INSERT INTO `supplyorderdetails` VALUES (789,111,12.00,'Kg'),(1054,511,10.00,'Dozen'),(4561,114,15.00,'Kg'),(5867,111,1.00,'Kg');
+INSERT INTO `supplyorderdetails` VALUES (789,111,12.00,'Kg'),(1054,112,10.00,'Dozen'),(1645,117,10.00,'Kg'),(4561,114,15.00,'Kg'),(4657,111,15.00,'Kg'),(5867,111,1.00,'Kg');
 /*!40000 ALTER TABLE `supplyorderdetails` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -506,14 +506,14 @@ CREATE TABLE `supplyorders` (
   `DeliveryReceiptNo` int(20) unsigned NOT NULL AUTO_INCREMENT,
   `SupplyOrderNum` int(20) NOT NULL,
   `SupplierID` int(20) NOT NULL,
-  `OrderDate` datetime NOT NULL,
+  `OrderDate` date NOT NULL,
   `DeliveryDate` date NOT NULL,
   `StatusID` int(11) NOT NULL,
   `StatusDetails` varchar(45) NOT NULL,
   `Comments` longtext,
   PRIMARY KEY (`DeliveryReceiptNo`,`SupplierID`),
   KEY `fk_SupplyOrders_Suppliers1_idx` (`SupplierID`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -522,7 +522,7 @@ CREATE TABLE `supplyorders` (
 
 LOCK TABLES `supplyorders` WRITE;
 /*!40000 ALTER TABLE `supplyorders` DISABLE KEYS */;
-INSERT INTO `supplyorders` VALUES (1,789,1,'2018-08-09 00:00:00','2018-08-10',2,'Processing',''),(4,1054,1,'2018-08-02 00:00:00','2018-08-03',2,'Processing',''),(5,5461,4,'2018-08-02 00:00:00','2018-08-03',2,'Processing',''),(7,5867,1,'2018-08-01 00:00:00','2018-08-02',2,'Processing','');
+INSERT INTO `supplyorders` VALUES (1,789,1,'2018-08-09','2018-08-10',2,'Delivered',''),(4,1054,1,'2018-08-02','2018-08-03',2,'Processing',''),(5,4561,4,'2018-08-02','2018-08-03',2,'Processing',''),(7,5867,1,'2018-08-01','2018-08-02',2,'Processing',''),(8,1645,3,'2018-08-05','2018-08-06',2,'Processing',''),(9,4657,3,'2018-08-06','2018-08-10',2,'Processing','');
 /*!40000 ALTER TABLE `supplyorders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -553,7 +553,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Rovi Elijah','Soriano','RSoriano','Rovi','Admin','Taft Ave Manila','3adb6c0a20b54375b54609445934e54d'),(2,'Anjelo','Padua','AnjeloP','padu','Staff','Taft Ave Manila','741b64fa32f14cb2a490a158a44602c2'),(6,'Jarod','Martinez','Jarom','jaru','Staff','Makati City',NULL);
+INSERT INTO `users` VALUES (1,'Rovi Elijah','Soriano','RSoriano','Rovi','Admin','Taft Ave Manila','b36c7437a36846a695f8b5fb5490acd9'),(2,'Anjelo','Padua','AnjeloP','padu','Staff','Taft Ave Manila','741b64fa32f14cb2a490a158a44602c2'),(6,'Marlo','Lar','Marlar','mar','Staff','Makati City',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -566,4 +566,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-05 22:17:53
+-- Dump completed on 2018-08-06  7:29:01

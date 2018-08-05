@@ -103,6 +103,36 @@ public class Usersdao {
     	return u;
     }
     
+    public static Users getUserByUserPosition(String position) {
+    	Connection c = dbconnect.getDBConnection();
+    	String sql = "SELECT * FROM eagle.users WHERE Position = ?;";
+    	
+    	Users u = null;
+    	
+    	try {
+    		PreparedStatement p = c.prepareStatement(sql);
+    		p.setString(1, position);
+    		ResultSet rs = p.executeQuery();
+    		if (rs != null) {
+	    		while (rs.next()) {
+	    			u = new Users(rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
+		    		u.setUserId(rs.getInt(1));
+		    		u.setUserhash(rs.getString(8));
+	    		}
+    		}
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	} finally {
+    		try {
+    			c.close();
+    		} catch (SQLException e) {
+    			e.printStackTrace();
+    		}
+    	}
+    	
+    	return u;
+    }
+    
     public static void updateUserHash(Users u) {
     	Connection c = dbconnect.getDBConnection();
     	String sql = "UPDATE eagle.users SET Userhash = ? WHERE UserID = ?";
@@ -113,6 +143,33 @@ public class Usersdao {
     		PreparedStatement p = c.prepareStatement(sql);
     		p.setString(1, u.getUserhash());
     		p.setInt(2, u.getUserId());
+    		p.executeUpdate();
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	} finally {
+    		try {
+    			c.close();
+    		} catch (SQLException e) {
+    			e.printStackTrace();
+    		}
+    	}
+    	
+    }
+    
+    public static void updateUser(Users u) {
+    	Connection c = dbconnect.getDBConnection();
+    	String sql = "UPDATE eagle.users SET Firstname = ?, Lastname = ?, Username = ?, Password = ?, Address = ? WHERE UserID = ?";
+    	
+    	System.out.println(sql);
+    	
+    	try {
+    		PreparedStatement p = c.prepareStatement(sql);
+    		p.setString(1, u.getFirstname());
+    		p.setString(2, u.getLastname());
+    		p.setString(3, u.getUsername());
+    		p.setString(4, u.getPassword());
+    		p.setString(5, u.getAddress());
+    		p.setInt(6, u.getUserId());
     		p.executeUpdate();
     	} catch (Exception e) {
     		e.printStackTrace();

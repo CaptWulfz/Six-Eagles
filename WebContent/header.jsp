@@ -89,7 +89,7 @@
           <% Users user = (Users) session.getAttribute("loginUser");
     		if (user != null) { 
     			if (user.getPosition().equals("Admin")) { %>
-					<li id ="topNavAddUser"><a href = "/Six_Eagles/createUser"><i class="glyphicon glyphicon-plus"></i>Create Users</a></li>
+					<li id ="topNavAddUser"><a href = "/Six_Eagles/createUser"><i class="glyphicon glyphicon-plus"></i> Update User Credentials</a></li>
 			 	<% } %>
             <li id="topNavSetting"><a href="setting.jsp"> <i class="glyphicon glyphicon-wrench"></i> Setting</a></li>            
             <li id="topNavLogout"><a href="/Six_Eagles/logOut"> <i class="glyphicon glyphicon-log-out"></i> Logout</a></li>            

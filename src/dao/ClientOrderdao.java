@@ -196,6 +196,43 @@ public class ClientOrderdao {
     
         }
     
+    public static ArrayList<Orders> viewClientOrderByRange(String start, String end) throws SQLException
+    {
+        ArrayList<Orders>Orders=new ArrayList();
+        Connection c=dbconnect.getDBConnection();
+        String sql="SELECT PURCHASEORDERNO, CLIENTID, DELIVERYRECEIPTNO, ORDERDATE, DELIVERYDATE, STATUSDETAILS FROM eagle.orders Where statusdetails='delivered' AND OrderDate >= ? AND OrderDate <= ?;";
+        
+        try
+        {
+        
+        PreparedStatement pStmt=c.prepareCall(sql);
+        pStmt.setString(1, start);
+        pStmt.setString(2, end);
+        ResultSet rs=pStmt.executeQuery();
+         while (rs.next()){
+             Orders.add(new Orders(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getString(4),rs.getString(5), rs.getString(6)));
+             
+         }
+         
+         System.out.println("good1");
+        }catch(Exception e){
+        
+            e.printStackTrace();
+        }finally
+        {
+            if(c!=null)
+            { 
+                try
+                {
+                    c.close();
+                }catch(Exception e){}
+            }
+        }
+        
+        return Orders;
+
+    }
+    
     
     public static boolean changestatus(int code, String status)throws SQLException
         {

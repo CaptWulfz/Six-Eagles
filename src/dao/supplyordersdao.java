@@ -24,6 +24,76 @@ import model.suppliers;
  */
 public class supplyordersdao 
 {
+	
+	public static ArrayList<supplyorders> viewSupplyOrdersByEndDate(String endDate)throws SQLException
+    {
+        ArrayList<supplyorders>supplyorders=new ArrayList();
+        Connection c=dbconnect.getDBConnection();
+        String sql="SELECT suppliers.suppliername,suppliers.supplierid, supplyorders.deliveryreceiptno,supplyorders.orderdate,supplyorders.deliverydate,supplyorders.statusdetails,supplyorders.comments, supplyorders.supplyordernum FROM eagle.supplyorders JOIN suppliers ON supplyorders.SupplierID=suppliers.SupplierID where statusdetails='Processing' AND DeliveryDate = ?;";
+        
+         try
+        {
+	        PreparedStatement pStmt=c.prepareCall(sql);
+	        pStmt.setString(1, endDate);
+	        ResultSet rs=pStmt.executeQuery();
+         while (rs.next()){
+             supplyorders.add(new supplyorders(rs.getString(1),rs.getInt(2),rs.getInt(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getInt(8)));
+         }
+         
+         System.out.println("good1");
+        }catch(Exception e){
+        
+            e.printStackTrace();
+        }finally
+        {
+            if(c!=null)
+            { 
+                    try
+                {
+                    c.close();
+                }catch(Exception e){}
+            }
+        }
+         
+        return supplyorders;
+
+    }
+	
+	public static ArrayList<supplyorders> viewSupplyOrdersByRange(String startDate, String endDate)throws SQLException
+    {
+        ArrayList<supplyorders>supplyorders=new ArrayList();
+        Connection c=dbconnect.getDBConnection();
+        String sql="SELECT suppliers.suppliername,suppliers.supplierid, supplyorders.deliveryreceiptno,supplyorders.orderdate,supplyorders.deliverydate,supplyorders.statusdetails,supplyorders.comments, supplyorders.supplyordernum FROM eagle.supplyorders JOIN suppliers ON supplyorders.SupplierID=suppliers.SupplierID where statusdetails='processing' AND DeliveryDate >= ? AND DeliveryDate <= ?;";
+        
+         try
+        {
+	        PreparedStatement pStmt=c.prepareCall(sql);
+	        pStmt.setString(1, startDate);
+	        pStmt.setString(2, endDate);
+	        ResultSet rs=pStmt.executeQuery();
+         while (rs.next()){
+             supplyorders.add(new supplyorders(rs.getString(1),rs.getInt(2),rs.getInt(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getInt(8)));
+         }
+         
+         System.out.println("good1");
+        }catch(Exception e){
+        
+            e.printStackTrace();
+        }finally
+        {
+            if(c!=null)
+            { 
+                    try
+                {
+                    c.close();
+                }catch(Exception e){}
+            }
+        }
+         
+        return supplyorders;
+
+    }
+	
     public static ArrayList<supplyorders> viewSupplyOrders()throws SQLException
         {
             ArrayList<supplyorders>supplyorders=new ArrayList();
@@ -53,11 +123,7 @@ public class supplyordersdao
                     }catch(Exception e){}
                 }
             }
-        //return ingredients;
-        
-            
-            
-            
+             
             return supplyorders;
     
         }

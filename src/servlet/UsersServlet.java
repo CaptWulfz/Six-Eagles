@@ -16,7 +16,8 @@ import url_patterns.URLPatterns;
  * Servlet implementation class UsersServlet
  */
 @WebServlet({"/UsersServlet",
-			 URLPatterns.ADDUSERTODB})
+			 URLPatterns.ADDUSERTODB,
+			 URLPatterns.UPDATEUSER})
 public class UsersServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -44,7 +45,27 @@ public class UsersServlet extends HttpServlet {
 		case URLPatterns.ADDUSERTODB:
 			addUserToDB(request, response);
 			break;
+		case URLPatterns.UPDATEUSER:
+			updateUser(request, response);
+			break;
 		}
+	}
+	
+	private void updateUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		
+		Users u = (Users) session.getAttribute("updatedUser");
+		
+		Usersdao.updateUser(u);
+		
+		Users currUser = (Users) session.getAttribute("loginUser");
+		if (currUser.getPosition().equals(u.getPosition())) {
+			session.setAttribute("loginUser", u);
+		}
+		
+		session.setAttribute("updatedUser", null);
+		
+		response.sendRedirect("/Six_Eagles/home");
 	}
 	
 	private void addUserToDB(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

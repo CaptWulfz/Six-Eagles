@@ -69,6 +69,11 @@
 				                                <td><center><%=s.getAddress()%></center></td>
 				                                <td><center><%=s.getCity()%></center></td>
 				                                <td><center><%=s.getContact()%></center></td>
+				                                <td>
+				                                	<form method = "post" action = "/Six_Eagles/viewSupplierStock">
+				                                		<center><button type = "submit" name = "submitBtn" value = <%=s.getSupplierID() %> class="btn btn-default button1"> <i class="glyphicon glyphicon-plus-sign"></i> View Supplier Stock</button></center>
+				                                	</form>
+				                                </td>
 				                            </tr>
 			                            <%}%>
 								</thead>

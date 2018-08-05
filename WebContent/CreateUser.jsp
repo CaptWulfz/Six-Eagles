@@ -26,7 +26,7 @@
 		<div class="area container-fluid">
 			<div class="panel panel-default" style="width: 100%; margin-left: 5%;">
 				<div class="panel-heading">
-					<b>Create User</b>
+					<b>Update User Credentials</b>
 				</div>
 				<div class = "messages">
 					
@@ -35,48 +35,61 @@
 						<div class="form-group">
 							<label class="control-label col-sm-5" for="col1">Firstname:</label>
 							<div class="col-sm-7">
-								<input type="text" class="lorem form-control" name = "Firstname" id="col1" style="width: 300px;">
+								<input type="text" class="lorem form-control" name = "Firstname" id="col1" style="width: 300px;" required>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-sm-5" for="col1">Lastname:</label>
 							<div class="col-sm-7">
-								<input type="text" class="lorem form-control" name = "Lastname" id="col1" style="width: 300px;">
+								<input type="text" class="lorem form-control" name = "Lastname" id="col1" style="width: 300px;" required>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="control-label col-sm-5" for="col1">Username:</label>
+							<label class="control-label col-sm-5" for="col1">Old Username:</label>
 							<div class="col-sm-7">
-								<input type="text" class="lorem form-control" name = "Username" id="col1" style="width: 300px;">
+								<input type="text" class="lorem form-control" name = "OldUsername" id="col1" style="width: 300px;" required>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="control-label col-sm-5" for="col1">Password:</label>
+							<label class="control-label col-sm-5" for="col1">New Username:</label>
 							<div class="col-sm-7">
-								<input type="password" class="lorem form-control" name = "Password" id="col1" style="width: 300px;">
+								<input type="text" class="lorem form-control" name = "Username" id="col1" style="width: 300px;" required>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-sm-5" for="col1">Old Password:</label>
+							<div class="col-sm-7">
+								<input type="password" class="lorem form-control" name = "OldPassword" id="col1" style="width: 300px;" required>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-sm-5" for="col1">New Password:</label>
+							<div class="col-sm-7">
+								<input type="password" class="lorem form-control" name = "Password" id="col1" style="width: 300px;" required>
 							</div>
 						</div>
 						
 						<div class="form-group">
 							<label class="control-label col-sm-5" for="col1">Re-Enter Password:</label>
 							<div class="col-sm-7">
-								<input type="password" class="lorem form-control" name = "RePassword" id="col1" style="width: 300px;">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-sm-5" for="col2">Staff Position: </label>
-							<div class="col-sm-7">
-								<select class="form-control" id="productName" name="Position" style = "width : 300px">
-									<option value = ""></option>
-									<option value = "Admin">Admin</option>
-									<option value = "Staff">Staff</option>										
-								</select>
+								<input type="password" class="lorem form-control" name = "RePassword" id="col1" style="width: 300px;" required>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-sm-5" for="col1">Address:</label>
 							<div class="col-sm-7">
-								<input type="text" class="lorem form-control" name = "Address" id="col1" style="width: 300px;">
+								<input type="text" class="lorem form-control" name = "Address" id="col1" style="width: 300px;" required>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label col-sm-5" for="col2">Staff Position to Update: </label>
+							<div class="col-sm-7">
+								<select class="form-control" id="productName" name="Position" style = "width : 300px" required>
+									<option value = ""></option>
+									<option value = "Admin">Admin</option>
+									<option value = "Staff">Plant Head</option>										
+								</select>
 							</div>
 						</div>
 						

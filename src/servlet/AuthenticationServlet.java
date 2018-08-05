@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.Usersdao;
+import model.Users;
 import url_patterns.URLPatterns;
 
 /**
@@ -75,33 +77,38 @@ public class AuthenticationServlet extends HttpServlet {
 			//getInputData
 			String firstName = request.getParameter("Firstname");
 			String lastName = request.getParameter("Lastname");
+			String oldUserName = request.getParameter("OldUsername");
 			String userName = request.getParameter("Username");
+			String oldPassword = request.getParameter("OldPassword");
 			String password = request.getParameter("Password");
 			String rePassword = request.getParameter("RePassword");
 			String position = request.getParameter("Position");
 			String address = request.getParameter("Address");
+		
+			Users u =Usersdao.getUserByUsername(oldUserName);
 			
-			String[] inputsList = new String[7];
-			inputsList[0] = firstName;
-			inputsList[1] = lastName;
-			inputsList[2] = userName;
-			inputsList[3] = password;
-			inputsList[4] = rePassword;
-			inputsList[5] = position;
-			inputsList[6] = address;
+			System.out.println(u.getPassword() + " AND " + oldPassword);
 			
-			if (!checkForEmptyString(inputsList)) {
-				if (password.equals(rePassword)) {
-					session.setAttribute("inputsList", inputsList);
-					response.sendRedirect("/Six_Eagles/addUserToDB");
+			if (u != null) {
+				if (u.getPassword().equals(oldPassword)) {
+					if (password.equals(rePassword)) {
+						Users updatedUser = new Users(firstName, lastName, userName, password, position, address);
+						updatedUser.setUserId(u.getUserId());
+						session.setAttribute("updatedUser", updatedUser);
+						response.sendRedirect("/Six_Eagles/updateUser");
+					} else {
+						session.setAttribute("errorMessage", "Password and Confirm Password do not match!!!");
+						response.sendRedirect("/Six_Eagles/createUser");
+					}
 				} else {
-					session.setAttribute("errorMessage", "Password and Confirm Password do not match!!!");
+					session.setAttribute("errorMessage", "Old Password is incorrect!!!");
 					response.sendRedirect("/Six_Eagles/createUser");
 				}
 			} else {
-				session.setAttribute("errorMessage", "Some fields are empty!!!");
+				session.setAttribute("errorMessage", "No Such User!!!");
 				response.sendRedirect("/Six_Eagles/createUser");
 			}
+	
 			
 		} else if (actionToDo.equals("cancelUserRequest"))
 			response.sendRedirect("/Six_Eagles/home");

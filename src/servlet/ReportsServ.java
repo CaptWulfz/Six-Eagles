@@ -20,9 +20,10 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import dao.*;
-import dao.SalesRepdao;
 import excel_writer.ExcelWriter;
 import jxl.write.WriteException;
+import model.Client;
+import model.Orders;
 import model.ingredients;
 import model.product;
 /**
@@ -80,11 +81,22 @@ public class ReportsServ extends HttpServlet {
           if(reportVal==1){
             request.setAttribute("start", Start);
             request.setAttribute("end", End);
+         
             try {
-                SalesRepdao.viewSales(Start, End);
-            } catch (SQLException ex) {
-                Logger.getLogger(ReportsServ.class.getName()).log(Level.SEVERE, null, ex);
-            }
+    			ArrayList<Orders> ordersList = ClientOrderdao.viewClientOrderByRange(Start, End);
+    			ArrayList<Client> clientList = new ArrayList<Client>();
+    			
+    			for (Orders o : ordersList) {
+    				Client c = clientdao.getClientByID(o.getClientID());
+    				clientList.add(c);
+    			}
+    			
+    			request.setAttribute("clientList", clientList);
+    			request.setAttribute("ordersList", ordersList);
+    		} catch (SQLException e) {
+    			e.printStackTrace();
+    		}
+
             request.getRequestDispatcher("SalesRep2.jsp").forward(request, response);
           }
           else if(reportVal==2){

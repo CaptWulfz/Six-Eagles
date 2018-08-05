@@ -34,4 +34,7 @@ public class URLPatterns {
 	public final static String VIEWSUPPLYORDERS = "/viewSupplyOrders";
 	public final static String MANAGEREPORTS = "/manageReports";
 	public final static String VIEWARCHIVEDSUPPLYORDERS = "/viewArchivedSupplyOrders";
+	public final static String VIEWSUPPLIERSTOCK = "/viewSupplierStock";
+	public final static String REMOVESTOCKINGREDIENT = "/removeStockIngredient";
+	public final static String UPDATEUSER = "/updateUser";
 }

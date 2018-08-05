@@ -82,5 +82,24 @@ public class SupplierStockService {
 			return stockList;
 		
 	}
+	
+	public static void removeSupplierStockByStockID(int stockID) {
+		Connection c = dbconnect.getDBConnection();
+		String sql = "DELETE FROM eagle.supplierstock WHERE supplierstockID = ?;";
+		
+		try {
+			PreparedStatement p = c.prepareStatement(sql);
+			p.setInt(1, stockID);
+			p.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				c.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}	
+	}
 
 }

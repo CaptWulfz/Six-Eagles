@@ -24,9 +24,9 @@ ArrayList<Client> clientList = (ArrayList<Client>) request.getAttribute("clientL
 		<div class="area container-fluid">
 		<ol class="breadcrumb">
 	   	    <li><a href="/Six_Eagles/home">Home</a></li>		
-		    <li><a href = "/Six_Eagles/manageOrders">Client</a></li>
+		    <li><a href = "/Six_Eagles/manageOrders">Client Orders</a></li>
 			<li><a class = "active">Archived Client Orders</a></li>
-			<li><a href = "/Six_Eagles/viewSupplyOrders">Supplier</a></li>
+			<li><a href = "/Six_Eagles/viewSupplyOrders">Supplier Orders</a></li>
 			<li><a href = "/Six_Eagles/viewArchivedSupplyOrders">Archived Supply Orders</a></li>
 		</ol>
 			<div class="panel panel-default">
@@ -40,13 +40,12 @@ ArrayList<Client> clientList = (ArrayList<Client>) request.getAttribute("clientL
 					<table class="table table-hover" align = "center">
 						<thead>
 							<tr>
-                                                            <th><center>Purchase Order No.</center></th>
-                                                            <th><center>Client Name</center></th>
-                                                            <th><center>Delivery Receipt No.</center></th>
-                                                            <th><center>Order Date</center></th>
-                                                            <th><center>Delivery Date</center></th>
-                                                            <th><center>Status</center></th>
-                                                            <!--<th><center>Comments</center></th>-->
+	                            <th><center>Purchase Order No.</center></th>
+	                            <th><center>Client Name</center></th>
+	                            <th><center>Delivery Receipt No.</center></th>
+	                            <th><center>Order Date</center></th>
+	                            <th><center>Delivery Date</center></th>
+	                            <th><center>Status</center></th>
 							</tr>
 							<% for(int i = 0; i < order.size(); i++) {
                          		Orders o = order.get(i);
@@ -66,9 +65,6 @@ ArrayList<Client> clientList = (ArrayList<Client>) request.getAttribute("clientL
                                     </tr>
                              <%}%>
 						</thead>
-						<tbody>
-						
-						</tbody>
 					</table>
                                 </div>
                         </div>
@@ -131,7 +127,7 @@ ArrayList<Client> clientList = (ArrayList<Client>) request.getAttribute("clientL
 		</div>
 					
 		
-		
+		</div>
 	</body>
 	<style>
 		body {

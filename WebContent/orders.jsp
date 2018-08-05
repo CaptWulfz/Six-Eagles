@@ -32,9 +32,9 @@ ArrayList<Client> clientList = (ArrayList<Client>) request.getAttribute("clientL
 		<div class="area container-fluid">
 			<ol class="breadcrumb">
 		   	    <li><a href="/Six_Eagles/home">Home</a></li>		
-			    <li><a class = "active">Client</a></li>
+			    <li><a class = "active">Client Orders</a></li>
 				<li><a href = "/Six_Eagles/viewArchivedClientOrders">Archived Client Orders</a></li>
-				<li><a href = "/Six_Eagles/viewSupplyOrders">Supplier</a></li>
+				<li><a href = "/Six_Eagles/viewSupplyOrders">Supplier Orders</a></li>
 				<li><a href = "/Six_Eagles/viewArchivedSupplyOrders">Archived Supply Orders</a></li>
 			</ol>
 			<div class="panel panel-default">

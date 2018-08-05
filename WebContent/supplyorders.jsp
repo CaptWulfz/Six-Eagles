@@ -31,9 +31,9 @@
 		<div class="area container-fluid">
 		<ol class="breadcrumb">
 	   	    <li><a href="/Six_Eagles/home">Home</a></li>		
-		    <li><a href = "/Six_Eagles/manageOrders">Client</a></li>
+		    <li><a href = "/Six_Eagles/manageOrders">Client Orders</a></li>
             <li><a href = "/Six_Eagles/viewArchivedClientOrders">Archived Client Orders</a></li>
-			<li><a class = "active">Supplier</a></li>
+			<li><a class = "active">Supplier Orders</a></li>
             <li><a href = "/Six_Eagles/viewArchivedSupplyOrders">Archived Supply Orders</a></li>
 		</ol>
 			<div class="panel panel-default">

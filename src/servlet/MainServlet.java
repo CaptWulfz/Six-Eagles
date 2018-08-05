@@ -63,7 +63,9 @@ import url_patterns.URLPatterns;
 			URLPatterns.VIEWARCHIVEDCLIENTORDERS,
 			URLPatterns.VIEWSUPPLYORDERS,
 			URLPatterns.MANAGEREPORTS,
-			URLPatterns.VIEWARCHIVEDSUPPLYORDERS
+			URLPatterns.VIEWARCHIVEDSUPPLYORDERS,
+			URLPatterns.VIEWSUPPLIERSTOCK,
+			URLPatterns.REMOVESTOCKINGREDIENT
 			})
 public class MainServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -194,7 +196,53 @@ public class MainServlet extends HttpServlet {
 				break;
 			case URLPatterns.VIEWARCHIVEDSUPPLYORDERS:
 				goToArchivedSupplyOrders(request, response);
+				break;
+			case URLPatterns.VIEWSUPPLIERSTOCK:
+				goToSupplierStock(request, response);
+				break;
+			case URLPatterns.REMOVESTOCKINGREDIENT:
+				removeStockIngredient(request, response);
+				break;
 		}
+	}
+	
+	private void removeStockIngredient(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		int stockID = Integer.parseInt(request.getParameter("submitButton"));
+		
+		System.out.println("STOCK ID is: " + stockID);
+		
+		SupplierStockService.removeSupplierStockByStockID(stockID);
+		
+		response.sendRedirect("/Six_Eagles/suppliers");
+	}
+	
+	private void goToSupplierStock(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		int supplierID = Integer.parseInt(request.getParameter("submitBtn"));
+		
+		ArrayList<SupplierStock> stockList =  new ArrayList<SupplierStock>();
+		ArrayList<ingredients> ingrList = new ArrayList<ingredients>();
+		suppliers sp = Supplierdao.getSupplierFromId(supplierID);
+		
+		stockList = SupplierStockService.getSupplierStockBySupplierID(supplierID);
+		
+		if (stockList != null) {
+			for (SupplierStock s : stockList) {
+				ingredients i = ingredientsdao.getIngredientByCode(s.getIngredientID());
+				ingrList.add(i);
+			}
+			
+		}
+		
+		
+		request.setAttribute("stockList", stockList);
+		request.setAttribute("ingrList", ingrList);
+		request.setAttribute("supplier", sp);
+		
+		
+		request.getRequestDispatcher("supplierstocks.jsp").forward(request, response);
+		
 	}
 	
 	private void goToArchivedSupplyOrders(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -447,6 +495,46 @@ public class MainServlet extends HttpServlet {
 			request.setAttribute("message", message);
 			session.setAttribute("message", null);
 		}
+		
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate localDate = LocalDate.now();
+		
+		String dateToday = dtf.format(localDate);
+		String dateNextWeek = dtf.format(localDate.plusDays(7));
+		
+		request.setAttribute("dateToday", dateToday);
+		request.setAttribute("dateNextWeek", dateNextWeek);
+		
+		 try {
+				ArrayList<supplyorders>supplyOrders = supplyordersdao.viewSupplyOrdersByEndDate(dateToday);
+				ArrayList<suppliers>suppliersList = new ArrayList<suppliers>();
+				
+				for (supplyorders s : supplyOrders) {
+					suppliers sp = Supplierdao.getSupplierFromId(s.getSupplierID());
+					suppliersList.add(sp);
+				}
+				
+				request.setAttribute("supplyOrders", supplyOrders);
+				request.setAttribute("suppliersList", suppliersList);
+				
+				ArrayList<supplyorders>supplyOrdersRange = supplyordersdao.viewSupplyOrdersByRange(dateToday, dateNextWeek);
+				ArrayList<suppliers>suppliersListRange = new ArrayList<suppliers>();
+				
+				System.out.println("SIZE: " + supplyOrdersRange.size());
+				System.out.println("SIZE2: " + suppliersListRange.size());
+				
+				for (supplyorders s : supplyOrdersRange) {
+					suppliers sp = Supplierdao.getSupplierFromId(s.getSupplierID());
+					suppliersListRange.add(sp);
+				}
+				
+				
+				
+				request.setAttribute("supplyOrdersRange", supplyOrdersRange);
+				request.setAttribute("suppliersListRange", suppliersListRange);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 
 		request.getRequestDispatcher("home.jsp").forward(request, response);		
 	}

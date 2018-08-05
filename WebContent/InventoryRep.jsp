@@ -24,7 +24,7 @@
     <script src="jquery-3.3.1.min.js"></script>
      <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Inventory Report</title>
+        <title>Six Eagles</title>
     </head>
     <script>
 			$(document).ready(function(){
@@ -34,22 +34,22 @@
 			 function myFunction() {
 		            window.print();
 		     }
-	</script>	
-    <body data-spy="scroll" data-target=".navbar" data-offset="50">
+	</script>
+	
+	<body data-spy="scroll" data-target=".navbar" data-offset="50">
 		<div class = "area container-fluid">
 			<ol class="breadcrumb">
 			  <li><a href="/Six_Eagles/home">Home</a></li>		
 			  <li><a class = "active">Sales Report</a></li>
 			</ol>
-
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<div class="page-heading"><b>Inventory Report</b></div>
-				</div> <!-- /panel-heading -->
+					Inventory Report
+				</div>
 				<div class="panel-body">
-			        <h2>Inventory Report Today: <%=request.getAttribute("dateToday") %></h2>
-			        <h3>Ingredients:</h3>
-			        <table class="table" id="invenRepTable" border="1"> 
+					<h2>Inventory Report Today: <%=request.getAttribute("dateToday") %></h2>
+					<h3>Ingredients:</h3>
+					<table class="table" id="invenRepTable" border="1"> 
 						<thead>
 							<tr>
 	                            <th><center>Ingredient Code</center></th>
@@ -83,21 +83,20 @@
                         	<%}%>
 						</thead>
 					</table>
-                
-     				<button onclick="myFunction()" class = "noprint" placeholder="Print">Print</button>
+					<button onclick="myFunction()" class = "noprint" placeholder="Print">Print</button>
 				</div>
 			</div>
 		</div>
-    </body>
-     <style>
-       	@media print {
-       		.breadcrumb {
-       			visibility: hidden;
-       		}
-       		
-       		.noprint {
-       			visibility: hidden;
-       		}
-       	}
-     </style>
+	</body>
+    <style>
+	   	@media print {
+	   		.breadcrumb {
+	   			visibility: hidden;
+	   		}
+	   		
+	   		.noprint {
+	   			visibility: hidden;
+	   		}
+	   	}
+    </style>
 </html>

@@ -6,7 +6,18 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import = "model.Users" %>
+<%@page import="model.suppliers"%>
+<%@page import="model.supplyorders"%>
+<%@page import="java.util.ArrayList"%>
 <!DOCTYPE html>
+<%
+ArrayList<supplyorders>sord = (ArrayList<supplyorders>) request.getAttribute("supplyOrders");
+ArrayList<suppliers>sup = (ArrayList<suppliers>) request.getAttribute("suppliersList");
+
+ArrayList<supplyorders>sordRange = (ArrayList<supplyorders>) request.getAttribute("supplyOrdersRange");
+ArrayList<suppliers>supRange = (ArrayList<suppliers>) request.getAttribute("suppliersListRange");
+
+%>
 <jsp:include page="header.jsp"/>
 <html>
     <head>
@@ -28,44 +39,9 @@
     <link rel="stylesheet" href="assests/plugins/fullcalendar/fullcalendar.print.css" media="print">
 
 <body onload = "displayMessage()">
-	<div class="row">
+	
 		
-		<div class="col-md-4">
-			<div class="panel panel-success">
-				<div class="panel-heading">
-					
-					<a href="inventory.jsp" style="text-decoration:none;color:black;">
-						Total Products
-						<span class="badge pull pull-right"></span>	
-					</a>
-					
-				</div> <!--/panel-hdeaing-->
-			</div> <!--/panel-->
-		</div> <!--/col-md-4-->
-	
-			<div class="col-md-4">
-				<div class="panel panel-info">
-				<div class="panel-heading">
-					<a href="orders.jsp?o=manord" style="text-decoration:none;color:black;">
-						Total Orders
-						<span class="badge pull pull-right"></span>
-					</a>
-						
-				</div> <!--/panel-hdeaing-->
-			</div> <!--/panel-->
-			</div> <!--/col-md-4-->
-	
-		<div class="col-md-4">
-			<div class="panel panel-danger">
-				<div class="panel-heading">
-					<a href="inventory.jsp" style="text-decoration:none;color:black;">
-						Low Stock
-						<span class="badge pull pull-right"></span>	
-					</a>
-					
-				</div> <!--/panel-hdeaing-->
-			</div> <!--/panel-->
-		</div> <!--/col-md-4-->
+		
 	
 		<div class="col-md-4">
 			<div class="card">
@@ -103,17 +79,79 @@
 	
 		<div class="col-md-8">
 			<div class="panel panel-default">
-				<div class="panel-heading"> <i class="glyphicon glyphicon-calendar"></i> Calendar</div>
-				<div class="panel-body">
-					<div id="calendar"></div>
+				<div class="panel-heading"> <i class="glyphicon glyphicon-calendar"></i> Due Today: <%=request.getAttribute("dateToday") %></div>
+				<div class="panel-body"> 
+					<table class="table table-hover" align = "center">
+						<thead>
+							<tr>
+								<th><center>Supplier Order No. </center></th>
+								<th><center>Supplier</center></th>
+								<th><center>Delivery Receipt No.</center></th>
+								<th><center>Order Date</center></th>
+								<th><center>Delivery Date</center></th>
+								<th><center>Status</center></th>
+							</tr>
+                                                        
+                             <%for(int i = 0; i < sord.size(); i++) { 
+                               	 supplyorders s = sord.get(i);
+                               	 suppliers sp = sup.get(i);				%>
+	                             <tr>
+	                                 <td><center><%=s.getSupplyOrderNum()%></center></td>
+	                                 <td><center><%=sp.getSupplierName() %></center></td>
+	                                 <td><center><%=s.getDeliveryReceiptNo()%></center></td>
+	                                 <td><center><%=s.getOrderDate()%></center></td>
+	                                 <td><center><%=s.getDeliveryDate()%></center></td>
+	                                 <td><center><%=s.getStatusDetails()%></center></td>
+	             					 <td>
+	             					 	<form method = "post" action = "/Six_Eagles/viewsupplyorderdetails">
+	             					 		<center><button type = "submit" name = "submitBtn" value = <%=s.getSupplyOrderNum()%> class="btn btn-default button1"><i class="glyphicon glyphicon-plus-sign"></i> View Supply Order Details</button></center>
+	                             		</form>
+	                             	<td>
+	                             </tr>
+                             <% } %>
+						</thead>
+					</table>
 				</div>	
 			</div>
+		</div> <!--/row-->
 			
+			<div class="col-md-8">
+			<div class="panel panel-default">
+				<div class="panel-heading"> <i class="glyphicon glyphicon-calendar"></i> Due From: <%=request.getAttribute("dateToday") %> To: <%=request.getAttribute("dateNextWeek") %></div>
+				<div class="panel-body">
+					<table class="table table-hover" align = "center">
+						<thead>
+							<tr>
+								<th><center>Supplier Order No. </center></th>
+								<th><center>Supplier</center></th>
+								<th><center>Delivery Receipt No.</center></th>
+								<th><center>Order Date</center></th>
+								<th><center>Delivery Date</center></th>
+								<th><center>Status</center></th>
+							</tr>
+                                                        
+                             <%	for(int i = 0; i < sordRange.size(); i++) { 
+                               	 supplyorders s = sordRange.get(i);
+                               	 suppliers sp = supRange.get(i);				%>
+	                             <tr>
+	                                 <td><center><%=s.getSupplyOrderNum()%></center></td>
+	                                 <td><center><%=sp.getSupplierName() %></center></td>
+	                                 <td><center><%=s.getDeliveryReceiptNo()%></center></td>
+	                                 <td><center><%=s.getOrderDate()%></center></td>
+	                                 <td><center><%=s.getDeliveryDate()%></center></td>
+	                                 <td><center><%=s.getStatusDetails()%></center></td>
+	             					 <td>
+	             					 	<form method = "post" action = "/Six_Eagles/viewsupplyorderdetails">
+	             					 		<center><button type = "submit" name = "submitBtn" value = <%=s.getSupplyOrderNum()%> class="btn btn-default button1"><i class="glyphicon glyphicon-plus-sign"></i> View Supply Order Details</button></center>
+	                             		</form>
+	                             	<td>
+	                             </tr>
+                             <% } %>
+						</thead>
+					</table>
+				</div>	
+			</div>
 		</div>
-	
-		
-	</div> <!--/row-->
-
 </body>
 <!-- fullCalendar 2.2.5 -->
 <script src="assests/plugins/moment/moment.min.js"></script>
@@ -121,27 +159,7 @@
 
 
 <script type="text/javascript">
-	$(function () {
-			// top bar active
-	$('#navDashboard').addClass('active');
-
-      //Date for the calendar events (dummy data)
-      var date = new Date();
-      var d = date.getDate(),
-      m = date.getMonth(),
-      y = date.getFullYear();
-
-      $('#calendar').fullCalendar({
-        header: {
-          left: '',
-          center: 'title'
-        },
-        buttonText: {
-          today: 'today',
-          month: 'month'          
-        }        
-      });
-		
+	$(
       <% String message = (String) request.getAttribute("message");
 	   System.out.println("THE MESSAGE IS: " + message);
 	   if (message != null) { %>
