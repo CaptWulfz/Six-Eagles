@@ -30,12 +30,13 @@ ArrayList<Client> clientList = (ArrayList<Client>) request.getAttribute("clientL
 	</head>
 	<body data-spy="scroll" data-target=".navbar" data-offset="50">
 		<div class="area container-fluid">
-		<ol class="breadcrumb">
-	   	    <li><a href="/Six_Eagles/home">Home</a></li>		
-		    <li><a class = "active">Client</a></li>
-			<li><a href = "/Six_Eagles/viewArchivedClientOrders">Archived Client Orders</a></li>
-			<li><a href = "/Six_Eagles/viewSupplyOrders">Supplier</a></li>
-		</ol>
+			<ol class="breadcrumb">
+		   	    <li><a href="/Six_Eagles/home">Home</a></li>		
+			    <li><a class = "active">Client</a></li>
+				<li><a href = "/Six_Eagles/viewArchivedClientOrders">Archived Client Orders</a></li>
+				<li><a href = "/Six_Eagles/viewSupplyOrders">Supplier</a></li>
+				<li><a href = "/Six_Eagles/viewArchivedSupplyOrders">Archived Supply Orders</a></li>
+			</ol>
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					Orders
@@ -80,6 +81,7 @@ ArrayList<Client> clientList = (ArrayList<Client>) request.getAttribute("clientL
 					</table>
                                 </div>
                         </div>
+                       </div> 
                                                 
 <div class="modal fade" id="addIngredientModal" tabindex="-1" role="dialog">
   <div class="modal-dialog">
@@ -96,7 +98,7 @@ ArrayList<Client> clientList = (ArrayList<Client>) request.getAttribute("clientL
 	         	<label class="col-sm-1 control-label">: </label>
 	            <div class="col-sm-8">
 	
-	           		<select class="form-control" id="pono" name="pono" style = "width : 300px">
+	           		<select class="form-control" id="pono" name="pono" style = "width : 300px" required>
                     	<% for(Orders o : order) { %>
 	                    	<option value="<%=o.getPurchaseOrderNum()%>"> <%=o.getPurchaseOrderNum()%> </option>
 						<% } %>
@@ -109,7 +111,7 @@ ArrayList<Client> clientList = (ArrayList<Client>) request.getAttribute("clientL
 	         <label class="col-sm-1 control-label">: </label>
 	             <div class="col-sm-8">
 	
-	                 <select class="form-control" id="status" name="status" style = "width : 300px">
+	                 <select class="form-control" id="status" name="status" style = "width : 300px" required>
 	                     <option value="Late"> Late </option>
 	                     <option value="Processing"> Processing </option>
 	                     <option value="Delivered"> Delivered </option>

@@ -62,7 +62,8 @@ import url_patterns.URLPatterns;
 			URLPatterns.MANAGEORDERS,
 			URLPatterns.VIEWARCHIVEDCLIENTORDERS,
 			URLPatterns.VIEWSUPPLYORDERS,
-			URLPatterns.MANAGEREPORTS
+			URLPatterns.MANAGEREPORTS,
+			URLPatterns.VIEWARCHIVEDSUPPLYORDERS
 			})
 public class MainServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -191,7 +192,28 @@ public class MainServlet extends HttpServlet {
 			case URLPatterns.MANAGEREPORTS:
 				goToReportsPage(request, response);
 				break;
+			case URLPatterns.VIEWARCHIVEDSUPPLYORDERS:
+				goToArchivedSupplyOrders(request, response);
 		}
+	}
+	
+	private void goToArchivedSupplyOrders(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		 try {
+				ArrayList<supplyorders>supplyOrders = supplyordersdao.viewSupplyOrdersdelivered();
+				ArrayList<suppliers>suppliersList = new ArrayList<suppliers>();
+				
+				for (supplyorders s : supplyOrders) {
+					suppliers sp = Supplierdao.getSupplierFromId(s.getSupplierID());
+					suppliersList.add(sp);
+				}
+				
+				request.setAttribute("supplyOrders", supplyOrders);
+				request.setAttribute("suppliersList", suppliersList);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			 
+			 request.getRequestDispatcher("Archivedsupplyorders.jsp").forward(request, response);
 	}
 	
 	private void goToReportsPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -212,7 +234,13 @@ public class MainServlet extends HttpServlet {
 	private void goToSupplyOrders(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 try {
 			ArrayList<supplyorders>supplyOrders = supplyordersdao.viewSupplyOrders();
-			ArrayList<suppliers>suppliersList =Supplierdao.viewSupplier();
+			ArrayList<suppliers>suppliersList = new ArrayList<suppliers>();
+			
+			for (supplyorders s : supplyOrders) {
+				suppliers sp = Supplierdao.getSupplierFromId(s.getSupplierID());
+				suppliersList.add(sp);
+			}
+			
 			request.setAttribute("supplyOrders", supplyOrders);
 			request.setAttribute("suppliersList", suppliersList);
 		} catch (SQLException e) {

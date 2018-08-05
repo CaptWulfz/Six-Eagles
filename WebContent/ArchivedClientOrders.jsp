@@ -27,6 +27,7 @@ ArrayList<Client> clientList = (ArrayList<Client>) request.getAttribute("clientL
 		    <li><a href = "/Six_Eagles/manageOrders">Client</a></li>
 			<li><a class = "active">Archived Client Orders</a></li>
 			<li><a href = "/Six_Eagles/viewSupplyOrders">Supplier</a></li>
+			<li><a href = "/Six_Eagles/viewArchivedSupplyOrders">Archived Supply Orders</a></li>
 		</ol>
 			<div class="panel panel-default">
 				<div class="panel-heading">

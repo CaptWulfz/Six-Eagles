@@ -7,12 +7,16 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import dao.*;
+import model.ingredients;
+import model.supplyorderdetails;
 /**
  *
  * @author wacke
@@ -48,18 +52,7 @@ public class viewsupplyorderdetails extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-        
-        int icode = Integer.parseInt(request.getParameter("code"));
-        
-        try{
-        supplyorderdetailsdao.viewsupplyorderdetails(icode);
-        request.setAttribute("codew", icode);
-        request.getRequestDispatcher("viewsupplyorder.jsp").forward(request, response);
-        }
-        catch(Exception e){}
-        
-        
+       doPost(request, response);
     }
 
     /**
@@ -73,7 +66,23 @@ public class viewsupplyorderdetails extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+    	int icode = Integer.parseInt(request.getParameter("submitBtn"));
+    	
+        try{
+	        ArrayList<supplyorderdetails> sord = supplyorderdetailsdao.viewsupplyorderdetails(icode);
+	        ArrayList<ingredients> ingrList = new ArrayList<ingredients>();
+	        for (supplyorderdetails s : sord) {
+	        	ingredients i = ingredientsdao.getIngredientByCode(s.getIngredientCode());
+	        	ingrList.add(i);
+	        }
+	        request.setAttribute("sord", sord);
+	        request.setAttribute("ingrList", ingrList);
+	        
+	        request.getRequestDispatcher("viewsupplyorder.jsp").forward(request, response);
+        }
+        catch(Exception e){
+        	e.printStackTrace();
+        }
     }
 
     /**

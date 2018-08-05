@@ -6,17 +6,15 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="dao.Supplierdao"%>
-<%@page import="model.suppliers"%>
+<%@page import="model.ingredients"%>
 <%@page import="model.supplyorderdetails"%>
 <%@page import="dao.supplyorderdetailsdao"%>
 <%@page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 
 <%
-    int code = (Integer)request.getAttribute("codew");
-    
-    ArrayList<supplyorderdetails>sord=supplyorderdetailsdao.viewsupplyorderdetails(code);
-    ArrayList<suppliers>sup=Supplierdao.viewSupplier();
+    ArrayList<supplyorderdetails>sord = (ArrayList<supplyorderdetails>) request.getAttribute("sord");
+    ArrayList<ingredients> ingrList= (ArrayList<ingredients>) request.getAttribute("ingrList");
     
 %>
 
@@ -24,49 +22,36 @@
     <jsp:include page="header.jsp"/>
 	<body data-spy="scroll" data-target=".navbar" data-offset="50">
 		<div class="area container-fluid">
-		<ol class="breadcrumb">
-	   	    <li><a href="home.jsp">Home</a></li>		
-		    <li><a href = "orders.jsp">Client</a></li>
-			<li><a class = "active">Supplier</a></li>
-		</ol>
+			<ol class="breadcrumb">
+		   	    <li><a href="/Six_Eagles/home">Home</a></li>
+			</ol>
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					Orders
+					Order Details of Supply Order: <%=sord.get(0).getSupplyOrderNum() %>
 				</div>
 				<div class="panel-body">
-                                    	<div class="div-action pull pull-right" style="padding-bottom:20px;">
-                                            <button class="btn btn-default button1" data-toggle="modal" data-target="#addSupplyOrderModal"> <i class="glyphicon glyphicon-plus-sign"></i> Add Supply Order</button>
-                                        </div> <!-- /div-action -->
+					<div class="panel-body">
 					<table class="table table-hover" align = "center">
 						<thead>
 							<tr>
-								<th><center>Supplier ID </center></th>
-								<th><center>Delivery Receipt No.</center></th>
-								<th><center>Order Date</center></th>
-								<th><center>Delivery Date</center></th>
-								<th><center>Status</center></th>
-								<th><center>Comments</center></th>
+	                            <th><center>Product Name</center></th>
+	                            <th><center>Quantity Ordered</center></th>
+	                            <!--<th><center>Comments</center></th>-->
 							</tr>
-                                                        
-                                                        <%for(supplyorderdetails s : sord)
-                                                          
-                                                        
-                                                        {
-                                                        
-                                                                                                                                                                                
-                                                    
-                                                         %>
-                                                        <tr>
-                                                            <td><center><%=s.getRawMaterialCode()%></center></td>
-                                                            <td><center><%=s.getQuantity()%></center></td>
-                                                            <td><center><%=s.getUnit()%></center></td>
-                                                        </tr>
-                                                        <%}%>
+                            	<% for(int i = 0; i < sord.size(); i++) { 
+                              		supplyorderdetails sd = sord.get(i);
+                              		ingredients ingr = ingrList.get(i);					%>
+                               		<tr>
+                            			<td><center><%=ingr.getIngredientName()%></center></td>
+                            			<td><center><%=sd.getQuantity()%></center></td>
+                      				</tr>
+                                 <% } %>
 						</thead>
 						<tbody>
-							
+						
 						</tbody>
 					</table>
+				</div>
 				</div>
 			</div>
 		</div>

@@ -24,18 +24,17 @@ ArrayList<product> prodList = (ArrayList<product>) request.getAttribute("prodLis
     <jsp:include page="header.jsp"/>
 	<body data-spy="scroll" data-target=".navbar" data-offset="50">
 		<div class="area container-fluid">
-		<ol class="breadcrumb">
-	   	    <li><a href="home.jsp">Home</a></li>
-		</ol>
+			<ol class="breadcrumb">
+		   	    <li><a href="/Six_Eagles/home">Home</a></li>
+			</ol>
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					Orders
+					Order Details of Purchase Order: <%=orderdetails.get(0).getPurchaseOrderNum()%>
 				</div>
 				<div class="panel-body">
 					<table class="table table-hover" align = "center">
 						<thead>
 							<tr>
-	                            <th><center>Purchase Order No.</center></th>
 	                            <th><center>Product Code</center></th>
 	                            <th><center>Unit Price</center></th>
 	                            <th><center>Quantity Ordered</center></th>
@@ -45,7 +44,6 @@ ArrayList<product> prodList = (ArrayList<product>) request.getAttribute("prodLis
                               		OrderDetails o = orderdetails.get(i);
                               		product p = prodList.get(i);					%>
                                		<tr>
-                           				<td><center><%=o.getPurchaseOrderNum()%></center></td>
                             			<td><center><%=p.getProductname()%></center></td>
                             			<td><center><%=o.getUnitprice()%></center></td>
                             			<td><center><%=o.getQtyOrdered()%></center></td>

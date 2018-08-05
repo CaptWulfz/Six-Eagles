@@ -14,7 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.*;
 import model.*;
-import dao.*; 
+import dao.*;
+
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 /**
@@ -51,7 +53,7 @@ public class changesupplyorderstatus extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        doPost(request, response);
     }
 
     /**
@@ -70,17 +72,22 @@ public class changesupplyorderstatus extends HttpServlet {
         int code = Integer.parseInt(request.getParameter("pono"));
         String status = request.getParameter("status");
         
-        
         try {
-            if(supplyordersdao.changestatus(code, status)){
-                //session.setAttribute("NewOrder", NewOrder);
-                request.getRequestDispatcher("supplyorders.jsp").forward(request, response);
-                
-            }
-            else{
-                 
-                request.getRequestDispatcher("home.jsp").forward(request, response);
-            }
+           supplyordersdao.changestatus(code, status);
+           
+           System.out.println(status);
+           
+           if (status.equals("Delivered")) {
+        	   ArrayList<supplyorderdetails> sord = supplyorderdetailsdao.viewsupplyorderdetails(code);
+        	   for (supplyorderdetails s : sord) {
+        		   ingredients i = ingredientsdao.getIngredientByCode(s.getIngredientCode());
+        		   double newQty = i.getStock() + s.getQuantity();
+        		   ingredientsdao.updateIngredientQuantity(i.getIngredientCode(), newQty);
+        	   }
+        	   
+           }
+           
+           response.sendRedirect("/Six_Eagles/viewSupplyOrders");
         } catch (SQLException ex) {
             Logger.getLogger(changesupplyorderstatus.class.getName()).log(Level.SEVERE, null, ex);
         }

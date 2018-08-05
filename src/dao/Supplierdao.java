@@ -96,6 +96,24 @@ public class Supplierdao {
     	
     	return supplierName;
     }
+    
+    public static suppliers getSupplierFromId(int id) {
+    	suppliers s = null;
+    	Connection c = dbconnect.getDBConnection();
+    	String sql = "Select * FROM eagle.suppliers WHERE SupplierID = ?";
+    	try {
+    		PreparedStatement ps = c.prepareCall(sql);
+    		ps.setInt(1, id);
+    		
+    		ResultSet rs = ps.executeQuery();
+    		while (rs.next())
+    			s = new suppliers(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	
+    	return s;
+    }
 
     
 }

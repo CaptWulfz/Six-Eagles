@@ -37,6 +37,26 @@ public class ingredientsdao {
 		}
 	}
 	
+	public static void updateIngredientQuantity(int code, double newQty) {
+		Connection c = dbconnect.getDBConnection();
+		String sql = "update ingredients set stock = ? where ingredientcode = ?;";
+		
+		try {
+			PreparedStatement p = c.prepareStatement(sql);
+			p.setDouble(1, newQty);
+			p.setInt(2, code);
+			p.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				c.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
      public static boolean addNewIngredients(ingredients ing){
         boolean b=false;
         Connection connect = dbconnect.getDBConnection();
