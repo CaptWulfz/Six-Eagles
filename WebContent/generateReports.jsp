@@ -6,58 +6,57 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <html>
-    <jsp:include page="header.jsp"/>
-    <script src="jquery-3.3.1.min.js"></script>
-    <body da ta-spy="scroll" data-target=".navbar" data-offset="50">
-        
-		<script>
-			$(document).ready(function(){
-			$('[data-toggle="popover"]').popover(); 
-			}); 
-		</script>	
-<div class="modal-header">
-	<div class="row">
-	<div class="col-md-12">
-
-		<ol class="breadcrumb">
-		  <li><a href="home.jsp">Home</a></li>		
-		  <li><a class = "active">Sales Report</a></li>
-		</ol>
-
-		<div class="panel panel-default">
-			<div class="panel-heading">
-			<div class="page-heading"><b>Sales Report</b></div>
-			</div> <!-- /panel-heading -->
-			<div class="panel-body">
-				<div class="div-action pull pull-right" style="padding-bottom:20px;">
-								
-				<div class="col-sm-10">
-                               
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Generate Report</title>
     </head>
-    <body>
-        <form action="ReportsServ" method="POST" name="viewReport">
-           Report Coverage:</br>
-           <input type="date" name="start">-<input type="date" name="end"></br>
-           Type of Report:</br>
-            <select id="drop" name="drop">
-               <option Value=1>Sales Report</option>
-               <option Value=2>Inventory Report</option>
-            </select>
-           </br>
-          <input type="submit" value="submit"></br>
-        </form>
+    <jsp:include page="header.jsp"/>
+    <script src="jquery-3.3.1.min.js"></script>
+    <script>
+			$(document).ready(function(){
+			$('[data-toggle="popover"]').popover(); 
+			}); 
+	</script>	
+    <body da ta-spy="scroll" data-target=".navbar" data-offset="50">
+		<div class="area container-fluid">
+			<ol class="breadcrumb">
+			  <li><a href="home.jsp">Home</a></li>		
+			  <li><a class = "active">Sales Report</a></li>
+			</ol>
+			<div id = "generateReports" class = "panel panel-default" style = "width: 100%; margin-left: 0%">
+				<div class = "panel-heading">
+					Generate Reports
+				</div>
+				<div class = "messages">
+					<div class = "panel-body">
+						<form class="form-horizontal" action="ReportsServ" method="POST" name="viewReport">
+					    	<div class = "form-group">
+					    		<label class = "control-label col-sm-5" for = "col1">Report Coverage From:</label>
+					    		<div class="col-sm-7">
+									<input type="date" class="sit form-control" id="ddate" name="start" placeholder="yyyy-mm-dd" value = <%=request.getAttribute("dateToday") %> style="margin-bottom: 5px; width: 150px;" required>
+								</div>
+					    	</div>
+					    	<div class = "form-group">
+					    		<label class = "control-label col-sm-5" for = "col1">To:</label>
+					    		<div class="col-sm-7">
+									<input type="date" class="sit form-control" id="ddate" name="end" placeholder="yyyy-mm-dd" value = <%=request.getAttribute("dateToday") %> style="margin-bottom: 5px; width: 150px;" required>
+								</div>
+					    	</div>
+					    	<div class = "form-group">
+					    		<label class = "control-label col-sm-5" for = "col1">Type of Report:</label>
+					    		<div class = "col-sm-7">
+					    			 <select class="form-control" id="drop" name="drop" style = "width : 150px">
+					               	 	<option Value=1>Sales Report</option>
+					               	 	<option Value=2>Inventory Report</option>
+					            	</select>
+					    		</div>
+					    	</div>
+					    	<button type="submit" name = "submitBtn" class="btn btn-primary" style="margin-left: 35%;"><i class="glyphicon glyphicon-log-in"></i> Submit</button>
+				        </form>
+					</div>
+				</div>
+			</div>
     </body>
-    </div> <!-- /div-action -->
-                                </div>
-                        </div>
-                </div>
-            </div>
-            </div>
-    </div>
     <style>
 		body {
 			position: relative;

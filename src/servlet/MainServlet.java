@@ -61,7 +61,8 @@ import url_patterns.URLPatterns;
 			URLPatterns.UPDATEINVENTORY,
 			URLPatterns.MANAGEORDERS,
 			URLPatterns.VIEWARCHIVEDCLIENTORDERS,
-			URLPatterns.VIEWSUPPLYORDERS
+			URLPatterns.VIEWSUPPLYORDERS,
+			URLPatterns.MANAGEREPORTS
 			})
 public class MainServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -187,7 +188,25 @@ public class MainServlet extends HttpServlet {
 			case URLPatterns.VIEWSUPPLYORDERS:
 				goToSupplyOrders(request, response);
 				break;
+			case URLPatterns.MANAGEREPORTS:
+				goToReportsPage(request, response);
+				break;
 		}
+	}
+	
+	private void goToReportsPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate localDate = LocalDate.now();
+		
+		String dateToday = dtf.format(localDate);
+		String dateTomorrow = dtf.format(localDate.plusDays(1));
+		
+		request.setAttribute("dateToday", dateToday);
+		request.setAttribute("dateTomorrow", dateTomorrow);
+		
+		request.getRequestDispatcher("generateReports.jsp").forward(request, response);
+		
 	}
 	
 	private void goToSupplyOrders(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

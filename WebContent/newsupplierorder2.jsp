@@ -48,10 +48,10 @@
 		}
 	</script>   
 		<div class="area container-fluid">
-		<ol class="breadcrumb">
-	   	    <li><a href="/Six_Eagles/home">Home</a></li>		
-		    <li><a href = "/Six_Eagles/newClientOrder">Client</a></li>
-			<li><a class = "active">Supplier</a></li>
+			<ol class="breadcrumb">
+	   	   		<li><a href="/Six_Eagles/home">Home</a></li>		
+		    	<li><a href = "/Six_Eagles/newClientOrder">Client</a></li>
+				<li><a class = "active">Supplier</a></li>
 		</ol>
 			<div id = "supplierOrder" class="panel panel-default" style="width: 46%; margin-left: 0%;">
 				<div class="panel-heading">
@@ -59,64 +59,65 @@
 				</div>
 				<div class="messages">
 						
-				<div class="panel-body">
-					<form class="form-horizontal" action="manageSupplyOrder" method="post" id="addOrders">
-						<div class="form-group">
-							<label class="control-label col-sm-5" for="col1">Supplier Name:</label>
-							<div class="col-sm-7">
-								<select onchange = "changeSupplierStock()" class = "form-control" id = "supplierName" name = "supplierName" style = "width: 150px">
-									<%	int index = (Integer) request.getAttribute("index"); 
-										int i = 0;
-										for (suppliers s: suppliersList) { %>
-											<option value = "<%=s.getSupplierID()%>" <% if (index == i) { out.print("selected"); } %>><%= s.getSupplierName() %></option>
-									<% 		i++;
-										} %>
-								</select>
+					<div class="panel-body">
+						<form class="form-horizontal" action="manageSupplyOrder" method="post" id="addOrders">
+							<div class="form-group">
+								<label class="control-label col-sm-5" for="col1">Supplier Name:</label>
+								<div class="col-sm-7">
+									<select onchange = "changeSupplierStock()" class = "form-control" id = "supplierName" name = "supplierName" style = "width: 150px">
+										<%	int index = (Integer) request.getAttribute("index"); 
+											int i = 0;
+											for (suppliers s: suppliersList) { %>
+												<option value = "<%=s.getSupplierID()%>" <% if (index == i) { out.print("selected"); } %>><%= s.getSupplierName() %></option>
+										<% 		i++;
+											} %>
+									</select>
+								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-sm-5" for="col1">Supply Order Number:</label>
-							<div class="col-sm-7">
-								<input type="number" mi n = 0 class="lorem form-control" name = "supplyOrder" id="col1" min = 0 value = 1 style="width: 150px;" required>
+							<div class="form-group">
+								<label class="control-label col-sm-5" for="col1">Supply Order Number:</label>
+								<div class="col-sm-7">
+									<input type="number" min = 0 class="lorem form-control" name = "supplyOrder" id="col1" min = 0 value = 1 style="width: 150px;" required>
+								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-sm-5" for="col2">Ingredient Name:</label>
-							<div class="col-sm-7">
-								<select class="form-control" id="ingredientCode" name="ingrCode" style = "width : 150px">
-									<% for (ingredients ingr: ingrList) { %>
-										<option value = "<%=ingr.getIngredientCode()%>"><%=ingr.getIngredientName() %></option>
-									<% } %>
-								</select>
+							<div class="form-group">
+								<label class="control-label col-sm-5" for="col2">Ingredient Name:</label>
+								<div class="col-sm-7">
+									<select class="form-control" id="ingredientCode" name="ingrCode" style = "width : 150px">
+										<% for (ingredients ingr: ingrList) { %>
+											<option value = "<%=ingr.getIngredientCode()%>"><%=ingr.getIngredientName() %></option>
+										<% } %>
+									</select>
+								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-sm-5" for="col2">Quantity:</label>
-							<div class="col-sm-7">
-								<input type="number" min = 0 class="ipsum form-control" id="quantity" name = "quantity" value = 1 min = 1 style="width: 150px;" required>
+							<div class="form-group">
+								<label class="control-label col-sm-5" for="col2">Quantity:</label>
+								<div class="col-sm-7">
+									<input type="number" min = 0 class="ipsum form-control" id="quantity" name = "quantity" value = 1 min = 1 style="width: 150px;" required>
+								</div>
 							</div>
-						</div>
 						
-						<div class="form-group">
-							<label class="control-label col-sm-5" for="col3">Date Ordered:</label>
-							<div class="col-sm-7">
-								<input type="date" class="dolor form-control" id="rdate" name="orderDate" placeholder="yyyy-mm-dd" value = <%=request.getAttribute("dateToday") %> style="margin-bottom: 5px; width: 150px;" required>
+							<div class="form-group">
+								<label class="control-label col-sm-5" for="col3">Date Ordered:</label>
+								<div class="col-sm-7">
+									<input type="date" class="dolor form-control" id="rdate" name="orderDate" placeholder="yyyy-mm-dd" value = <%=request.getAttribute("dateToday") %> style="margin-bottom: 5px; width: 150px;" required>
+								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-sm-5" for="col4">Delivery Date:</label>
-							<div class="col-sm-7">
-								<input type="date" class="sit form-control" id="ddate" name="deliveryDate" placeholder="yyyy-mm-dd" value = <%=request.getAttribute("dateTomorrow") %> style="margin-bottom: 5px; width: 150px;" required>
+							<div class="form-group">
+								<label class="control-label col-sm-5" for="col4">Delivery Date:</label>
+								<div class="col-sm-7">
+									<input type="date" class="sit form-control" id="ddate" name="deliveryDate" placeholder="yyyy-mm-dd" value = <%=request.getAttribute("dateTomorrow") %> style="margin-bottom: 5px; width: 150px;" required>
+								</div>
 							</div>
-						</div>
-						<button type="submit" name = "submitBtn" value = "addToOrder" class="btn btn-primary" style="margin-left: 35%;"><i class="glyphicon glyphicon-log-in"></i> Submit</button></a>
-						<button type="submit" name = "submitBtn" value = "checkout" class="btn btn-default">Done</button>
-					</form>
+							<button type="submit" name = "submitBtn" value = "addToOrder" class="btn btn-primary" style="margin-left: 35%;"><i class="glyphicon glyphicon-log-in"></i> Submit</button>
+							<button type="submit" name = "submitBtn" value = "checkout" class="btn btn-default">Done</button>
+						</form>
+					</div>
 				</div>
 			</div>
-		</div>
 		
-		<div id = "cart" class="panel panel-default" style="width: 52%; margin-left: 0%;">
+		
+			<div id = "cart" class="panel panel-default" style="width: 52%; margin-left: 0%;">
 				<div class="panel-heading">
 					Cart
 				</div>
@@ -155,7 +156,7 @@
 					</form>
 				</div>
 			</div>
-
+		</div>
 	</body>
 	<style>
 		body {
