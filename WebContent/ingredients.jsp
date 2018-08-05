@@ -174,14 +174,14 @@
 	        	<label for="productName" class="col-sm-3 control-label">Ingredient Name </label>
 	        	<label class="col-sm-1 control-label">: </label>
 				    <div class="col-sm-8">
-				      <input type="text" class="form-control" id="ingredientName" placeholder="Ingredient Name" name="ingredientName" autocomplete="off" required>
+				      <input type="text" pattern="([A-Za-z]).{3,}" title = "Letters only; at least 3 characters" class="form-control" id="ingredientName" placeholder="Ingredient Name" name="ingredientName" autocomplete="off" required>
 				    </div>
 	        </div> <!-- /form-group-->	
 			 <div class="form-group">
 	        	<label for="availableStock" class="col-sm-3 control-label">Stock</label>
 	        	<label class="col-sm-1 control-label">: </label>
 				    <div class="col-sm-8">
-				      <input type="number" min="0" class="form-control" id="availableStock" placeholder="Available Stock" name="availableStock" value = 0 autocomplete="off" required>
+				      <input type="number" min="1" class="form-control" id="availableStock" placeholder="Available Stock" name="availableStock" value = 1 autocomplete="off" required>
 				    </div>
 	        </div>
 			  <div class="form-group">

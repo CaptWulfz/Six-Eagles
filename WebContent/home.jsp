@@ -142,7 +142,7 @@
         }        
       });
 		
-      <% String message = (String) request.getAttribute("successMessage");
+      <% String message = (String) request.getAttribute("message");
 	   System.out.println("THE MESSAGE IS: " + message);
 	   if (message != null) { %>
 	   		alert("<%=message%>");

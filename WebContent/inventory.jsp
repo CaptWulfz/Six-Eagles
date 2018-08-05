@@ -270,21 +270,21 @@
 	        	<label for="productName" class="col-sm-3 control-label">Product Name: </label>
 	        	<label class="col-sm-1 control-label">: </label>
 				    <div class="col-sm-8">
-				      <input type="text" class="form-control" id="productName" placeholder="Product Name" name="productName" autocomplete="off" required>
+				      <input type="text" pattern="([A-Za-z]).{3,}" title = "Letters only; at least 3 characters" class="form-control" id="productName" placeholder="Product Name" name="productName" autocomplete="off" required>
 				    </div>
 	        </div> <!-- /form-group-->	
 			 <div class="form-group">
 	        	<label for="productPrice" class="col-sm-3 control-label">Product Price: </label>
 	        	<label class="col-sm-1 control-label">: </label>
 				    <div class="col-sm-8">
-				      <input type="number" min = "0" value = 0 class="form-control" id="productPrice" placeholder="Price" name="productPrice" autocomplete="off" required>
+				      <input type="number" min = "1" value = 1 class="form-control" id="productPrice" placeholder="Price" name="productPrice" autocomplete="off" required>
 				    </div>
 	        </div>
 			 <div class="form-group">
 	        	<label for="availableStock" class="col-sm-3 control-label">Stocks Available: </label>
 	        	<label class="col-sm-1 control-label">: </label>
 				    <div class="col-sm-8">
-				      <input type="number" min = "0" class="form-control" id="availableStock" placeholder="Available Stock" value = 0 name="availableStock" autocomplete="off" required>
+				      <input type="number" min = "1" class="form-control" id="availableStock" placeholder="Available Stock" value = 1 name="availableStock" autocomplete="off" required>
 				    </div>
 	        </div>
 

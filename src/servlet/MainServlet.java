@@ -394,11 +394,11 @@ public class MainServlet extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		
-		String successMessage = (String) session.getAttribute("successMessage");
+		String message = (String) session.getAttribute("message");
 
-		if (successMessage != null) {
-			request.setAttribute("successMessage", successMessage);
-			session.setAttribute("successMessage", null);
+		if (message != null) {
+			request.setAttribute("message", message);
+			session.setAttribute("message", null);
 		}
 
 		request.getRequestDispatcher("home.jsp").forward(request, response);		

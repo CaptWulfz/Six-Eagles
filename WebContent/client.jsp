@@ -124,7 +124,7 @@
 	        	<label for="productName" class="col-sm-3 control-label">Client Name: </label>
 	        	<label class="col-sm-1 control-label">: </label>
 				    <div class="col-sm-8">
-				      <input type="text" class="form-control" id="clientName" placeholder="Client Name" name="clientName" autocomplete="off" required>
+				      <input type="text" pattern="([A-Za-z]).{3,}" title = "Letters only; at least 3 characters"  class="form-control" id="clientName" placeholder="Client Name" name="clientName" autocomplete="off" required>
 				    </div>
 	        </div> <!-- /form-group-->	
 			 <div class="form-group">

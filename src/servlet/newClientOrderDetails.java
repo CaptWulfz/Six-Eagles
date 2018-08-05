@@ -109,9 +109,9 @@ public class newClientOrderDetails extends HttpServlet {
 	
 		if (actionToDo.equals(ButtonActions.ADDTOCART)) {
 
-			Orders cartItem = (Orders) session.getAttribute("NewOrder");
+			
  
-    			int ProdCode = Integer.parseInt(request.getParameter("productCode"));
+    		int ProdCode = Integer.parseInt(request.getParameter("productCode"));
 			int QTY= Integer.parseInt(request.getParameter("quantity"));
 			
  	        // Get The Product Using the Product Code
@@ -152,6 +152,8 @@ public class newClientOrderDetails extends HttpServlet {
     	} else if (actionToDo.equals(ButtonActions.CHECKOUT)){
     		Orders Order = (Orders) session.getAttribute("NewOrder");
     		
+    		System.out.println("ORDER IS: " + Order.getPurchaseOrderNum());
+    		
     		cart = (ArrayList<CartItem>) session.getAttribute("cart");
     		
     		if (!cart.isEmpty()) {
@@ -163,6 +165,7 @@ public class newClientOrderDetails extends HttpServlet {
 		        	ClientOrderdao.addnewClientOrderDetails(NewOrderDetails);
 		        }
 		        
+		        session.setAttribute("message", "Successfully Added a New Client Order!!!");
 		        response.sendRedirect("/Six_Eagles/home");
     		} else {
     			session.setAttribute("message", "The Cart is Empty!!!");
