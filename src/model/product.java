@@ -24,11 +24,13 @@ public class product {
      */
     
     public product(int productcode, String productname, double productprice, int stock, int threshold, int ceiling, String status){
-        this.productname = productname;
+        this.productcode = productcode;
+    	this.productname = productname;
         this.productprice = productprice;
         this.stock = stock;
         this.threshold = threshold;
         this.ceiling = ceiling;
+        this.status = status;
     }
     
     public product(String productname, double productprice, int stock, int threshold, int ceiling){

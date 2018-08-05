@@ -76,7 +76,7 @@ public class addIngredientlistsmodal extends HttpServlet {
             String unitadd = request.getParameter("unitadd");
         
         ingredientslists i = new ingredientslists(Pcode,IGcode, amountadd, unitadd,name);
-        PrintWriter pw=response.getWriter();
+       
         
         if(ingredientslistsdao.addingingredientslist(i)){
             request.getRequestDispatcher("inventory.jsp").forward(request, response);

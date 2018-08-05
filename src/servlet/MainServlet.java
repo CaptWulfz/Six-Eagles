@@ -305,7 +305,14 @@ public class MainServlet extends HttpServlet {
 		int threshold = Integer.parseInt(request.getParameter("threshold"));
 		int ceiling = Integer.parseInt(request.getParameter("ceiling"));
 		
-		ingredientsdao.changeThresholds(code, threshold, ceiling);
+		HttpSession session = request.getSession();
+		
+		if (threshold < ceiling) {
+			ingredientsdao.changeThresholds(code, threshold, ceiling);
+			session.setAttribute("message", "Successfully Changed Treshold!!!");
+		} else {
+			session.setAttribute("message", "Treshold Cannot be Greater or Equal to the Ceiling!!!");
+		}
 		
 		response.sendRedirect("/Six_Eagles/ingredients");
 	}
@@ -316,7 +323,14 @@ public class MainServlet extends HttpServlet {
 		int threshold = Integer.parseInt(request.getParameter("threshold"));
 		int ceiling = Integer.parseInt(request.getParameter("ceiling"));
 		
-		productdao.changeThresholds(code, threshold, ceiling);
+		HttpSession session = request.getSession();
+		
+		if (threshold < ceiling || (threshold == 0 && ceiling == 0)) {
+			productdao.changeThresholds(code, threshold, ceiling);
+			session.setAttribute("message", "Successfully Changed The Thresholds!!!");
+		} else {
+			session.setAttribute("message", "Threshold cannot be Greater than or Equal to Ceiling!!!");
+		}
 		
 		response.sendRedirect("/Six_Eagles/inventory");
 		
@@ -336,8 +350,14 @@ public class MainServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-
+		HttpSession session = request.getSession();
+		String message = (String) session.getAttribute("message");
 		
+		if (message != null) {
+			request.setAttribute("message", message);
+			session.setAttribute("message", null);
+		}
+
 		request.getRequestDispatcher("inventory.jsp").forward(request, response);
 	}
 	
@@ -422,6 +442,15 @@ public class MainServlet extends HttpServlet {
 					ingr.add(i);
 		} else {
 			ingr = ingredientsdao.viewIngredientactive();
+		}
+		
+		HttpSession session = request.getSession();
+		
+		String message = (String) session.getAttribute("message");
+		
+		if (message != null) {
+			request.setAttribute("message", message);
+			session.setAttribute("message", null);
 		}
 		
 		request.setAttribute("ingredientsList", ingr);

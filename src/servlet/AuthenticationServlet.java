@@ -49,6 +49,17 @@ public class AuthenticationServlet extends HttpServlet {
 		
 	}
 	
+	private void tryAddProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		
+		//get Input Data
+		String ProductName = request.getParameter("productName");
+        double ProductPrice = Double.parseDouble(request.getParameter("productPrice"));
+        int Stock = Integer.parseInt(request.getParameter("availableStock"));
+        int Threshold = Integer.parseInt(request.getParameter("threshold"));
+        int Ceiling = Integer.parseInt(request.getParameter("ceiling"));
+	}
+	
 	private void tryCreateUserRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Process type of request
 		
@@ -111,5 +122,6 @@ public class AuthenticationServlet extends HttpServlet {
 		
 		return empty;
 	}
+
 
 }

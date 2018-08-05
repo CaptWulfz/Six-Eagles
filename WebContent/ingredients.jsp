@@ -23,7 +23,17 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<body>
+<script>
+	$(function () {
+		// top bar active
+	 	<% 	String message = (String) request.getAttribute("message");
+			if (message != null) { %>
+				alert("<%=message %>");
+			<% } %>
+	
+	});
+</script>
+<body onload = "showError()">
 	<div class="modal-header">
 	<div class="row">
 	<div class="col-md-12">
@@ -121,7 +131,7 @@
 	        	<label for="productThreshold" class="col-sm-3 control-label">Threshold: </label>
 	        	<label class="col-sm-1 control-label">: </label>
 				    <div class="col-sm-8">
-				      <input type="number" class="form-control" id="productThreshold" placeholder= 0 name="threshold" autocomplete="off" required>
+				      <input type="number" class="form-control" id="productThreshold" placeholder= 0 name="threshold" min = "0" value = 0 autocomplete="off" required>
 				    </div>
 	        </div>    	    
 	        
@@ -129,7 +139,7 @@
 	        	<label for="productCeiling" class="col-sm-3 control-label">Ceiling: </label>
 	        	<label class="col-sm-1 control-label">: </label>
 				    <div class="col-sm-8">
-				      <input type="number" class="form-control" id="productCeiling" placeholder= 0 name="ceiling" autocomplete="off" required>
+				      <input type="number" class="form-control" id="productCeiling" placeholder= 0 name="ceiling" min = "0" value = 0 autocomplete="off" required>
 				    </div>
 	        </div>    
 
@@ -164,28 +174,28 @@
 	        	<label for="productName" class="col-sm-3 control-label">Ingredient Name </label>
 	        	<label class="col-sm-1 control-label">: </label>
 				    <div class="col-sm-8">
-				      <input type="text" class="form-control" id="ingredientName" placeholder="Ingredient Name" name="ingredientName" autocomplete="off">
+				      <input type="text" class="form-control" id="ingredientName" placeholder="Ingredient Name" name="ingredientName" autocomplete="off" required>
 				    </div>
 	        </div> <!-- /form-group-->	
 			 <div class="form-group">
 	        	<label for="availableStock" class="col-sm-3 control-label">Stock</label>
 	        	<label class="col-sm-1 control-label">: </label>
 				    <div class="col-sm-8">
-				      <input type="number" min="0" class="form-control" id="availableStock" placeholder="Available Stock" name="availableStock" value = 0 autocomplete="off">
+				      <input type="number" min="0" class="form-control" id="availableStock" placeholder="Available Stock" name="availableStock" value = 0 autocomplete="off" required>
 				    </div>
 	        </div>
 			  <div class="form-group">
 	        	<label for="threshold" class="col-sm-3 control-label">Threshold</label>
 	        	<label class="col-sm-1 control-label">: </label>
 				    <div class="col-sm-8">
-				      <input type="number" min="0" class="form-control" id="threshold" placeholder="Threshold" name="threshold" value = 0 autocomplete="off">
+				      <input type="number" min="0" class="form-control" id="threshold" placeholder="Threshold" name="threshold" value = 0 autocomplete="off" required>
 				    </div>
 	        </div>
 			<div class="form-group">
 	        	<label for="ceiling" class="col-sm-3 control-label">Ceiling</label>
 	        	<label class="col-sm-1 control-label">: </label>
 				    <div class="col-sm-8">
-				      <input type="number" min="0" class="form-control" id="Ceiling" placeholder="Ceiling" name="ceiling" value = 0 autocomplete="off">
+				      <input type="number" min="0" class="form-control" id="Ceiling" placeholder="Ceiling" name="ceiling" value = 0 autocomplete="off" required>
 				    </div>
 	        </div>
 			<div class="form-group">

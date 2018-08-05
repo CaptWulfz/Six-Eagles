@@ -42,32 +42,23 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">
 			<div class="page-heading"><b><%=p.getProductname() %>'s Ingredients</b></div>
-			</div> <!-- /panel-heading -->
+			</div> <!-- /panel-heading --> 
 			<div class="panel-body">			
 				
 				<table class="table" id="manageProductTable">
 					<thead>
 						<tr>
-                                                    <th><center>Name</center></th>
-                                                    <th><center>Unit</center></th>
-                                                    <th><center>Amount</center></th>
-                                                    
-						</tr>
-                                                
-                                                
-                                                <%
-                                                    
-                                                    for(ingredientslists in : ilist){
-                                                        
-                                                %>
-                                                
-                                                <tr>
-                                                    <td><center><%=in.getName()%></center></td>
-                                                    <td><center><%=in.getUnitOfMeasurement()%></center></td>
-                                                    <td><center><%=in.getAmount()%></center></td> 
-                                                    
-                                                </tr>
-                                                <% } %>
+                      		<th><center>Name</center></th>
+                      		<th><center>Unit</center></th>
+                      		<th><center>Amount</center></th>
+						</tr>                  
+                        <% for(ingredientslists in : ilist) { %>
+                        	<tr>
+                            	<td><center><%=in.getName()%></center></td>
+                              	<td><center><%=in.getUnitOfMeasurement()%></center></td>
+                              	<td><center><%=in.getAmount()%></center></td> 
+                          	</tr>
+                          <% } %>
 					</thead>
 				</table>
 				<!-- /table -->

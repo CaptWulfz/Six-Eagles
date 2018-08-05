@@ -35,8 +35,9 @@ public class ingredientslists {
        this.IngredientCode=IngredientCode;
        this.Amount=Amount;
        this.UnitOfMeasurement=Uom;
-       
    }
+   
+  // public ingredientslists(int )
 
     /**
      * @return the ProductCode

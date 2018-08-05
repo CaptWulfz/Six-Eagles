@@ -55,18 +55,18 @@ public class productdao {
         }
 	}
 	
-    public static boolean addNewProduct(product ing){
+    public static boolean addNewProduct(product prod){
         boolean b=false;
         Connection connect = dbconnect.getDBConnection();
         String query ="INSERT INTO PRODUCTS(PRODUCTNAME, PRODUCTPRICE, AVAILABLESTOCK, THRESHOLD, CEILING)VALUES(?,?,?,?,?)";
         try{
             PreparedStatement p = connect.prepareCall(query);
             //p.setInt(1,ing.getProductcode());
-            p.setString(1,ing.getProductname());
-            p.setDouble(2,ing.getProductprice());
-            p.setInt(3,ing.getStock());
-            p.setInt(4,ing.getThreshold());
-            p.setInt(5,ing.getCeiling());
+            p.setString(1,prod.getProductname());
+            p.setDouble(2,prod.getProductprice());
+            p.setInt(3,prod.getStock());
+            p.setInt(4,prod.getThreshold());
+            p.setInt(5,prod.getCeiling());
             
             int confirmed = p.executeUpdate();
             System.out.print(confirmed);
@@ -299,7 +299,7 @@ public class productdao {
     
         }
     
-    public static product getProduct(int ProductCode)throws SQLException{
+    public static product getProduct(int ProductCode)throws SQLException {
          
             Connection c=dbconnect.getDBConnection();
             product product= null;
@@ -337,7 +337,32 @@ public class productdao {
             
             return product;
     
-}
+    }
+    
+    public static product getProductByName(String name) throws SQLException {
+		Connection c = dbconnect.getDBConnection();
+		String sql = "SELECT * FROM eagle.product WHERE ProductName = ?;";
+		product p = null;
+		
+		try {
+			PreparedStatement ps = c.prepareStatement(sql);
+			ps.setString(1, name);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				p = new product(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getInt(4), rs.getInt(5), rs.getInt(7), rs.getString(9));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				c.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return p;
+	}
     
     public static boolean makeProduct(int Pcode, int qty)throws SQLException
     {
@@ -451,10 +476,8 @@ public class productdao {
                     }
                  }
         } catch (Exception e) {
+        	e.printStackTrace();
         }
-        
-      
-        
     }
     
 }

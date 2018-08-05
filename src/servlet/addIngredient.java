@@ -12,6 +12,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import java.sql.*;
 import model.*;
 import dao.*;
@@ -64,32 +66,42 @@ public class addIngredient extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+    	
+    	HttpSession session = request.getSession();
         
       //  int ingredientCode = Integer.parseInt(request.getParameter("ingredientCode"));
         String ingredientName = request.getParameter("ingredientName");
         double availableStock = Double.parseDouble(request.getParameter("availableStock"));
+        int threshold = Integer.parseInt(request.getParameter("threshold"));
+        int ceiling = Integer.parseInt(request.getParameter("ceiling"));
         String unitOfMeasurement = request.getParameter("unitOfMeasurement");
         
-        ingredients a = new ingredients(ingredientName, availableStock, 0, 0, unitOfMeasurement);
-        PrintWriter pw=response.getWriter();
-       // pw.println(a.getIngredientName());
-       // pw.println(a.getStock());
-       // pw.println(a.getThreshold());
-       // pw.println(a.getCeiling());
-       // pw.println(a.getUnitOfMeasurement());
-        //request.setAttribute("testing", a.getIngredientName());
-        //request.getRequestDispatcher("testing.jsp").forward(request, response);
+        ingredients i = null;
         
-        if(ingredientsdao.addNewIngredients(a)){
-            response.sendRedirect("/Six_Eagles/ingredients");
+        try {
+			i = ingredientsdao.getIngredientByName(ingredientName);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+        
+        if (i == null) {
+		        if (threshold < ceiling || (threshold == 0 && ceiling == 0)) {
+		        	if (availableStock > 0) {
+				        ingredients a = new ingredients(ingredientName, availableStock, threshold, ceiling, unitOfMeasurement);
+				        ingredientsdao.addNewIngredients(a);
+				        session.setAttribute("message", "Successfully Added New Ingredient!!!");
+		        	} else
+		        		session.setAttribute("message", "Stock cannot be 0!!!");
+		        } else {
+		        	session.setAttribute("message", "Treshold Cannot be Greater or Equal to the Ceiling!!!");
+		        }
+        } else {
+        	session.setAttribute("message", "Ingredient Already Exists!!!");
         }
-        else{
-        request.getRequestDispatcher("updateprodad.jsp").forward(request, response);
-        }
+        	
         
         
-        
+        response.sendRedirect("/Six_Eagles/ingredients");
         
     }
 

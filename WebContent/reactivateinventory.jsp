@@ -38,9 +38,7 @@
 			</div> <!-- /panel-heading -->
 			<div class="panel-body">
 				<div class="div-action pull pull-right" style="padding-bottom:20px;">
-					<button class="btn btn-default button1" data-toggle="modal" data-target="#addProductModal"> <i class="glyphicon glyphicon-plus-sign"></i> Add Product</button>
-                                        <button class="btn btn-default button1" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-plus-sign"></i>Add Ingredient</button>
-                                                    <div class="modal fade" id="myModal" role="dialog">
+				 <div class="modal fade" id="myModal" role="dialog">
                                                         <div class="modal-dialog">
 
                                                           <!-- Modal content-->

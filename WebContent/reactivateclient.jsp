@@ -38,7 +38,6 @@
 			</div> <!-- /panel-heading -->
 			<div class="panel-body">
 				<div class="div-action pull pull-right" style="padding-bottom:20px;">
-					<button class="btn btn-default button1" data-toggle="modal" data-target="#addClientModal"> <i class="glyphicon glyphicon-plus-sign"></i> Add Client</button>
 				</div> <!-- /div-action -->				
 				
 				<table class="table" id="manageProductTable">

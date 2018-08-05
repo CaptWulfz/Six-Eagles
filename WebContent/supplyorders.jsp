@@ -33,10 +33,10 @@
 					Orders
 				</div>
 				<div class="panel-body">
-                                    	<div class="div-action pull pull-right" style="padding-bottom:20px;">
-                                            <button class="btn btn-default button1" data-toggle="modal" data-target="#addSupplyOrderModal"> <i class="glyphicon glyphicon-plus-sign"></i> Add Supply Order</button>
-                                            <button class="btn btn-default button1" data-toggle="modal" data-target="#changestatus"> <i class="glyphicon glyphicon-plus-sign"></i> Change Status</button>
-                                        </div> <!-- /div-action -->
+                 	<div class="div-action pull pull-right" style="padding-bottom:20px;">
+                         <button class="btn btn-default button1" data-toggle="modal" data-target="#addSupplyOrderModal"> <i class="glyphicon glyphicon-plus-sign"></i> Add Supply Order</button>
+                         <button class="btn btn-default button1" data-toggle="modal" data-target="#changestatus"> <i class="glyphicon glyphicon-plus-sign"></i> Change Status</button>
+                     </div> <!-- /div-action -->
 					<table class="table table-hover" align = "center">
 						<thead>
 							<tr>

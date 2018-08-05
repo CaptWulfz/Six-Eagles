@@ -73,14 +73,14 @@ public class viewIngredientslist extends HttpServlet {
     	   int icode = Integer.parseInt(request.getParameter("submitButton"));
            
            try{
-           ArrayList<ingredientslists> ingrList = ingredientslistsdao.viewproductingredient(icode);
-           product p = productdao.getProduct(icode);
-           request.setAttribute("product", p);
-           request.setAttribute("ingrList", ingrList);
-           request.getRequestDispatcher("viewIngredient.jsp").forward(request, response);
+	           ArrayList<ingredientslists> ingrList = ingredientslistsdao.viewproductingredient(icode);
+	           product p = productdao.getProduct(icode);
+	           request.setAttribute("product", p);
+	           request.setAttribute("ingrList", ingrList);
+	           request.getRequestDispatcher("viewIngredient.jsp").forward(request, response);
            }
            catch(Exception e){
-           	e.printStackTrace();
+        	   e.printStackTrace();
            }
     }
 
