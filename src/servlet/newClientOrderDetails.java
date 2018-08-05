@@ -75,6 +75,16 @@ public class newClientOrderDetails extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+    	
+    	HttpSession session = request.getSession();
+    	
+    	String message = (String) session.getAttribute("message");
+    	
+    	if (message != null) {
+    		request.setAttribute("message", message);
+    		session.setAttribute("message", null);
+    	}
+    	
 		request.getRequestDispatcher("neworder2.jsp").forward(request,  response);
     }
 
@@ -144,26 +154,21 @@ public class newClientOrderDetails extends HttpServlet {
     		
     		cart = (ArrayList<CartItem>) session.getAttribute("cart");
     		
-	        OrderDetails NewOrderDetails;
-	        
-	        for (CartItem item: cart) {
-	        	NewOrderDetails = new OrderDetails(Order.getPurchaseOrderNum(),item.getProductCode(),item.getPricePerPiece(),item.getQuantity());
-	        	ClientOrderdao.addnewClientOrderDetails(NewOrderDetails);
-	        }
-	        
-	        request.getRequestDispatcher("home.jsp").forward(request, response);
-	        
-	        /* Commented Out
-	        if(ClientOrderdao.addnewClientOrderDetails(NewOrderDetails)){
-	            request.getRequestDispatcher("neworder2.jsp").forward(request, response); 
-	               
-	        } else {     
-	        	request.getRequestDispatcher("neworder2.jsp").forward(request, response); 
-	        }
-	        */
-	        
-    		
-    		
+    		if (!cart.isEmpty()) {
+		        OrderDetails NewOrderDetails;
+		        
+		        for (CartItem item: cart) {
+		        	NewOrderDetails = new OrderDetails(Order.getPurchaseOrderNum(),item.getProductCode(),item.getPricePerPiece(),item.getQuantity());
+		        	ClientOrderdao.addnewClientOrder(Order);
+		        	ClientOrderdao.addnewClientOrderDetails(NewOrderDetails);
+		        }
+		        
+		        response.sendRedirect("/Six_Eagles/home");
+    		} else {
+    			session.setAttribute("message", "The Cart is Empty!!!");
+    			response.sendRedirect("/Six_Eagles/newClientOrderDetails");
+    		}
+
     	} else if (actionToDo.equals(ButtonActions.REMOVE)){
     		
     		cart = (ArrayList<CartItem>) session.getAttribute("cart");
@@ -186,6 +191,18 @@ public class newClientOrderDetails extends HttpServlet {
     		int ProdCode = Integer.parseInt(request.getParameter("productCode"));
 			int QTY= Integer.parseInt(request.getParameter("quantity"));
     		
+			ArrayList<Client> clientList;
+			
+			try {
+				clientList = clientdao.viewClientactive();
+				ArrayList<product> prodList = productdao.viewproductactive();
+				request.setAttribute("clientList", clientList);
+				request.setAttribute("prodList", prodList);
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			
+			
 			try {
 				product p = productdao.getProduct(ProdCode);
 				int index = itemExistsInCart(p.getProductname(), cart);
@@ -198,15 +215,15 @@ public class newClientOrderDetails extends HttpServlet {
 					else
 						newQty = currQty - QTY;
 					cart.get(index).setQuantity(newQty);
-					cart.get(index).setTotalPrice(newQty * cart.get(index).getPricePerPiece());
-					session.setAttribute("cart", cart);
 					
-					ArrayList<Client> clientList = clientdao.viewClientactive();
-	    			ArrayList<product> prodList = productdao.viewproductactive();
-	    			request.setAttribute("clientList", clientList);
-	    			request.setAttribute("prodList", prodList);
+					if (cart.get(index).getQuantity() > 0)
+						cart.get(index).setTotalPrice(newQty * cart.get(index).getPricePerPiece());
+					else 
+						cart.remove(index);
+					
+					session.setAttribute("cart", cart);
 				} else {
-					request.setAttribute("errorMessage", "No such item exists in the cart!!!");
+					request.setAttribute("message", "No such item exists in the cart!!!");
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

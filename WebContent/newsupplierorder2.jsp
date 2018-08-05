@@ -19,7 +19,7 @@
 
 <html>
     <jsp:include page="header.jsp"/>
-	<body data-spy="scroll" data-target=".navbar" data-offset="50">
+	<body onload = "tryAlert()" data-spy="scroll" data-target=".navbar" data-offset="50">
 
 	<script>
 		$(document).ready(function(){
@@ -33,6 +33,13 @@
 		  };
 		  date_input.datepicker(options);
 		})
+		
+		function tryAlert () {
+		 	<% String message = (String) request.getAttribute("message");
+				if (message != null) { %>
+					alert("<%=message %>");
+				<% } %>
+		}
 		
 		function changeSupplierStock() {
 			var form = document.getElementById("addOrders");
@@ -70,7 +77,7 @@
 						<div class="form-group">
 							<label class="control-label col-sm-5" for="col1">Supply Order Number:</label>
 							<div class="col-sm-7">
-								<input type="number" mi n = 0 class="lorem form-control" name = "supplyOrder" id="col1" style="width: 150px;">
+								<input type="number" mi n = 0 class="lorem form-control" name = "supplyOrder" id="col1" min = 0 value = 1 style="width: 150px;" required>
 							</div>
 						</div>
 						<div class="form-group">
@@ -86,20 +93,20 @@
 						<div class="form-group">
 							<label class="control-label col-sm-5" for="col2">Quantity:</label>
 							<div class="col-sm-7">
-								<input type="number" min = 0 class="ipsum form-control" id="quantity" name = "quantity" value = 0 style="width: 150px;">
+								<input type="number" min = 0 class="ipsum form-control" id="quantity" name = "quantity" value = 1 min = 1 style="width: 150px;" required>
 							</div>
 						</div>
 						
 						<div class="form-group">
 							<label class="control-label col-sm-5" for="col3">Date Ordered:</label>
 							<div class="col-sm-7">
-								<input type="date" class="dolor form-control" id="rdate" name="orderDate" placeholder="yyyy-mm-dd" style="margin-bottom: 5px; width: 150px;">
+								<input type="date" class="dolor form-control" id="rdate" name="orderDate" placeholder="yyyy-mm-dd" value = <%=request.getAttribute("dateToday") %> style="margin-bottom: 5px; width: 150px;" required>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-sm-5" for="col4">Delivery Date:</label>
 							<div class="col-sm-7">
-								<input type="date" class="sit form-control" id="ddate" name="deliveryDate" placeholder="yyyy-mm-dd" style="margin-bottom: 5px; width: 150px;">
+								<input type="date" class="sit form-control" id="ddate" name="deliveryDate" placeholder="yyyy-mm-dd" value = <%=request.getAttribute("dateTomorrow") %> style="margin-bottom: 5px; width: 150px;" required>
 							</div>
 						</div>
 						<button type="submit" name = "submitBtn" value = "addToOrder" class="btn btn-primary" style="margin-left: 35%;"><i class="glyphicon glyphicon-log-in"></i> Submit</button></a>

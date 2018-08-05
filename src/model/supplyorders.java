@@ -52,6 +52,15 @@ public class supplyorders {
         this.StatusDetails = SD;
         this.Comments = Co;
     }
+    
+    public supplyorders(int dNo, int sNum, int sID, String orderDate, String deliveryDate, String statusDetails) {
+    	this.DeliveryReceiptNo = dNo;
+    	this.SupplyOrderNum = sNum;
+    	this.SupplierID = sID;
+    	this.OrderDate = orderDate;
+    	this.DeliveryDate = deliveryDate;
+    	this.StatusDetails = statusDetails;
+    }
             
            // VIEW w/ Supplier Name
      public supplyorders(String SN ,int SID, int DDN, String OD, String DD,String SD, String Co,int SON){ 
@@ -65,16 +74,7 @@ public class supplyorders {
         this.SupplyOrderNum=SON;
      }
      
-     //public supplyorders(int SID, int DDN ,String OD, String DD, int STID , String SD, String Co,int SON){
-       // this.SupplierID = SID;
-        //this.DeliveryReceiptNo = DDN;
-        //this.OrderDate = OD;
-        //this.DeliveryDate = DD;
-       // this.StatusID = STID;
-       // this.StatusDetails = SD;
-       // this.Comments = Co;
-       // this.SupplyOrderNum=SON;
-     //}
+     
 
     /**
      * @return the SupplyOrderNum

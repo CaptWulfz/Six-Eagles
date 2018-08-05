@@ -82,10 +82,15 @@ public class addClientOrder extends HttpServlet {
 	        String RD=request.getParameter("orderDate");
 	        String DD=request.getParameter("deliveryDate");
 	        
-	        Users loginUser = (Users) session.getAttribute("loginUser");
-	       
-	        Orders NewOrder= new Orders(PO,client,loginUser.getUserId(),RD,DD);
-	        if(ClientOrderdao.addnewClientOrder(NewOrder)) {
+	        Orders order = ClientOrderdao.getClientOrderByPurchaseOrderNum(PO);
+	        
+	        System.out.println("Looking...");
+	        
+	        if (order == null) {   
+		        Users loginUser = (Users) session.getAttribute("loginUser");
+		       
+		        Orders NewOrder= new Orders(PO,client,loginUser.getUserId(),RD,DD);
+		        
 	            session.setAttribute("NewOrder", NewOrder);
 	            //Added Cart
 	            session.setAttribute("cart", new  ArrayList<CartItem>());
@@ -99,10 +104,12 @@ public class addClientOrder extends HttpServlet {
 					e.printStackTrace();
 				}
 	            
-	            request.getRequestDispatcher("neworder2.jsp").forward(request, response); 
-	        } else {  
-	        	request.getRequestDispatcher("neworder.jsp").forward(request, response); 
+	           response.sendRedirect("/Six_Eagles/newClientOrderDetails");
+	        } else {
+	        	session.setAttribute("message", "This Purchase Order Number already exists!!!");
+	        	response.sendRedirect("/Six_Eagles/newClientOrder");
 	        }
+ 
         } else {
         	String selectedClientName = request.getParameter("clientName");
         	

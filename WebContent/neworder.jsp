@@ -23,7 +23,7 @@
 
 <html>
     <jsp:include page="header.jsp"/>
-	<body data-spy="scroll" data-target=".navbar" data-offset="50">
+	<body onload = "showMessage()" data-spy="scroll" data-target=".navbar" data-offset="50">
 
 	<script>
 		$(document).ready(function(){
@@ -43,6 +43,13 @@
 			var form = document.getElementById("addOrders");
 		
 			form.submit();	
+		}
+		
+		function showMessage() {
+			<% 	String message = (String) request.getAttribute("message");
+			if (message != null) { %>
+				alert("<%=message %>");
+			<% } %>
 		}
 		
 	</script>   
@@ -87,20 +94,20 @@
 						<div class="form-group">
 							<label class="control-label col-sm-5" for="col1">Purchase Order Number:</label>
 							<div class="col-sm-7">
-								<input type="number" min = 0 class="lorem form-control" name = "purchaseOrder" id="col1" style="width: 300px;">
+								<input type="number" min = 0 class="lorem form-control" name = "purchaseOrder" id="col1" min = 0 value = 0 style="width: 300px;" required>
 							</div>
 						</div>
 						
 						<div class="form-group">
-							<label class="control-label col-sm-5" for="col3">Date Received:</label>
+							<label class="control-label col-sm-5" for="col3">Date Ordered:</label>
 							<div class="col-sm-7">
-								<input type="date" class="dolor form-control" id="rdate" name="orderDate" placeholder="yyyy-mm-dd" style="margin-bottom: 5px; width: 43%;">
+								<input type="date" class="dolor form-control" id="rdate" name="orderDate" placeholder="yyyy-mm-dd" value = <%=request.getAttribute("dateToday") %> style="margin-bottom: 5px; width: 43%;" required>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-sm-5" for="col4">Delivery Date:</label>
 							<div class="col-sm-7">
-								<input type="date" class="sit form-control" id="ddate" name="deliveryDate" placeholder="yyyy-mm-dd" style="margin-bottom: 5px; width: 43%;">
+								<input type="date" class="sit form-control" id="ddate" name="deliveryDate" placeholder="yyyy-mm-dd" value = <%=request.getAttribute("dateTomorrow") %> style="margin-bottom: 5px; width: 43%;" required>
 							</div>
 						</div>
                                                                 

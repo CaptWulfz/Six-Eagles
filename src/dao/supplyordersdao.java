@@ -99,19 +99,44 @@ public class supplyordersdao
             return supplyorders;
     
         }
-    
+    	
+    	public static supplyorders getSupplyOrderBySupplyOrderNum(int num) {
+    		Connection c = dbconnect.getDBConnection();
+    		String sql = "SELECT * FROM eagle.supplyorders WHERE SupplyOrderNum = ?;";
+    		supplyorders sp = null;
+    		
+    		try {
+    			PreparedStatement p = c.prepareStatement(sql);
+    			p.setInt(1, num);
+    			ResultSet rs = p.executeQuery();
+    			while (rs.next()) {
+    				sp = new supplyorders(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getString(5), rs.getString(7));
+    			}
+    		} catch (SQLException e) {
+    			e.printStackTrace();
+    		} finally {
+    			try {
+    				c.close();
+    			} catch (Exception e) {
+    				e.printStackTrace();
+    			}
+    		}
+    		
+    		return sp;
+    	}
     
         public static boolean addingSupplyOrder(supplyorders asp){
               boolean x = false;
 
             Connection connect = dbconnect.getDBConnection();
-            String query ="INSERT INTO SUPPLYORDERS(SupplierID,DeliveryReceiptNo, OrderDate, DeliveryDate,StatusID,StatusDetails,Comments)VALUES(?,?,?,?,?,?,?)";
+            String query ="INSERT INTO SUPPLYORDERS(SupplyOrderNum, SupplierID, OrderDate, DeliveryDate,StatusID,StatusDetails,Comments)VALUES(?, ?, ?, ?, ?, ?, ?)";
             try{
 
-
+            	
                 PreparedStatement p = connect.prepareCall(query);
-                p.setInt(1,asp.getSupplierID());
-                p.setInt(2,0);
+                
+                p.setInt(1,asp.getSupplyOrderNum());
+                p.setInt(2, asp.getSupplierID());
                 p.setString(3,asp.getOrderDate());
                 p.setString(4,asp.getDeliveryDate());
                 p.setInt(5,2);

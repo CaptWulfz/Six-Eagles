@@ -2,6 +2,8 @@ package servlet;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -544,6 +546,21 @@ public class MainServlet extends HttpServlet {
 		request.setAttribute("clientList", uniqueClientList);
 		request.setAttribute("allEntriesOfSelectedClient", allEntriesOfSelectedClient);
 		
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate localDate = LocalDate.now();
+		
+		String dateToday = dtf.format(localDate);
+		String dateTomorrow = dtf.format(localDate.plusDays(1));
+		
+		request.setAttribute("dateToday", dateToday);
+		request.setAttribute("dateTomorrow", dateTomorrow);
+		
+		String message = (String) session.getAttribute("message");
+		if (message != null) {
+			request.setAttribute("message", message);
+			session.setAttribute("message", null);
+		}
+		
 		request.getRequestDispatcher("neworder.jsp").forward(request, response);
 	}
 	
@@ -593,6 +610,22 @@ public class MainServlet extends HttpServlet {
 			supplyOrdersCart = new ArrayList<supplyorders>();
 			session.setAttribute("supplyOrdersCart", supplyOrdersCart);
 		}
+		
+		String message = (String) session.getAttribute("message");
+		
+		if (message != null) {
+			request.setAttribute("message", message);
+			session.setAttribute("message", null);
+		}
+		
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate localDate = LocalDate.now();
+		
+		String dateToday = dtf.format(localDate);
+		String dateTomorrow = dtf.format(localDate.plusDays(1));
+		
+		request.setAttribute("dateToday", dateToday);
+		request.setAttribute("dateTomorrow", dateTomorrow);
 		
 		request.getRequestDispatcher("newsupplierorder2.jsp").forward(request, response);
 	}
@@ -660,25 +693,57 @@ public class MainServlet extends HttpServlet {
 		        int StatusID = 2;
 		        String Comment = "";
 		        
-		        String supplierName = Supplierdao.getSupplierNameFromId(SupplierID);
-		         
-		        //supplyorders b = new supplyorders(SupplierID,0,OrderDate,DeliveryDate,StatusID,Comment);
-				supplyorders b = new supplyorders(supplierName, supplyOrderNum, SupplierID, 0, OrderDate, DeliveryDate, StatusID, Comment);
-		        item.setSupplyOrders(b);
-		        item.setQuantity(quantity);
-				supplyOrdersCart.add(item);
-		        session.setAttribute("supplyOrdersCart", supplyOrdersCart);
+		        System.out.println("THE ORDER DATE IS: " + OrderDate);
+		        System.out.println("THE DELIVERY DATE IS: " + DeliveryDate);
 		        
-		        try {
-					ArrayList<suppliers> suppliersList = Supplierdao.viewSupplier();
-					request.setAttribute("suppliersList",  suppliersList);
-		        } catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+		        supplyorders sp = supplyordersdao.getSupplyOrderBySupplyOrderNum(supplyOrderNum);
+		        
+		        if (sp == null) {
+		        	
+		        	boolean found = false;
+		        	int i = 0;
+		        	while (i < supplyOrdersCart.size() && !found) {
+		        		SupplyOrderItem s = supplyOrdersCart.get(i);
+		        		if (s.getSupplyOrders().getSupplyOrderNum() == supplyOrderNum) 
+		        			found = true;
+		        		else
+		        			i++;
+		        	}
+		        	
+		        	if (!found) {
+				        if (DeliveryDate.compareTo(OrderDate) > 0) {
+				        
+					        String supplierName = Supplierdao.getSupplierNameFromId(SupplierID);
+					         
+					        //supplyorders b = new supplyorders(SupplierID,0,OrderDate,DeliveryDate,StatusID,Comment);
+							supplyorders b = new supplyorders(supplierName, supplyOrderNum, SupplierID, 0, OrderDate, DeliveryDate, StatusID, Comment);
+					        item.setSupplyOrders(b);
+					        item.setQuantity(quantity);
+							supplyOrdersCart.add(item);
+					        session.setAttribute("supplyOrdersCart", supplyOrdersCart);
+					        
+					        try {
+								ArrayList<suppliers> suppliersList = Supplierdao.viewSupplier();
+								request.setAttribute("suppliersList",  suppliersList);
+					        } catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+					        
+					        session.setAttribute("message", "Successfully Added New Supply Order!!!");
+					        
+					        //request.getRequestDispatcher("newsupplierorder2.jsp").forward(request, response);
+				        } else {
+				        	session.setAttribute("message", "Order Date cannot come after the Delivery Date!!!");
+				        }
+		        	} else {
+		        		session.setAttribute("message", "This Supply Order Number is already in the cart!!!");
+		        	}
+		        } else {
+		        	session.setAttribute("message", "This Supply Order Number already exists!!!");
+		        }
 		        
 		        response.sendRedirect("/Six_Eagles/newSupplierOrder");
-		        //request.getRequestDispatcher("newsupplierorder2.jsp").forward(request, response);
 			} else if (actionToDo.equals("checkout")) {
 				System.out.println("ADD THE ORDERS");
 				//response.sendRedirect("/Six_Eagles/addSupplyOrder");
@@ -689,10 +754,10 @@ public class MainServlet extends HttpServlet {
 		        	ingredients ingr = item.getIngredient();
 		        	supplyorders sb = item.getSupplyOrders();
 		        	
-		        	if(supplyordersdao.addingSupplyOrder(sb)){
-		        		supplyorderdetailsdao.AddSupplyOrderDetails(item);
-		        		response.sendRedirect("/Six_Eagles/home");
-		        	}
+		        	supplyordersdao.addingSupplyOrder(sb);
+	        		supplyorderdetailsdao.AddSupplyOrderDetails(item);
+	        		response.sendRedirect("/Six_Eagles/home");
+		        	
 		        }
 				
 			} else if (actionToDo.equals("Remove")) {

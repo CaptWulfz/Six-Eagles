@@ -25,7 +25,7 @@
 
 <html>
     <jsp:include page="header.jsp"/>
-	<body data-spy="scroll" data-target=".navbar" data-offset="50">
+	<body onload = "showMessage()" data-spy="scroll" data-target=".navbar" data-offset="50">
 
 	<script>
 		$(document).ready(function(){
@@ -39,6 +39,13 @@
 		  };
 		  date_input.datepicker(options);
 		})
+		
+		function showMessage() {
+			<% 	String message = (String) request.getAttribute("message");
+			if (message != null) { %>
+				alert("<%=message %>");
+			<% } %>
+		}
 	</script>   
 		<div class="area container-fluid">
 			<ol class="breadcrumb">
@@ -73,7 +80,7 @@
 							<div class="form-group">
 								<label class="control-label col-sm-4" for="col3">Quantity:</label>
 								<div class="col-sm-7">
-									<input type="number" min = 0 class="dolor form-control" id="quantity" name="quantity" placeholder="Quantity" value = 0 style="margin-bottom: 5px; width: 50%;">
+									<input type="number" min = 1 class="dolor form-control" id="quantity" name="quantity" placeholder="Quantity" value = 1 style="margin-bottom: 5px; width: 50%;">
 								</div>
 								
 								<button type="submit" name = "submitButton" value = "addToCart" class="btn btn-primary" style="margin-left: 35%;"><i class="glyphicon glyphicon-log-in"></i> Add To Cart</button>

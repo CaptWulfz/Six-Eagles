@@ -31,17 +31,7 @@ public class Orders {
         this.StatusDetails="Processing";
         
     }
-    //for initial orders with coments
-    //public Orders(int ClientID,int StaffID,String orderdate,String Deliverydate,String Comments){
-        //this.ClientID=ClientID;
-        //this.StaffID=StaffID;
-        //this.orderdate=orderdate;
-        //this.Deliverydate=Deliverydate;
-        //this.Status=1;
-        //this.StatusDetails="Processing";
-        //this.Comments=Comments;
-        
-    //}
+   
     
     public Orders(int PurchaseOrderNum, int clientID, int Deliveryreceiptnum,String orderdate,String Deliverydate,String StatusDetails){
         this.PurchaseOrderNum=PurchaseOrderNum;

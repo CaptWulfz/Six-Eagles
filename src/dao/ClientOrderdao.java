@@ -56,7 +56,32 @@ public class ClientOrderdao {
         return x;
         
     }
-
+    
+    public static Orders getClientOrderByPurchaseOrderNum(int num) {
+    	Connection c = dbconnect.getDBConnection();
+    	String sql = "SELECT * FROM eagle.orders WHERE PurchaseOrderNo = ?;";
+    	Orders o = null;
+    	
+    	try {
+    		PreparedStatement p = c.prepareStatement(sql);
+    		p.setInt(1, num);
+    		ResultSet rs = p.executeQuery();
+    		while (rs.next()) {
+    			o = new Orders(rs.getInt(1), rs.getInt(2), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getString(8));
+    		}
+    	} catch (SQLException e) {
+    		e.printStackTrace();
+    	} finally {
+    		try {
+    			c.close();
+    		} catch (Exception e) {
+    			e.printStackTrace();
+    		}
+    	}
+    	
+    	return o;
+    }
+    
     public static boolean addnewClientOrderDetails(OrderDetails orderdets){
         
         boolean x = false;
