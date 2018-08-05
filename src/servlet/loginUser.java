@@ -85,6 +85,7 @@ public class loginUser extends HttpServlet {
             	 response.sendRedirect("/Six_Eagles/home");
             }
             else{
+            	request.setAttribute("message", "Incorrect Username or Password!!!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }
         }

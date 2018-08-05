@@ -19,8 +19,18 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	</head>
+	<script>
+	function showMessage () {
+		// top bar active
+	 	<% 	String message = (String) request.getAttribute("message");
+			if (message != null) { %>
+				alert("<%=message %>");
+			<% } %>
 	
-        <body data-spy="scroll" data-target=".navbar" data-offset="50">
+	}
+	</script>
+	
+        <body onload = "showMessage()" data-spy="scroll" data-target=".navbar" data-offset="50">
 		<div class="container-fluid" style="height: 100px; background-color: white;">
 			<div class="row">
 				<div class="col-sm-6">
