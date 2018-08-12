@@ -19,18 +19,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	</head>
-	<script>
-	function showMessage () {
-		// top bar active
-	 	<% 	String message = (String) request.getAttribute("message");
-			if (message != null) { %>
-				alert("<%=message %>");
-			<% } %>
-	
-	}
-	</script>
-	
-        <body onload = "showMessage()" data-spy="scroll" data-target=".navbar" data-offset="50">
+    <body onload = "showMessage()" data-spy="scroll" data-target=".navbar" data-offset="50">
 		<div class="container-fluid" style="height: 100px; background-color: white;">
 			<div class="row">
 				<div class="col-sm-6">
@@ -44,35 +33,48 @@
 					<div class="panel-heading">
 					Login
 					</div>
-					<div class="messages">
+					<div class="panel-body">
+						<form class="form-horizontal" action="loginUser" method="post" id="loginForm">
+								<div class="form-group">
+									<label class="control-label col-sm-2 control label" >Username</label>
+									<div class="col-sm-10">
+										<b>Username: </b><input type="text" name = "username" class="form-control" id="username" placeholder="Username" autocomplete = "off">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-2 control label">Password</label>
+									<div class="col-sm-10">
+										<b>Password: </b><input type="password" name = "password" class="form-control" id="password" placeholder = "Password" autocomplete = "off">
+									</div>
+								</div>
+								<button type="submit" name = "submit" class="btn btn-default"><i class="glyphicon glyphicon-log-in"></i> Sign in</button>
+						</form>
+						
+						<br>
+						
+						<% String message = (String) request.getAttribute("message");
+						   if (message != null) { %>
+						   <div id = "message">
+						   		<strong><%=message%></strong>
+						   </div>
+						<% } %>
+							
 					</div>
-				<div class="panel-body">
-					<form class="form-horizontal" action="loginUser" method="post" id="loginForm">
-							<div class="form-group">
-								<label class="control-label col-sm-2 control label" >Username</label>
-								<div class="col-sm-10">
-									<b>Username: </b><input type="text" name = "username" class="form-control" id="username" placeholder="Username" autocomplete = "off">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-sm-2 control label">Password</label>
-								<div class="col-sm-10">
-									<b>Password: </b><input type="password" name = "password" class="form-control" id="password" placeholder = "Password" autocomplete = "off">
-								</div>
-							</div>
-							<button type="submit" name = "submit" class="btn btn-default"><i class="glyphicon glyphicon-log-in"></i> Sign in</button>
-					</form>		
-				</div>
 				</div>			
 			</div>
-            </body>
-	
+    </body>	
 	<style>
 		body {
 			position: relative; 
 			background-color: #1E88E5;
 		}
-
+		
+		#message {
+			color: red;
+			text-align: center;
+			
+		}
+		
 		.active {
 			color: black;
 		}

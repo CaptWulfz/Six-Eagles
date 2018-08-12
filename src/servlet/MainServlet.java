@@ -717,20 +717,20 @@ public class MainServlet extends HttpServlet {
 		} else {
 			ingrList = new ArrayList<ingredients>();
 			ArrayList<SupplierStock> stockList = SupplierStockService.getSupplierStockBySupplierID(1);
-			for (SupplierStock s : stockList) {
-				ingredients i = ingredientsdao.getIngredientByCode(s.getIngredientID());
-				ingrList.add(i);
+			if (stockList != null) {
+				for (SupplierStock s : stockList) {
+					ingredients i = ingredientsdao.getIngredientByCode(s.getIngredientID());
+					ingrList.add(i);
+				}
+			} else {
+				stockList = new ArrayList<SupplierStock>();
 			}
+			session.setAttribute("stockList", stockList);
 			request.setAttribute("ingrList", ingrList);
 		}
-		
-		System.out.println(ingrList.size());
-		System.out.println("here");
-		
+
 		String index = (String) session.getAttribute("currSupplierID");
-		
-		System.out.println(index);
-		
+
 		if (index != null) {
 			request.setAttribute("index", Integer.parseInt(index));
 			session.setAttribute("index", null);
@@ -804,18 +804,16 @@ public class MainServlet extends HttpServlet {
 		System.out.println(actionToDo);
 		if (actionToDo != null) {
 			if (actionToDo.equals("addToOrder")) {
-				int ingrCode = Integer.parseInt(request.getParameter("ingrCode"));
+				int stockCode = Integer.parseInt(request.getParameter("stockCode"));
 				ArrayList<SupplyOrderItem> supplyOrdersCart = (ArrayList<SupplyOrderItem>) session.getAttribute("supplyOrdersCart");
 				SupplyOrderItem item = new SupplyOrderItem();
+				SupplierStock stockItem;
 				
+				stockItem = SupplierStockService.getSupplierStockByStockID(stockCode);
+				item.setStockItem(stockItem);
 				
-				try {
-					//product p = productdao.getProduct(productCode);
-					ingredients ingr = ingredientsdao.getIngredientByCode(ingrCode);
-					item.setIngredient(ingr);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				ingredients ingr = ingredientsdao.getIngredientByCode(stockItem.getIngredientID());
+				item.setIngredient(ingr);
 				
 				if (supplyOrdersCart == null)
 					supplyOrdersCart = new ArrayList<SupplyOrderItem>();
@@ -828,9 +826,6 @@ public class MainServlet extends HttpServlet {
 		        //Subject to Change
 		        int StatusID = 2;
 		        String Comment = "";
-		        
-		        System.out.println("THE ORDER DATE IS: " + OrderDate);
-		        System.out.println("THE DELIVERY DATE IS: " + DeliveryDate);
 		        
 		        supplyorders sp = supplyordersdao.getSupplyOrderBySupplyOrderNum(supplyOrderNum);
 		        
@@ -855,6 +850,7 @@ public class MainServlet extends HttpServlet {
 							supplyorders b = new supplyorders(supplierName, supplyOrderNum, SupplierID, 0, OrderDate, DeliveryDate, StatusID, Comment);
 					        item.setSupplyOrders(b);
 					        item.setQuantity(quantity);
+					        
 							supplyOrdersCart.add(item);
 					        session.setAttribute("supplyOrdersCart", supplyOrdersCart);
 					        
@@ -867,8 +863,6 @@ public class MainServlet extends HttpServlet {
 							}
 					        
 					        session.setAttribute("message", "Successfully Added New Supply Order!!!");
-					        
-					        //request.getRequestDispatcher("newsupplierorder2.jsp").forward(request, response);
 				        } else {
 				        	session.setAttribute("message", "Order Date cannot come after the Delivery Date!!!");
 				        }
@@ -879,6 +873,9 @@ public class MainServlet extends HttpServlet {
 		        	session.setAttribute("message", "This Supply Order Number already exists!!!");
 		        }
 		        
+		        session.setAttribute("stockList", null);
+		        session.setAttribute("ingrList", null);
+				session.setAttribute("currSupplierID", null);
 		        response.sendRedirect("/Six_Eagles/newSupplierOrder");
 			} else if (actionToDo.equals("checkout")) {
 				System.out.println("ADD THE ORDERS");
@@ -892,9 +889,13 @@ public class MainServlet extends HttpServlet {
 		        	
 		        	supplyordersdao.addingSupplyOrder(sb);
 	        		supplyorderdetailsdao.AddSupplyOrderDetails(item);
-	        		response.sendRedirect("/Six_Eagles/home");
-		        	
 		        }
+		        
+		        session.setAttribute("stockList", null);
+		        session.setAttribute("ingrList", null);
+				session.setAttribute("currSupplierID", null);
+				
+				response.sendRedirect("/Six_Eagles/home");
 				
 			} else if (actionToDo.equals("Remove")) {
 				ArrayList<SupplyOrderItem> supplyOrdersCart = (ArrayList<SupplyOrderItem>) session.getAttribute("supplyOrdersCart");
@@ -927,11 +928,17 @@ public class MainServlet extends HttpServlet {
 			
 			ArrayList<SupplierStock> stockList = SupplierStockService.getSupplierStockBySupplierID(supplierID);
 			ArrayList<ingredients> ingrList = new ArrayList<ingredients>();
-			for (SupplierStock s : stockList) {
-				ingredients i = ingredientsdao.getIngredientByCode(s.getIngredientID());
-				ingrList.add(i);
+			
+			if (stockList != null ) {
+				for (SupplierStock s : stockList) {
+					ingredients i = ingredientsdao.getIngredientByCode(s.getIngredientID());
+					ingrList.add(i);
+				}
+			} else {
+				stockList = new ArrayList<SupplierStock>();
 			}
 			
+			session.setAttribute("stockList", stockList);
 			System.out.println("HERE NOW");
 			String newID = Integer.toString(supplierID - 1);
 			session.setAttribute("ingrList", ingrList);

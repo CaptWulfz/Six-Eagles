@@ -59,38 +59,33 @@ public class loginUser extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session=request.getSession();
-        if(session.getAttribute("loginUser") == null){
-            String Username =   request.getParameter("username");
-            String Password = request.getParameter("password");
+        
+        String Username =   request.getParameter("username");
+        String Password = request.getParameter("password");
 
-            Users LoginUser= new Users(Username,Password);
-
-
-             if(Usersdao.Checklogin(LoginUser)!=null){
-            	
-            	 String uuid = UUID.randomUUID().toString().replaceAll("-", "");
-            	 System.out.println("uuid: " + uuid);
-            	 
-            	 LoginUser.setUserhash(uuid);
-            	 
-            	 Usersdao.updateUserHash(LoginUser);
-            	 
-            	 Cookie cookie = new Cookie("uuid", uuid);
-            	 cookie.setMaxAge(60*30);
-            	 response.addCookie(cookie);
-            	 
-            	 session.setMaxInactiveInterval(60*15);
- 	 
-            	 session.setAttribute("loginUser", LoginUser);
-            	 response.sendRedirect("/Six_Eagles/home");
-            }
-            else{
-            	request.setAttribute("message", "Incorrect Username or Password!!!");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-            }
-        }
-        else{
-            request.getRequestDispatcher("home.jsp").forward(request, response);
+        Users LoginUser= new Users(Username,Password);
+        
+        if(Usersdao.Checklogin(LoginUser)!=null){
+        	
+        	String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+        	System.out.println("uuid: " + uuid);
+        	 
+        	LoginUser.setUserhash(uuid);
+        	 
+        	Usersdao.updateUserHash(LoginUser);
+        	 
+        	Cookie cookie = new Cookie("uuid", uuid);
+        	cookie.setMaxAge(60*30);
+        	response.addCookie(cookie);
+        	 
+        	session.setMaxInactiveInterval(60*15);
+ 
+        	session.setAttribute("loginUser", LoginUser);
+        	response.sendRedirect("/Six_Eagles/checkOrdersStatus");
+        	//response.sendRedirect("/Six_Eagles/home");
+        } else {
+        	request.setAttribute("message", "Incorrect Username or Password!!!");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
     }
 

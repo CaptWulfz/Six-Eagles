@@ -1,6 +1,10 @@
 package servlet;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dao.Usersdao;
+import dao.supplyordersdao;
 import model.Users;
 import url_patterns.URLPatterns;
 
@@ -16,7 +21,8 @@ import url_patterns.URLPatterns;
  * Servlet implementation class AuthenticationServlet
  */
 @WebServlet({"/AuthenticationServlet",
-			URLPatterns.SUBMITCREATEUSERREQUEST})
+			URLPatterns.SUBMITCREATEUSERREQUEST,
+			URLPatterns.CHECKORDERSSTATUS})
 
 public class AuthenticationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -47,19 +53,27 @@ public class AuthenticationServlet extends HttpServlet {
 		switch (pattern) {
 		case URLPatterns.SUBMITCREATEUSERREQUEST:
 			tryCreateUserRequest(request, response);
+			break;
+		case URLPatterns.CHECKORDERSSTATUS:
+			checkOrders(request, response);
+			break;
 		}
 		
 	}
 	
-	private void tryAddProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
+	private void checkOrders(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate localDate = LocalDate.now();
 		
-		//get Input Data
-		String ProductName = request.getParameter("productName");
-        double ProductPrice = Double.parseDouble(request.getParameter("productPrice"));
-        int Stock = Integer.parseInt(request.getParameter("availableStock"));
-        int Threshold = Integer.parseInt(request.getParameter("threshold"));
-        int Ceiling = Integer.parseInt(request.getParameter("ceiling"));
+		String dateToday = dtf.format(localDate);
+		
+		try {
+			supplyordersdao.checkForLateOrders(dateToday);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		response.sendRedirect("/Six_Eagles/home");
 	}
 	
 	private void tryCreateUserRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -85,7 +99,7 @@ public class AuthenticationServlet extends HttpServlet {
 			String position = request.getParameter("Position");
 			String address = request.getParameter("Address");
 		
-			Users u =Usersdao.getUserByUsername(oldUserName);
+			Users u = Usersdao.getUserByUsername(oldUserName);
 			
 			System.out.println(u.getPassword() + " AND " + oldPassword);
 			

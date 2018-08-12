@@ -55,7 +55,7 @@
 								<button class="btn btn-default button1" data-toggle="modal" data-target="#supplierStockModal"> <i class="glyphicon glyphicon-plus-sign"></i> Add Supplier Stock</button>
 							</div> <!-- /div-action -->				
 							
-							<table class="table" id="manageSupplierTable">
+							<table class="table" id="manageSupplierTable" >
 								<thead>
 									<tr>
 										<th><center>Supplier Name</center></th>
@@ -123,7 +123,7 @@
 			        	<label for="productPrice" class="col-sm-3 control-label">Contact: </label>
 			        	<label class="col-sm-1 control-label">: </label>
 						    <div class="col-sm-8">
-						      <input type="text" class="form-control" id="contact" placeholder="contact number or e-mail" name="contact" autocomplete="off" required>
+						      <input type="number" min = 0 class="form-control" id="contact" placeholder="contact number or e-mail" name="contact" autocomplete="off" required>
 						    </div>
 			        </div>
 			      </div> <!-- /modal-body -->
@@ -131,7 +131,7 @@
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			        
-			        <button type="submit" name = "submit" class="btn btn-success" id="createBrandBtn" data-loading-text="Loading..." autocomplete="off">Save Changes</button>
+			        <button type="submit" name = "submit" class="btn btn-success" id="createBrandBtn" data-loading-text="Loading...">Save Changes</button>
 			      </div>
 			      <!-- /modal-footer -->
 		     	</form>
@@ -174,6 +174,14 @@
 				      						<option value = <%=i.getIngredientCode() %>> <%=i.getIngredientName() %> </option>
 				      					<% } %>
 				      				</select>
+				   				 </div>
+	        				</div>
+	        				
+							<div class="form-group">
+	        					<label for="productPrice" class="col-sm-3 control-label">Price: </label>
+	        					<label class="col-sm-1 control-label">: </label>
+				    			<div class="col-sm-8">
+									<input type="number" class="form-control" id="price" placeholder="Price" name="price" min = 1 value = 1 autocomplete="off" required>
 				   				 </div>
 	        				</div>
 	     				</div> <!-- /modal-body -->

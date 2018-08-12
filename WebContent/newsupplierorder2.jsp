@@ -9,12 +9,14 @@
 <%@page import = "model.suppliers" %>
 <%@page import = "model.ingredients" %>
 <%@page import = "model.supplyorders" %>
+<%@page import = "model.SupplierStock" %>
 <%@page import = "temporary_models.SupplyOrderItem" %>
 <!DOCTYPE html>
 
 <% ArrayList<suppliers> suppliersList = (ArrayList<suppliers>) request.getAttribute("suppliersList");
    ArrayList<ingredients> ingrList = (ArrayList<ingredients>) request.getAttribute("ingrList");
    ArrayList<SupplyOrderItem> supplyOrdersCart = (ArrayList<SupplyOrderItem>) session.getAttribute("supplyOrdersCart");
+   ArrayList<SupplierStock> stockList = (ArrayList<SupplierStock>) session.getAttribute("stockList");
 %>
 
 <html>
@@ -83,9 +85,11 @@
 							<div class="form-group">
 								<label class="control-label col-sm-5" for="col2">Ingredient Name:</label>
 								<div class="col-sm-7">
-									<select class="form-control" id="ingredientCode" name="ingrCode" style = "width : 150px">
-										<% for (ingredients ingr: ingrList) { %>
-											<option value = "<%=ingr.getIngredientCode()%>"><%=ingr.getIngredientName() %></option>
+									<select class="form-control" id="stockCode" name="stockCode" style = "width : 100px">
+										<% for (int k = 0; k < ingrList.size(); k++) { 
+										   		SupplierStock ss = stockList.get(k);
+										   		ingredients ingr = ingrList.get(k); %>
+											<option value = "<%=ss.getSupplierStockID()%>"><%=ingr.getIngredientName() %></option>
 										<% } %>
 									</select>
 								</div>
@@ -126,20 +130,23 @@
 					<div class="panel-body">
 						<table id = "orderTable">
 							<tr>
-								<th>Supplier ID</th>
+								<th>Supplier Name</th>
 								<th>Supply Order Num</th>
 								<th>Ingredient Name</th>
+								<th>Price</th>
 								<th>Order Date</th>
 								<th>Delivery Date</th>
 							<tr>
 							<% for (int j = 0; j < supplyOrdersCart.size(); j++ ) {
 								SupplyOrderItem cartItem = supplyOrdersCart.get(j);
 								supplyorders item = cartItem.getSupplyOrders();
-								ingredients ingr = cartItem.getIngredient();%>
+								ingredients ingr = cartItem.getIngredient();
+								SupplierStock stock = cartItem.getStockItem();	%>
 								<tr>
 									<th><%=item.getSupplierName() %></th>
 									<th><%=item.getSupplyOrderNum() %></th>
 									<th><%=ingr.getIngredientName()%></th>
+									<th><%=cartItem.getQuantity() * stock.getIngredientPrice()%></th>
 									<th><%=item.getOrderDate() %></th>
 									<th><%=item.getDeliveryDate() %></th>
 									<td>

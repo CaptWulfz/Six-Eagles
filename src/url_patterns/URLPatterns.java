@@ -37,4 +37,5 @@ public class URLPatterns {
 	public final static String VIEWSUPPLIERSTOCK = "/viewSupplierStock";
 	public final static String REMOVESTOCKINGREDIENT = "/removeStockIngredient";
 	public final static String UPDATEUSER = "/updateUser";
+	public final static String CHECKORDERSSTATUS = "/checkOrdersStatus";
 }

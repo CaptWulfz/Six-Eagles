@@ -61,8 +61,9 @@ public class SuppliersServlet extends HttpServlet {
 	private void addToSupplierStock(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int supplierID = Integer.parseInt(request.getParameter("supplierName"));
 		int ingredientID = Integer.parseInt(request.getParameter("ingredientName"));
+		double price = Double.parseDouble(request.getParameter("price"));
 		
-		SupplierStockService.addSupplierStock(supplierID, ingredientID);
+		SupplierStockService.addSupplierStock(supplierID, ingredientID, price);
 		
 		response.sendRedirect("/Six_Eagles/suppliers");
 		

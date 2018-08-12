@@ -33,7 +33,7 @@
 							<tr>
 	                            <th><center>Ingredient Name</center></th>
 	                            <th><center>Unit of Measurement</center></th>
-	                            <th><center>Quantity</center></th>
+	                            <th><center>Price</center></th>
 	                            <!--<th><center>Comments</center></th>-->
 							</tr>
                             	<% for(int j = 0;j < ingrList.size(); j++) { 
@@ -42,7 +42,7 @@
                                		<tr>
                             			<td><center><%=i.getIngredientName() %></center></td>
                             			<td><center><%=i.getUnitOfMeasurement()%></center></td>
-                            			<td><center><%=i.getStock()%></center></td>
+                            			<td><center><%=ss.getIngredientPrice() %></center></td>
                             			<td>
                             				<form method = "post" action = "/Six_Eagles/removeStockIngredient">
 												<center><button type = "submit" name = "submitButton" value = <%=ss.getSupplierStockID() %> class = "btn btn-default"><img src = "images/Minus-Icon.png" height = "15" width = "15"></button></center>
