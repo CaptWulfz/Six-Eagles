@@ -31,7 +31,7 @@ CREATE TABLE `client` (
   `City` varchar(100) DEFAULT NULL,
   `Status` varchar(45) DEFAULT 'Active',
   PRIMARY KEY (`ClientID`)
-) ENGINE=InnoDB AUTO_INCREMENT=10000026 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10000023 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,6 +42,33 @@ LOCK TABLES `client` WRITE;
 /*!40000 ALTER TABLE `client` DISABLE KEYS */;
 INSERT INTO `client` VALUES (10000016,'Ministop','EGI, Taft Ave, Pasay','Pasay','active'),(10000017,'711','The Manila Residences T2, Taft Ave. Malate Manila','Pasay','Active'),(10000018,'Ministop','Vito Cruz, near Roxas Boulevard','Pasay','Active'),(10000019,'711','One Archers Taft Ave. Manila','Pasay','Active'),(10000020,'Lawson','BGC High Street','Taguig','Active'),(10000021,'Padu','7162','Caloocan','Active'),(10000022,'Fernan','address 123','Quezon','active');
 /*!40000 ALTER TABLE `client` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `expirationdates`
+--
+
+DROP TABLE IF EXISTS `expirationdates`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `expirationdates` (
+  `entryID` int(11) NOT NULL AUTO_INCREMENT,
+  `productID` int(11) NOT NULL,
+  `manufactureDate` date NOT NULL,
+  `expirationDate` date NOT NULL,
+  PRIMARY KEY (`entryID`),
+  UNIQUE KEY `entryID_UNIQUE` (`entryID`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `expirationdates`
+--
+
+LOCK TABLES `expirationdates` WRITE;
+/*!40000 ALTER TABLE `expirationdates` DISABLE KEYS */;
+INSERT INTO `expirationdates` VALUES (2,120,'2018-08-13','2018-09-12'),(3,120,'2018-08-13','2018-09-12'),(4,120,'2018-08-13','2018-09-12'),(5,120,'2018-08-13','2018-09-12');
+/*!40000 ALTER TABLE `expirationdates` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -96,7 +123,7 @@ CREATE TABLE `ingredientlists` (
 
 LOCK TABLES `ingredientlists` WRITE;
 /*!40000 ALTER TABLE `ingredientlists` DISABLE KEYS */;
-INSERT INTO `ingredientlists` VALUES (5.00,'Dozen',456,112,'Eggs'),(10.00,'Kg',120,116,'Ham'),(30.00,'Kg',121,111,'Flour'),(2.00,'Dozen',121,111,'Flour'),(20.00,'Kg',122,111,'Flour'),(2.00,'dozen',122,112,'Eggs'),(20.00,'kg',123,111,'Flour'),(3.00,'Dozen',123,112,'Eggs'),(10.00,'Kg',456,111,'Flour'),(10.00,'Kg',457,111,'Flour');
+INSERT INTO `ingredientlists` VALUES (5.00,'Dozen',456,112,'Eggs'),(10.00,'Kg',120,116,'Ham'),(30.00,'Kg',121,112,'Egg'),(2.00,'Dozen',121,112,'Egg'),(20.00,'Kg',122,112,'Egg'),(2.00,'dozen',122,112,'Eggs'),(20.00,'kg',123,112,'Egg'),(3.00,'Dozen',123,112,'Eggs'),(10.00,'Kg',456,112,'Egg'),(10.00,'Kg',457,112,'Egg');
 /*!40000 ALTER TABLE `ingredientlists` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -118,7 +145,7 @@ CREATE TABLE `ingredients` (
   `UnitOfMeasurement` varchar(45) NOT NULL,
   `Status` varchar(8) DEFAULT 'Active',
   PRIMARY KEY (`IngredientCode`)
-) ENGINE=InnoDB AUTO_INCREMENT=124 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=123 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,7 +154,7 @@ CREATE TABLE `ingredients` (
 
 LOCK TABLES `ingredients` WRITE;
 /*!40000 ALTER TABLE `ingredients` DISABLE KEYS */;
-INSERT INTO `ingredients` VALUES (111,'Flour',512.00,100,NULL,1000,NULL,'Kg','Active'),(112,'Eggs',315.00,100,NULL,1000,NULL,'Dozen','Active'),(113,'Chocolate',175.00,100,NULL,1000,NULL,'Kg','Active'),(114,'Rice',550.00,100,NULL,1000,NULL,'Kg','Active'),(115,'Cheese',275.00,100,NULL,500,NULL,'Kg','Active'),(116,'Ham',265.00,100,NULL,500,NULL,'Kg','Active'),(117,'Noodles',450.00,100,NULL,1000,NULL,'Kg','Active'),(121,'Sugar',600.00,100,NULL,1000,NULL,'Kg','Active'),(122,'Butter',0.00,100,NULL,1000,NULL,'Kg','active');
+INSERT INTO `ingredients` VALUES (111,'Flour',512.00,100,NULL,1000,NULL,'Kg','Active'),(112,'Eggs',315.00,100,NULL,1000,NULL,'Dozen','Active'),(113,'Chocolate',175.00,100,NULL,1000,NULL,'Kg','Active'),(114,'Rice',550.00,100,NULL,1000,NULL,'Kg','Active'),(115,'Cheese',275.00,100,NULL,500,NULL,'Kg','Active'),(116,'Ham',215.00,100,NULL,500,NULL,'Kg','Active'),(117,'Noodles',450.00,100,NULL,1000,NULL,'Kg','Active'),(121,'Sugar',600.00,100,NULL,1000,NULL,'Kg','Active'),(122,'Butter',0.00,100,NULL,1000,NULL,'Kg','active');
 /*!40000 ALTER TABLE `ingredients` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -181,7 +208,7 @@ CREATE TABLE `orderdetails` (
 
 LOCK TABLES `orderdetails` WRITE;
 /*!40000 ALTER TABLE `orderdetails` DISABLE KEYS */;
-INSERT INTO `orderdetails` VALUES (1,456,25.00,1),(1,456,25.00,1),(11,456,25.00,10),(11,120,20.00,20),(45687,456,25.00,2),(12345,456,25.00,65),(165,456,25.00,66),(91567,456,25.00,10),(1234,456,25.00,950),(1234,120,20.00,200),(4567,456,25.00,4),(741,122,40.00,50),(78943,120,20.00,10),(1789,120,20.00,11),(1789,456,25.00,15);
+INSERT INTO `orderdetails` VALUES (1,456,25.00,1),(1,456,25.00,1),(11,456,25.00,10),(11,120,20.00,20),(45687,456,25.00,2),(12345,456,25.00,65),(165,456,25.00,66),(91567,456,25.00,10),(1234,456,25.00,950),(1234,120,20.00,200),(4567,456,25.00,4),(741,122,40.00,50),(78943,120,20.00,10),(1789,120,20.00,11),(1789,456,25.00,15),(648,120,20.00,3),(486,120,20.00,2),(496,120,20.00,2),(164,120,20.00,1),(745,120,20.00,1);
 /*!40000 ALTER TABLE `orderdetails` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -208,7 +235,7 @@ CREATE TABLE `orders` (
   KEY `fk_Orders_Client1_idx` (`ClientID`),
   KEY `fk_Orders_Staff1_idx` (`UserID`),
   CONSTRAINT `fk_Orders_Client1` FOREIGN KEY (`ClientID`) REFERENCES `client` (`ClientID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -217,7 +244,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,10000016,101,1,'2018-08-07','2018-08-08',2,'Delivered',NULL),(11,10000016,101,2,'2018-08-08','2018-08-09',2,'Delivered',NULL),(165,10000018,101,3,'2018-08-09','2018-08-10',2,'Delivered',NULL),(888,10000018,101,5,'2018-08-08','2018-08-08',2,'Delivered',NULL),(1234,10000022,101,6,'2018-07-16','2018-07-31',2,'Processing',NULL),(4567,10000016,1,7,'2018-08-02','2018-08-03',2,'Processing',NULL),(4848,10000016,101,8,'2018-08-08','2018-08-09',2,'Processing',NULL),(5454,10000016,101,9,'2018-08-08','2018-08-09',2,'Processing',NULL),(12345,10000018,101,10,'2018-09-08','2018-09-09',2,'Processing',NULL),(45687,10000017,101,11,'2018-09-08','2018-09-08',2,'Processing',NULL),(56564,10000016,101,12,'2018-08-08','2018-08-08',2,'Processing',NULL),(91567,10000018,101,13,'2018-08-08','2018-08-08',2,'Processing',NULL),(741,10000016,1,14,'2018-08-16','2018-08-17',2,'Processing',NULL),(159764,10000016,1,15,'2018-08-02','2018-08-03',2,'Processing',NULL),(159754,10000016,1,16,'2018-08-02','2018-08-03',2,'Processing',NULL),(4957,10000016,1,24,'2018-08-02','2018-08-03',2,'Processing',NULL),(1679,10000016,1,25,'2018-08-02','2018-08-03',2,'Processing',NULL),(16497,10000016,1,26,'2018-08-02','2018-08-03',2,'Processing',NULL),(66354,10000016,1,27,'2018-08-03','2018-08-04',2,'Processing',NULL),(14657,10000016,1,28,'2018-08-02','2018-08-03',2,'Processing',NULL),(78961,10000016,1,29,'2018-08-02','2018-08-03',2,'Processing',NULL),(78943,10000016,1,30,'2018-08-02','2018-08-03',2,'Processing',NULL),(1789,10000016,1,31,'2018-08-05','2018-08-06',2,'Processing',NULL);
+INSERT INTO `orders` VALUES (1,10000016,101,1,'2018-08-07','2018-08-08',2,'Delivered',NULL),(11,10000016,101,2,'2018-08-08','2018-08-09',2,'Delivered',NULL),(165,10000018,101,3,'2018-08-09','2018-08-10',2,'Delivered',NULL),(888,10000018,101,5,'2018-08-08','2018-08-08',2,'Delivered',NULL),(1234,10000022,101,6,'2018-07-16','2018-07-31',2,'Processing',NULL),(4567,10000016,1,7,'2018-08-02','2018-08-03',2,'Processing',NULL),(4848,10000016,101,8,'2018-08-08','2018-08-09',2,'Processing',NULL),(5454,10000016,101,9,'2018-08-08','2018-08-09',2,'Processing',NULL),(12345,10000018,101,10,'2018-09-08','2018-09-09',2,'Processing',NULL),(45687,10000017,101,11,'2018-09-08','2018-09-08',2,'Processing',NULL),(56564,10000016,101,12,'2018-08-08','2018-08-08',2,'Processing',NULL),(91567,10000018,101,13,'2018-08-08','2018-08-08',2,'Processing',NULL),(741,10000016,1,14,'2018-08-16','2018-08-17',2,'Processing',NULL),(159764,10000016,1,15,'2018-08-02','2018-08-03',2,'Processing',NULL),(159754,10000016,1,16,'2018-08-02','2018-08-03',2,'Processing',NULL),(4957,10000016,1,24,'2018-08-02','2018-08-03',2,'Processing',NULL),(1679,10000016,1,25,'2018-08-02','2018-08-03',2,'Processing',NULL),(16497,10000016,1,26,'2018-08-02','2018-08-03',2,'Processing',NULL),(66354,10000016,1,27,'2018-08-03','2018-08-04',2,'Processing',NULL),(14657,10000016,1,28,'2018-08-02','2018-08-03',2,'Processing',NULL),(78961,10000016,1,29,'2018-08-02','2018-08-03',2,'Processing',NULL),(78943,10000016,1,30,'2018-08-02','2018-08-03',2,'Processing',NULL),(1789,10000016,1,31,'2018-08-05','2018-08-06',2,'Processing',NULL),(648,10000016,1,32,'2018-08-13','2018-08-14',2,'Processing',NULL),(486,10000016,1,33,'2018-08-13','2018-08-14',2,'Processing',NULL),(496,10000016,1,34,'2018-08-13','2018-08-14',2,'Processing',NULL),(164,10000016,1,35,'2018-08-13','2018-08-14',2,'Processing',NULL),(745,10000016,1,36,'2018-08-13','2018-08-14',2,'Processing',NULL);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -274,7 +301,7 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (120,'Ham and Cheese kariman',20.00,401,100,NULL,1000,NULL,'Active'),(121,'Beef Sandwich',30.00,0,100,NULL,1000,NULL,'Active'),(122,'Chicken Sandwich',40.00,0,0,NULL,0,NULL,'active'),(123,'beef empanada',25.00,0,0,NULL,0,NULL,'active'),(456,'Chicken Empanada',25.00,517,100,NULL,1000,NULL,'active'),(457,'Good Bread',20.00,100,100,NULL,1000,NULL,'Active');
+INSERT INTO `products` VALUES (120,'Ham and Cheese kariman',20.00,406,100,NULL,1000,NULL,'Active'),(121,'Beef Sandwich',30.00,0,100,NULL,1000,NULL,'Active'),(122,'Chicken Sandwich',40.00,0,0,NULL,0,NULL,'active'),(123,'beef empanada',25.00,0,0,NULL,0,NULL,'active'),(456,'Chicken Empanada',25.00,517,100,NULL,1000,NULL,'active'),(457,'Good Bread',20.00,100,100,NULL,1000,NULL,'Active');
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -452,9 +479,10 @@ CREATE TABLE `supplierstock` (
   `supplierstockID` int(11) NOT NULL AUTO_INCREMENT,
   `supplierID` int(11) NOT NULL,
   `ingredientID` int(11) NOT NULL,
+  `ingredientPrice` double NOT NULL,
   PRIMARY KEY (`supplierstockID`),
   UNIQUE KEY `supplierIngredientID_UNIQUE` (`supplierstockID`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -463,7 +491,7 @@ CREATE TABLE `supplierstock` (
 
 LOCK TABLES `supplierstock` WRITE;
 /*!40000 ALTER TABLE `supplierstock` DISABLE KEYS */;
-INSERT INTO `supplierstock` VALUES (3,3,115),(4,4,114),(6,3,117);
+INSERT INTO `supplierstock` VALUES (3,3,115,10),(4,4,114,15),(6,3,117,20);
 /*!40000 ALTER TABLE `supplierstock` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -522,7 +550,7 @@ CREATE TABLE `supplyorders` (
 
 LOCK TABLES `supplyorders` WRITE;
 /*!40000 ALTER TABLE `supplyorders` DISABLE KEYS */;
-INSERT INTO `supplyorders` VALUES (1,789,1,'2018-08-09','2018-08-10',2,'Delivered',''),(4,1054,1,'2018-08-02','2018-08-03',2,'Processing',''),(5,4561,4,'2018-08-02','2018-08-03',2,'Processing',''),(7,5867,1,'2018-08-01','2018-08-02',2,'Processing',''),(8,1645,3,'2018-08-05','2018-08-06',2,'Processing',''),(9,4657,3,'2018-08-06','2018-08-10',2,'Processing','');
+INSERT INTO `supplyorders` VALUES (1,789,1,'2018-08-09','2018-08-10',2,'Delivered',''),(4,1054,1,'2018-08-02','2018-08-03',2,'Late',''),(5,4561,4,'2018-08-02','2018-08-03',2,'Late',''),(7,5867,1,'2018-08-01','2018-08-02',2,'Late',''),(8,1645,3,'2018-08-05','2018-08-06',2,'Late',''),(9,4657,3,'2018-08-06','2018-08-10',2,'Late','');
 /*!40000 ALTER TABLE `supplyorders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -553,7 +581,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Rovi Elijah','Soriano','RSoriano','Rovi','Admin','Taft Ave Manila','b36c7437a36846a695f8b5fb5490acd9'),(2,'Anjelo','Padua','AnjeloP','padu','Staff','Taft Ave Manila','741b64fa32f14cb2a490a158a44602c2'),(6,'Marlo','Lar','Marlar','mar','Staff','Makati City',NULL);
+INSERT INTO `users` VALUES (1,'Rovi Elijah','Soriano','RSoriano','Rovi','Admin','Taft Ave Manila','20a5a4da4072492883db6b3d26f73915'),(2,'Anjelo','Padua','AnjeloP','padu','Staff','Taft Ave Manila','5a5f3a50025243199441ebe3f5b49695'),(6,'Marlo','Lar','Marlar','mar','Staff','Makati City',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -566,4 +594,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-06  7:29:01
+-- Dump completed on 2018-08-13  8:27:37

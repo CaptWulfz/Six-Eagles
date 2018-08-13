@@ -6,6 +6,7 @@
 package servlet;
 
 import dao.ClientOrderdao;
+import dao.ExpirationDatesService;
 import dao.clientdao;
 import dao.productdao;
 import java.io.IOException;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Orders;
 import model.Client;
+import model.ExpirationDates;
 import model.OrderDetails;
 import model.Users;
 import model.product;
@@ -146,7 +148,7 @@ public class newClientOrderDetails extends HttpServlet {
  	       }
  	        
  	       session.setAttribute("cart", cart);
- 	        
+ 	       System.out.println("ADDED NEW ITEM!!!");
  	       request.getRequestDispatcher("neworder2.jsp").forward(request, response);
  	        
     	} else if (actionToDo.equals(ButtonActions.CHECKOUT)){
@@ -156,13 +158,33 @@ public class newClientOrderDetails extends HttpServlet {
     		
     		cart = (ArrayList<CartItem>) session.getAttribute("cart");
     		
+    		ClientOrderdao.addnewClientOrder(Order);
+    		
     		if (!cart.isEmpty()) {
 		        OrderDetails NewOrderDetails;
 		        
 		        for (CartItem item: cart) {
 		        	NewOrderDetails = new OrderDetails(Order.getPurchaseOrderNum(),item.getProductCode(),item.getPricePerPiece(),item.getQuantity());
-		        	ClientOrderdao.addnewClientOrder(Order);
+		        	
 		        	ClientOrderdao.addnewClientOrderDetails(NewOrderDetails);
+		        	
+		        	ArrayList<ExpirationDates> list = null;
+		        	
+		        	try {
+						list = ExpirationDatesService.getExpirationDatesListByProductID(item.getProductCode());
+						
+						System.out.println("SIZE OF LIST: " + list.size());
+						
+						for (int i = 0; i < item.getQuantity(); i++) {
+							ExpirationDatesService.removeProduct(list.get(i).getEntryID());
+						}
+						
+						product p = productdao.getProduct(item.getProductCode());
+						productdao.updateProductStock(p.getProductcode(), p.getStock() - item.getQuantity());
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+		        	
 		        }
 		        
 		        session.setAttribute("message", "Successfully Added a New Client Order!!!");

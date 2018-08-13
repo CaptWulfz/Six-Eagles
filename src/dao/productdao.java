@@ -9,7 +9,6 @@ package dao;
 import java.sql.*;
 import java.util.ArrayList;
 import model.product;
-import model.rawmaterials;
 /**
  *
  * @author Roano
@@ -33,6 +32,26 @@ public class productdao {
         		e.printStackTrace();
         	}
         }
+	}
+	
+	public static void setConsumableDates(int code, String dateToday, String expiryDate) {
+		Connection c = dbconnect.getDBConnection();
+		String sql = "INSERT INTO eagle.expirationdates(productID, manufactureDate, expirationDate) VALUES(?, ?, ?);";
+		try {
+			PreparedStatement p = c.prepareStatement(sql);
+			p.setInt(1, code);
+			p.setString(2, dateToday);
+			p.setString(3, expiryDate);
+			p.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				c.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public static void changeThresholds(int code, int threshold, int ceiling) {
@@ -290,14 +309,22 @@ public class productdao {
                     }catch(Exception e){}
                 }
             }
-        //return ingredients;
-        
-            
-            
-            
+   
             return name;
     
         }
+    
+    public static void updateProductStock(int id, int stock) throws SQLException {
+    	Connection c=dbconnect.getDBConnection();
+        String sql = "UPDATE eagle.products SET AvailableStock = ? WHERE ProductCode = ?;";
+        
+        PreparedStatement p = c.prepareStatement(sql);
+        p.setInt(1, stock);
+        p.setInt(2, id);
+        p.executeUpdate();
+        
+        c.close();
+    }
     
     public static product getProduct(int ProductCode)throws SQLException {
          

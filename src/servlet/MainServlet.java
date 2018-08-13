@@ -907,7 +907,6 @@ public class MainServlet extends HttpServlet {
 					ArrayList<suppliers> suppliersList = Supplierdao.viewSupplier();
 					request.setAttribute("suppliersList",  suppliersList);
 		        } catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 		        

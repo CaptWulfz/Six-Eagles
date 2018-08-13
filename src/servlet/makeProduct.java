@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import model.*;
 import dao.*;
 
@@ -69,21 +72,22 @@ public class makeProduct extends HttpServlet {
         try {
             makeP=productdao.makeProduct(ProductCode,QTY);
             
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    		LocalDate localDate = LocalDate.now();
+    		
+    		String dateToday = dtf.format(localDate);
+    		String expiryDate = dtf.format(localDate.plusDays(30));
+    		
+    		for (int i = 0; i < QTY; i++)
+    			productdao.setConsumableDates(ProductCode, dateToday, expiryDate);
+            
         } catch (Exception e) {
+        	e.printStackTrace();
         }
-
-       
-             if(makeP){
-              response.sendRedirect("/Six_Eagles/inventory");
-               
-               }
-               else{
-               response.sendRedirect("/Six_Eagles/home");
-               }
-   
-
-     
-        
+        if(makeP)
+        	response.sendRedirect("/Six_Eagles/inventory");
+	    else
+	       response.sendRedirect("/Six_Eagles/home");
     }
 
     /**
